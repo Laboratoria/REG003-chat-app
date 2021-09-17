@@ -1,5 +1,3 @@
-const dotenv =  require('dotenv';
-dotenv.config();
 
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
@@ -10,7 +8,7 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js",
+  provider = "prisma-client-js"
   binaryTargets = env("BINARY_TARGET")
 }
 
@@ -20,7 +18,6 @@ model User {
   password      String    
   username      String
   profile_image String    @default("https://cdn-icons-png.flaticon.com/512/1077/1077114.png")
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
 }
-//
-//createdAt     DateTime  @default(now()) @map(name: "created_at")
-//updatedAt     DateTime  @updatedAt @map(name: "updated_at")
