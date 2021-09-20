@@ -1,13 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import {runMiddleware, fn} from '../../../midlewares/auth'
+import {runMiddleware} from '../../../midlewares/auth'
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-    // Run the middleware
-    await runMiddleware(req, res, fn)
-      // Rest of the API logic
+const controller = (req:NextApiRequest, res:NextApiResponse)=>{
   if(req.method === 'GET'){
 
     res.status(200).json({ "name": req.method })
@@ -15,4 +9,14 @@ export default async function handler(
   else{
     res.status(405).json({"message":"only suport method get"})
   }
+}
+
+export default  function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+    // Run the middleware
+runMiddleware(req, res, controller)
+      // Rest of the API logic its in the callback controller
+
 }
