@@ -2,14 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import {runMiddleware} from '../../../midlewares/auth'
 
 const controller = (req:NextApiRequest, res:NextApiResponse)=>{
-  if(req.method === 'GET'){
 
-    res.status(200).json({ "name": req.method })
-  }
-  else{
-    res.status(405).json({"message":"only suport method get"})
-  }
-}
 
 export default  function handler(
   req: NextApiRequest,
