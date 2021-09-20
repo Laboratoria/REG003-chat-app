@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'nex
 import {authController} from '../../controller/auth'
 
 async function authRoute (req:NextApiRequest, res: NextApiResponse) {
@@ -6,6 +6,7 @@ async function authRoute (req:NextApiRequest, res: NextApiResponse) {
     authController(req, res)
   }
   else res.status(405).json({'message':'Method Not Allowed '})
+
 }
 
 export default authRoute
