@@ -13,7 +13,14 @@
     "db-down": "docker-compose down"
   },
   "dependencies": {
+    "@prisma/client": "^3.0.2",
+    "@types/bcrypt": "^5.0.0",
+    "@types/jsonwebtoken": "^8.5.5",
+    "antd": "^4.16.13",
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
+    "jsonwebtoken": "^8.5.1",
     "next": "11.1.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
