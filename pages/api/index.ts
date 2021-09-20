@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import pkg from '../../package.json'
 
-
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse
