@@ -10,7 +10,6 @@ const Login: NextPage = () => {
         console.log('Success:', values);
         postAuth({email:values.email, password:values.password})
       };
-    
       const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
       };
