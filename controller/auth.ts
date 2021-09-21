@@ -24,17 +24,18 @@ if( !bcrypt.compareSync(password, user.password)){
   return res.status(400).json({'message': 'Bad Request'})
 }
 jwt.sign(
-  {
-    uid: user.id,
-    email: user.email,
-  },
-  secret,
-  {
-    expiresIn: '8h',
-  },
-  (err, token) => {
-    if (err) console.error(err);
-    return res.status(200).json({ token });
-  },
-);
-}
+    {
+      uid: user.id,
+      email: user.email,
+    },
+    secret,
+    {
+      expiresIn: '8h',
+    },
+    (err, token) => {
+      if (err) console.error(err);
+      return res.status(200).json({ token });
+    },
+  );
+  }
+  

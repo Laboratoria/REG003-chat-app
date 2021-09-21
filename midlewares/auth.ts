@@ -8,12 +8,3 @@ export const  runMiddleware = (req:NextApiRequest, res: NextApiResponse, fn:any)
 }
     fn(req, res)
   }
-
-/* async function handler(req:NextApiRequest, res: NextApiResponse) {
-
-  // Run the middleware
-  await runMiddleware(req, res, fn)
-
-  // Rest of the API logic
-  res.json({ message: 'Hello Everyone!' })
-} */
