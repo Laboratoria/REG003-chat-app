@@ -7,6 +7,3 @@ export const postAuth = async (objValue:any) => fetch(`${url}/api/auth`,{
 
     ).then(response => response.json())
     .then(data => console.log(data));
-
-
-
