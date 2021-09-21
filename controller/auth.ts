@@ -11,14 +11,15 @@ export const authController = async (req:NextApiRequest, res:NextApiResponse)=>{
 await prisma.$connect();
 
   const {email, password} =req.body;
-
+  console.log('LINE5',email);
+  console.log('LINE6', password);
   if(!email || !password || !/\S+@\S+\.\S+/.test(email)){
     console.log('entre al 1')
     return res.status(400).json({'message': 'Bad Request'})
   }
   const user = await prisma.user.findUnique({ where: { email: email } });
 console.log(user)
-if(user ===null){
+if(user === null){
   return res.status(404).json({'message':'Not Found'})
 };
 /* user.password = bcrypt.hashSync(password, 10); */
