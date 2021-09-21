@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'nex
+import type { NextApiRequest, NextApiResponse } from 'next'
 import {authController} from '../../controller/auth'
 
 async function authRoute (req:NextApiRequest, res: NextApiResponse) {

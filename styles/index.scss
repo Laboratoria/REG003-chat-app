@@ -1,1 +1,13 @@
-@import url('global.scss');
+
+
+.principle_container{
+    width:370px;
+    display: flex;
+    margin: 10rem auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.container_login{
+    width: 100%;
+}
