@@ -8,7 +8,7 @@ const Login: NextPage = () => {
 
     const onFinish = (values: any) => {
         console.log('Success:', values);
-        postAuth(values)
+        postAuth({email:values.email, password:values.password})
       };
     
       const onFinishFailed = (errorInfo: any) => {
