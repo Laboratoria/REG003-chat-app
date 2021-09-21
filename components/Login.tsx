@@ -3,8 +3,10 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import { useState } from 'react';
 import { postAuth } from '../services/auth';
 
-const Login: NextPage = () => {
+// SHOW ERROR ON FAILED
+// ASSIGNED TO: VALENTINA
 
+const Login: NextPage = () => {
 
     const onFinish = (values: any) => {
         console.log('Success:', values);
@@ -13,7 +15,6 @@ const Login: NextPage = () => {
       const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
       };
-
 
     return (
         <Form
