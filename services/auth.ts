@@ -1,14 +1,10 @@
-let  url = "http://localhost:3000/api";
-
-export const postAuth = async (objValue:any) => {
-
-    const request = await fetch(`api/auth`,{
-        method:'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:JSON.stringify(objValue)
-    })
-
-    const data = await request.json()
-    return data
-
+let url = "http://localhost:3000";
+//TODO: REFACTOR TO AWAIT / HANDLE ERRORS
+//ASSIGN TO: VALEN
+export const postAuth = async (objValue: any) => fetch(`${url}/api/auth`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(objValue)
 }
+).then(response => response.json())
+    .then(data => console.log(data));

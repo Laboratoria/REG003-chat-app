@@ -1,3 +1,6 @@
+// TODO: REFACTOR, LEAVE ONLY SASS AND CONFIGURE GLOBAL STYLES (DEFINE COLORS/PALLETTE)
+// USE REM
+// ASSIGNED TO: MAICITA
 html,
 body {
   padding: 0;
@@ -10,8 +13,5 @@ body {
   box-sizing: border-box;
 }
 
-
-$primary_color : #E01010;
-$secondary_color : #838583;
-
-
+$primary_color: #e01010;
+$secondary_color: #838583;
