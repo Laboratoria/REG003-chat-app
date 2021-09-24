@@ -4,10 +4,8 @@ import Login from '../components/Login'
 
 const Home: NextPage = () => {
   return (
-    <div className='principle_container'>
+    <div className='container'>
           <Login />
-        
-      
     </div>
   )
 }

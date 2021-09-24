@@ -1,17 +1,32 @@
 // TODO: REFACTOR, LEAVE ONLY SASS AND CONFIGURE GLOBAL STYLES (DEFINE COLORS/PALLETTE)
 // USE REM
 // ASSIGNED TO: MAICITA
-html,
-body {
+//HACK NOMENCLATURA BEM
+$primary_color: #e01010;
+$secondary_color: #838583;
+* {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-* {
-  box-sizing: border-box;
+
+@mixin tablet {
+  @media only screen and (min-width: 768px) {
+    @content;
+  }
 }
 
-$primary_color: #e01010;
-$secondary_color: #838583;
+@mixin desktop {
+  @media only screen and (min-width: 992px) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media only screen and (min-width: 1200px) {
+    @content;
+  }
+}
