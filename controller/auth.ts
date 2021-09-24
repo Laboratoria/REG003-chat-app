@@ -30,7 +30,7 @@ export const authController = async (req: NextApiRequest, res: NextApiResponse) 
       message: 'Not Found'
     })
   };
-  //  user.password = bcrypt.hashSync(password, 10); 
+
   if (!bcrypt.compareSync(password, user.password)) {
     console.log('entre aqui')
     return res.status(400).json({

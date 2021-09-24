@@ -1,7 +1,5 @@
 let url = "http://localhost:3000";
-//TODO: REFACTOR TO AWAIT / HANDLE ERRORS
-//ASSIGN TO: VALEN
-export const postAuth = async (objValue: any) => fetch(`${url}/api/auth`, {
+export const postUser = async (objValue: any) => fetch(`${url}/api/user`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(objValue)
