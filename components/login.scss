@@ -1,0 +1,17 @@
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10rem auto;
+  width: 60vw;
+  @include tablet {
+    width: 60rem;
+  }
+  @include desktop {
+    width: 80rem;
+  }
+}
+.container_login{
+  width: 100%;
+}
