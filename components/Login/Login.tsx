@@ -1,15 +1,14 @@
 import type {NextPage} from 'next';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { useState } from 'react';
-import { postAuth } from '../services/auth';
+import { postAuth } from '../../services/auth';
 
-// SHOW ERROR ON FAILED
-// ASSIGNED TO: VALENTINA
+//TODO STYLES
+// TODO ERROR
 
 const Login: NextPage = () => {
 
     const onFinish = (values: any) => {
-        console.log('Success:', values);
         postAuth({email:values.email, password:values.password})
       };
       const onFinishFailed = (errorInfo: any) => {
@@ -38,10 +37,6 @@ const Login: NextPage = () => {
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
         <Input.Password />
-      </Form.Item>
-
-      <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
-        <Checkbox>Remember me</Checkbox>
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
