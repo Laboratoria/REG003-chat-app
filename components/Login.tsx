@@ -19,7 +19,6 @@ const Login: NextPage = () => {
     return (
         <Form
       name="basic"
-      
       initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
