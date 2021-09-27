@@ -21,8 +21,7 @@ export const authController = async (req: NextApiRequest, res: NextApiResponse) 
       message: 'Bad Request'  })
   }
   const user = await prisma.user.findUnique({ where: { email: email } });
-  
-  
+
   console.log(user)
   if (user === null) {
     return res.status(404).json({ 
