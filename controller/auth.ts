@@ -52,7 +52,7 @@ export const authController = async (req: NextApiRequest, res: NextApiResponse) 
       
       if (err) console.error(err);
       return res.status(200).json(
-        { 
+        {
         ok:true,
         token
         }

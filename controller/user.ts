@@ -17,7 +17,7 @@ const newUser = await prisma.user.create({ data : { email, password:passwordCryp
 const responseUser : CreateUserResponse= { ...newUser };
 console.log(newUser)
 delete responseUser.password;
-return res.status(200).json(responseUser)
+return res.status(200).json({ok:true ,responseUser})
 
   }catch (error) {
     if(error.code === 'P2002'){

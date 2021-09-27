@@ -7,5 +7,5 @@ export const postAuth = async (objValue: any) => fetch(`${url}/api/auth`, {
     body: JSON.stringify(objValue)
 }
 ).then(response => response.json())
-.then(data => console.log(data))
+.then(data => data)
 .catch(err=> console.error(err))
