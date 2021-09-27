@@ -17,7 +17,6 @@ export const authController = async (
     const { email, password } = req.body;
     console.log(email, password);
 
-<<<<<<< Updated upstream
     if (!email || !password || !isValidEmail(email)) {
       return res.status(400).json({
         ok: false,
@@ -71,12 +70,6 @@ export const authController = async (
       message: "server error",
 
     });
-=======
-  const {email, password} =req.body;
-  console.log('LINE5',email);
-  console.log('LINE6', password);
-  if(!email || !password || !/\S+@\S+\.\S+/.test(email)){
-    return res.status(400).json({'message': 'Bad Request'})
->>>>>>> Stashed changes
+  
   }
 };
