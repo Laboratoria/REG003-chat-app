@@ -1,14 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import prisma  from '../lib/prisma'
 import bcrypt from 'bcrypt';
-import Password from 'antd/lib/input/Password';
+import { isValidEmail, isWeakPassword } from '../utils/utils';
+
 
 type CreateUserResponse = { id: number; email: string; password?: string; username: string,profile_image: string  }
-//TODO format to email utils y password valid
+//TODO-DONE format to email utils y password valid
 export const createUser = async (req: NextApiRequest, res: NextApiResponse) =>{
   try{
     const { username, email, password } = req.body;
-if(!username || !email || !password){
+if(!username || !isValidEmail(email) || !isWeakPassword(password)){
   console.log(username, email, password)
   return res.status(400).json({ok:false, message:'bad request'})
 }
@@ -17,7 +18,7 @@ const newUser = await prisma.user.create({ data : { email, password:passwordCryp
 const responseUser : CreateUserResponse= { ...newUser };
 console.log(newUser)
 delete responseUser.password;
-return res.status(200).json(responseUser)
+return res.json(responseUser)
 
   }catch (error) {
     if(error.code === 'P2002'){

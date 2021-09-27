@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { secret } from "../config";
 import { isValidEmail } from "../utils/utils";
-//TODO :CONFIGURAR SECRET MEJOR Y MODIFICAR TIEMPO DEL TOKEN AL PASAR A PROD
+//TODO-DONE :CONFIGURAR SECRET MEJOR Y MODIFICAR TIEMPO DEL TOKEN AL PASAR A PROD
 // ASSIGNED TO: DENISSITA
 
 console.log(secret);
