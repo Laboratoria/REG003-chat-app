@@ -2,12 +2,14 @@ import type { NextPage } from "next";
 import { Form, Input, Button } from "antd";
 import { useState } from "react";
 import { postAuth } from "../../services/auth";
+import { useRouter } from "next/router";
 
 //TODO STYLES
 // TODO ERROR
 
 const Login: NextPage<any> = ({ setIsLogin }) => {
   const [error, setError] = useState(false);
+  const router = useRouter();
 
   const onFinish = async (values: any) => {
     const token: any = await postAuth(values);
@@ -17,6 +19,7 @@ const Login: NextPage<any> = ({ setIsLogin }) => {
     } else {
       setError(!token.ok);
       localStorage.setItem("token", token.token);
+      router.push("/chat");
       //navegacion a otro lado
     }
   };
