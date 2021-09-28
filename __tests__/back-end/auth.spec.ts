@@ -10,17 +10,55 @@ const mockResponse: any = () => {
   return res;
 };
 // TODO: CREATE USER IN MOCK DB
-test('should ', async() => {
-
-  const req: any ={
-    body:{
-  email:'email@gmail.com',
-  password:'1234567'}
-  }
-const res =mockResponse()
-  const user= {id:1, email:'email@gmail.com', username:'email', password:'$2b$10$phIT8PFGPPEfA4b3/v11wuMDM8.pfmynhzJlFIDUObl3FK0CTcdgq', profile_image:''}
-  prismaMock.user.findUnique.mockResolvedValue(user)
-  const token = await authController(req, res)
-  expect(res.json).toHaveBeenCalled();
-  expect(res.status).toHaveBeenCalledWith(200);
+describe('Auth Controller', () =>{
+  it('should be return 200 ', async() => {
+    const req: any ={
+      body:{
+    email:'email@gmail.com',
+    password:'1234567'}
+    }
+  const res =mockResponse()
+    const user= {id:1, email:'email@gmail.com', username:'email', password:'$2b$10$phIT8PFGPPEfA4b3/v11wuMDM8.pfmynhzJlFIDUObl3FK0CTcdgq', profile_image:''}
+    prismaMock.user.findUnique.mockResolvedValue(user)
+    const token = await authController(req, res)
+    expect(res.json).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(200);
+  })
+  it('should be return 400 password wrong ', async() => {
+    const req: any ={
+      body:{
+    email:'email@gmail.com',
+    password:'1234567'}
+    }
+  const res =mockResponse()
+    const user= {id:1, email:'email@gmail.com', username:'email', password:'$2b$10$phIT8PFGPPEfA4b3/v11wuMDM8.pfmynhzJlFIDUObl', profile_image:''}
+    prismaMock.user.findUnique.mockResolvedValue(user)
+    const token = await authController(req, res)
+    expect(res.json).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(400);
+  })
+  it('should be return 500 serverError ', async() => {
+    const req: any ={
+      body:{
+        email:'email@gmail.com',
+        password:'1234567'}
+    }
+  const res =mockResponse()
+    const error= {message:'ERROR'}
+    prismaMock.user.findUnique.mockRejectedValue(error)
+    const token = await authController(req, res)
+    expect(res.json).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(500);
+  })
+  it('should be return 400 no body', async() => {
+    const req: any ={
+      body:{}
+    }
+  const res =mockResponse()
+    const user= {id:1, email:'email@gmail.com', username:'email', password:'$2b$10$phIT8PFGPPEfA4b3/v11wuMDM8.pfmynhzJlFIDUObl', profile_image:''}
+    prismaMock.user.findUnique.mockResolvedValue(user)
+    const token = await authController(req, res)
+    expect(res.json).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(400);
+  })
 })
