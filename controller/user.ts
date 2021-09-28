@@ -26,7 +26,7 @@ export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     console.log(newUser);
     delete responseUser.password;
     return res.json(responseUser);
-  } catch (error) {
+  } catch (error: any) {
     if (error.code === "P2002") {
       console.log("error en prisma");
       return res.status(400).json({
@@ -40,3 +40,31 @@ export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 };
+
+export const updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    const { id } = req.query;
+    let { username, email, password } = req.body;
+    if (!username && !email && !password) {
+      return res.status(400).json({ ok: false, message: "Bad Request" });
+    } else {
+      if (password) {
+        password = await bcrypt.hash(password, 10);
+      }
+      const updatedUser = await prisma.user.update({
+        where: { id: Number(id) },
+        data: {
+          email,
+          password,
+          username
+        }
+      });
+      return res.json(updatedUser);
+    }
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      message: "server error",
+    });
+  }
+}
