@@ -6,14 +6,10 @@ import {secret} from '../config'
 //TODO :CONFIGURAR SECRET MEJOR Y MODIFICAR TIEMPO DEL TOKEN AL PASAR A PROD
 // ASSIGNED TO: DENISSITA
 
-console.log(secret);
-
-
 export const authController = async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     const { email, password } = req.body;
-  console.log(email, password);
 
   if (!email || !password || !/\S+@\S+\.\S+/.test(email)) {
     console.log('entre al 1')
@@ -22,9 +18,8 @@ export const authController = async (req: NextApiRequest, res: NextApiResponse) 
   }
   const user = await prisma.user.findUnique({ where: { email: email } });
 
-  console.log(user)
   if (user === null) {
-    return res.status(404).json({ 
+    return res.status(404).json({
       ok: false,
       message: 'Not Found'
     })
@@ -47,8 +42,6 @@ export const authController = async (req: NextApiRequest, res: NextApiResponse) 
       expiresIn: '8h',
     },
     (err, token) => {
-      console.log(token);
-      
       if (err) console.error(err);
       return res.status(200).json(
         {
@@ -60,13 +53,11 @@ export const authController = async (req: NextApiRequest, res: NextApiResponse) 
   );
   } catch (error) {
     console.log(error);
-    
     return res.status(500).json({
       ok:false,
       content: "server error"
     })
   }
-  
-  
+
 }
 
