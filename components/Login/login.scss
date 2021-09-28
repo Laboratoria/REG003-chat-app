@@ -1,9 +1,9 @@
-
 .container {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 10rem auto;
+  margin: 5rem auto;
   width: 60vw;
   @include tablet {
     width: 60rem;
@@ -12,6 +12,6 @@
     width: 80rem;
   }
 }
-.container_login{
+.container_login {
   width: 100%;
 }
