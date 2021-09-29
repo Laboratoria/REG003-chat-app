@@ -60,8 +60,4 @@ export const authController = async (req: NextApiRequest, res: NextApiResponse) 
     })
   }
 
-}
-    });
-  
-  }
 };
