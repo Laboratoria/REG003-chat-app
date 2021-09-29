@@ -3,7 +3,7 @@ import prisma from "../lib/prisma";
 import bcrypt from "bcrypt";
 import { isValidEmail, isWeakPassword } from "../utils/utils";
 
-type CreateUserResponse = {
+type User = {
   id: number;
   email: string;
   password?: string;
@@ -22,7 +22,7 @@ export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     const newUser = await prisma.user.create({
       data: { email, password: passwordCrypt, username },
     });
-    const responseUser: CreateUserResponse = { ...newUser };
+    const responseUser: User = { ...newUser };
     console.log(newUser);
     delete responseUser.password;
     return res.json(responseUser);
@@ -59,9 +59,18 @@ export const updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
           username
         }
       });
-      return res.json(updatedUser);
+      const responseUser: User = { ...updatedUser };
+      delete responseUser.password;
+      return res.json(responseUser);
     }
-  } catch (error) {
+  } catch (error: any) {
+    console.log(error);
+    if (error.code === "P2025") {
+      return res.status(404).json({
+        ok: false,
+        message: error.meta.cause
+      });
+    }
     return res.status(500).json({
       ok: false,
       message: "server error",
