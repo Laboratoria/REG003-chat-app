@@ -9,7 +9,7 @@ const Home: NextPage<any> = () => {
 
   return (
     <div className='container'>
-       { isLogin ? <Login setIsLogin={setIsLogin}></Login> : <Register setIsLogin={setIsLogin}></Register>}
+      { isLogin ? <Login setIsLogin={setIsLogin}></Login> : <Register setIsLogin={setIsLogin}></Register>}
     </div>
   )
 }
