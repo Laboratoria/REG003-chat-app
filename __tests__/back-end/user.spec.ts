@@ -1,15 +1,16 @@
 import { prismaMock } from "../../singleton";
+import { deleteUser } from '../../controller/user';
 import { updateUser } from "../../controller/user";
 
 const mockResponse: any = () => {
-    const res: any = {};
+    const res:any = {};
     res.status = jest.fn().mockReturnValue(res);
     res.links = jest.fn().mockReturnValue(res);
     res.json = jest.fn((body) => body);
     return res;
 };
 
-describe("User Controller", () => {
+describe("Update user", () => {
     test('should return 200', async () => {
         const req: any = {
             query: {
@@ -35,12 +36,6 @@ describe("User Controller", () => {
         await expect(updateUser(req, res)).resolves.toEqual(
             desiredResponse)
     })
-    // const response = await updateUser(req, res)
-    // expect(res.json).toHaveBeenCalled();
-    // expect(res.status).toBe(200);
-    // expect(res.status).toBe(200)
-    // expect(res.json).toMatchObject(desiredResponse)
-
 })
 test('should return 404, user does not exist', async () => {
     const req: any = {
@@ -54,25 +49,61 @@ test('should return 404, user does not exist', async () => {
         }
     }
     const res = mockResponse()
-    const user = { id: 3244, email: 'email@gmail.com', username: 'email', password: '$2b$10$phIT8PFGPPEfA4b3/v11wuMDM8.pfmynhzJlFIDUObl3FK0CTcdgq', profile_image: '' }
-    prismaMock.user.update.mockResolvedValue(user);
-    // const response =
+    const user = {code: "P2025", meta:{cause:'error'}}
+    //@ts-ignore
+    prismaMock.user.update.mockRejectedValue(user);
     await updateUser(req, res);
-    expect(res.status).toHaveBeenCalledWith(404)
-    console.log(res)
-    // expect(res.status).toBe(400);
-    // expect(res.status).toBe(404)
-    // expect(res.ok).toBeFalsy();
-})
+    expect(res.status).toHaveBeenCalledWith(404);
 test('should be return 400 no body', async () => {
     const req: any = {
+        query:'1',
         body: {}
     }
     const res = mockResponse()
-    const user = { id: 1, email: 'email@gmail.com', username: 'email', password: '$2b$10$phIT8PFGPPEfA4b3/v11wuMDM8.pfmynhzJlFIDUObl', profile_image: '' }
-    prismaMock.user.findUnique.mockResolvedValue(user)
-    const response = await updateUser(req, res)
+    await updateUser(req, res)
     expect(res.json).toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(400);
 })
+})
 
+
+describe('Delete user', ()=>{
+it('ok', async()=>{
+    const req:any ={
+    query:{
+        id:'1',
+    }}
+    const res =mockResponse()
+    const user ={
+    id:1,
+    email:'email@gmail.com',
+    username:'email',
+    password:'$2b$10$phIT8PFGPPEfA4b3/v11wuMDM8.pfmynhzJlFIDUObl3FK0CTcdgq',
+    profile_image:''}
+    prismaMock.user.delete.mockResolvedValue(user)
+    await deleteUser(req,res)
+    expect(res.json).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(200);
+})
+it('400', async ()=>{
+    const req:any ={
+    query:{
+    }}
+    const res =mockResponse()
+    await deleteUser(req,res)
+    expect(res.json).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(400);
+})
+it('500', async()=>{
+    const req:any ={
+    query:{
+        id:'1',
+    }}
+    const res =mockResponse()
+    const error = {message:'ERROR'}
+    prismaMock.user.delete.mockRejectedValue(error)
+    await deleteUser(req,res)
+    expect(res.json).toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(500);
+})
+})

@@ -60,7 +60,7 @@ describe('Auth Controller', () => {
     const res = mockResponse()
     const user = { id: 1, email: 'email@gmail.com', username: 'email', password: '$2b$10$phIT8PFGPPEfA4b3/v11wuMDM8.pfmynhzJlFIDUObl', profile_image: '' }
     prismaMock.user.findUnique.mockResolvedValue(user)
-    const token = await authController(req, res)
+    await authController(req, res)
     expect(res.json).toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(400);
   })
