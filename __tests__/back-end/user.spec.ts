@@ -1,6 +1,6 @@
 import { prismaMock } from "../../singleton";
-import { deleteUser } from '../../controller/user';
-import { updateUser } from "../../controller/user";
+import { deleteUser, updateUser, createUser } from '../../controller/user';
+
 
 const mockResponse: any = () => {
     const res:any = {};
@@ -11,7 +11,7 @@ const mockResponse: any = () => {
 };
 
 describe("Update user", () => {
-    test('should return 200', async () => {
+    it('should return 200', async () => {
         const req: any = {
             query: {
                 id: 1
@@ -36,8 +36,7 @@ describe("Update user", () => {
         await expect(updateUser(req, res)).resolves.toEqual(
             desiredResponse)
     })
-})
-test('should return 404, user does not exist', async () => {
+    it('should return 404, user does not exist', async () => {
     const req: any = {
         query: {
             id: '6997'
@@ -54,7 +53,8 @@ test('should return 404, user does not exist', async () => {
     prismaMock.user.update.mockRejectedValue(user);
     await updateUser(req, res);
     expect(res.status).toHaveBeenCalledWith(404);
-test('should be return 400 no body', async () => {
+})
+    it('should be return 400 no body', async () => {
     const req: any = {
         query:'1',
         body: {}
@@ -65,6 +65,7 @@ test('should be return 400 no body', async () => {
     expect(res.status).toHaveBeenCalledWith(400);
 })
 })
+
 
 
 describe('Delete user', ()=>{
@@ -106,4 +107,64 @@ it('500', async()=>{
     expect(res.json).toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(500);
 })
+})
+describe('Create User', ()=>{
+    it('ok', async ()=>{
+        const user ={
+            id:1,
+            email:'email@gmail.com',
+            username:'email',
+            password:'$2b$10$phIT8PFGPPEfA4b3/v11wuMDM8.pfmynhzJlFIDUObl3FK0CTcdgq',
+            profile_image:''}
+        const req:any ={
+            body:{
+            email:'email@gmail.com',
+            username:'email',
+            password:'123456789'
+        }}
+            const res =mockResponse()
+            prismaMock.user.create.mockResolvedValue(user)
+            await createUser(req,res)
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.json).toHaveBeenCalled();
+    })
+    it('400 no body', async ()=>{
+        const req:any ={
+            body:{
+        }}
+            const res =mockResponse()
+            await createUser(req,res)
+            expect(res.status).toHaveBeenCalledWith(400);
+            expect(res.json).toHaveBeenCalled();
+    })
+    it('should return 400 repeat email, ', async () => {
+        const req: any = {
+            body: {
+                username: 'Pepita Pérez',
+                password: 'testpassword',
+                email: 'hello@prisma.io',
+            }
+        }
+        const res = mockResponse()
+        const user = {code: "P2002", meta:{cause:'error'}}
+        prismaMock.user.create.mockRejectedValue(user);
+        await createUser(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalled();
+    })
+    it('should return 400 repeat email, ', async () => {
+        const req: any = {
+            body: {
+                username: 'Pepita Pérez',
+                password: 'testpassword',
+                email: 'hello@prisma.io',
+            }
+        }
+        const res = mockResponse()
+        const user = {}
+        prismaMock.user.create.mockRejectedValue(user);
+        await createUser(req, res);
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.json).toHaveBeenCalled();
+    })
 })
