@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { createUser, getAllUser } from '../../../controller/user'
+import { runMiddleware } from '../../../middlewares/auth'
 
 export default function user(
   req: NextApiRequest,
@@ -10,6 +11,7 @@ export default function user(
 }else if (req.method === 'GET'){
   getAllUser(req, res)
 }
+
 else{
   console.log('hola mal todo')
 }
@@ -17,7 +19,7 @@ else{
 
 
 /*EXAMPLE USAGE MIDDLEWARE
-import { runMiddleware } from '../../../middlewares/auth'
+
 
 const controller = (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {

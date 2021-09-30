@@ -2,6 +2,8 @@
 // USE REM
 // ASSIGNED TO: MAICITA
 //HACK NOMENCLATURA BEM
+
+@import url("https://fonts.googleapis.com/css2?family=Poiret+One&family=Poppins:wght@400;800&display=swap");
 // -- COLORS PALETTE -- //
 $color1: #d7dcec;
 $color2: #9ea4b9;
@@ -11,12 +13,30 @@ $color5: #6fa2b0;
 $color6: #887370;
 $color7: #ed9eaa;
 
+$poppins: "Poppins", sans-serif;
+$poiret: "Poiret One", cursive;
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  // font-family: $poiret;
+}
+
+body,
+html {
+  background-color: $color2;
+  // width: 100vw;
+}
+
+h1,
+h2 {
+  font-size: $poppins;
+}
+@mixin mobile {
+  @media only screen and (min-width: 568px) {
+    @content;
+  }
 }
 
 @mixin tablet {
@@ -35,4 +55,27 @@ $color7: #ed9eaa;
   @media only screen and (min-width: 1200px) {
     @content;
   }
+}
+
+@mixin titles($color, $font-weight, $font-size) {
+  // letter-spacing: 0.5rem;
+  color: $color;
+  font-weight: $font-weight;
+  font-size: $font-size;
+}
+
+.title_pink_bold {
+  @include titles($color7, bold, 3rem);
+}
+
+.title_pink_medium {
+  @include titles($color7, 400, 2rem);
+}
+
+.title_pink_thin {
+  @include titles($color7, light, 2rem);
+}
+
+.title_violet_thin {
+  @include titles($color3, light, 2rem);
 }

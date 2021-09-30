@@ -33,59 +33,63 @@ const Login: NextPage<any> = ({ setIsLogin }) => {
   };
 
   return (
-    <Form
-      name="basic"
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-    >
-      <Form.Item
-        label="Email"
-        name="email"
-        rules={[
-          {
-            required: true,
-            message: "Please input your Email!",
-            pattern: /\S+@\S+\.\S+/,
-            whitespace: true,
-          },
-        ]}
+    <>
+      <h3 className="title_violet_thin">Welcome to</h3>
+      <h1 className="title_pink_bold">Chat-app</h1>
+      <Form
+        name="basic"
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
       >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Password"
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: "Please input your password, min 6 and max 20!",
-            whitespace: true,
-            min: 6,
-            max: 20,
-          },
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
-      {error ? (
-        <Form.Item>
-          <p>User or password incorret</p>
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[
+            {
+              required: true,
+              message: "Please input your Email!",
+              pattern: /\S+@\S+\.\S+/,
+              whitespace: true,
+            },
+          ]}
+        >
+          <Input />
         </Form.Item>
-      ) : null}
 
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "Please input your password, min 6 and max 20!",
+              whitespace: true,
+              min: 6,
+              max: 20,
+            },
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
+        {error ? (
+          <Form.Item>
+            <p>User or password incorret</p>
+          </Form.Item>
+        ) : null}
 
-      <Form.Item>
-        <p>¿Do not have an account? </p>
-        <a onClick={toRegister}> Create Account </a>
-      </Form.Item>
-    </Form>
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+
+        <Form.Item>
+          <p>¿Do not have an account? </p>
+          <a onClick={toRegister}> Create Account </a>
+        </Form.Item>
+      </Form>
+    </>
   );
 };
 
