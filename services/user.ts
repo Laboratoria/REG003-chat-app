@@ -6,4 +6,4 @@ export const postUser = async (objValue: any) => fetch(`${url}/api/user`, {
 }
 ).then(response => response.json())
 .then(data => data)
-.catch(err=> console.error(err))
+.catch(err=> 'error')

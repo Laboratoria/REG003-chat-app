@@ -26,7 +26,7 @@ export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     });
     const responseUser: User = { ...newUser };
     delete responseUser.password;
-    return res.json(responseUser);
+    return res.status(200).json({ok:true, user:responseUser});
   } catch (error: any) {
     if (error.code === "P2002") {
       return res.status(400).json({
