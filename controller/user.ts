@@ -11,13 +11,12 @@ type User = {
   profile_image: string;
 };
 //TODO-DONE format to email utils y password valid
-type CreateUserResponse = { id: number; email: string; password?: string; username: string, profile_image: string }
 //TODO format to email utils y password valid
 
 export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { username, email, password } = req.body;
-    if (!username || !isValidEmail(email) || !isWeakPassword(password)) {
+    if (!username || !isValidEmail(email) || isWeakPassword(password)) {
       return res.status(400).json({ ok: false, message: "bad request" });
     }
     const passwordCrypt = bcrypt.hashSync(password, 10);
@@ -26,7 +25,7 @@ export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     });
     const responseUser: User = { ...newUser };
     delete responseUser.password;
-    return res.json(responseUser);
+    return res.status(200).json({ok:true, user:responseUser});
   } catch (error: any) {
     if (error.code === "P2002") {
       return res.status(400).json({
