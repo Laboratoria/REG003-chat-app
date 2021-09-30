@@ -23,16 +23,23 @@ $poiret: "Poiret One", cursive;
   // font-family: $poiret;
 }
 
-body,
-html {
-  background-color: $color2;
-  // width: 100vw;
-}
+// body,
+// html {
+//   background-color: $color2;
+//   // width: 100vw;
+// }
 
 h1,
-h2 {
+h2,
+p {
   font-size: $poppins;
+  margin: 0;
 }
+
+h3 {
+  margin: 0;
+}
+
 @mixin mobile {
   @media only screen and (min-width: 568px) {
     @content;
@@ -76,6 +83,18 @@ h2 {
   @include titles($color7, light, 2rem);
 }
 
+.text_pink_thin {
+  @include titles($color7, light, 1.3rem);
+}
+
 .title_violet_thin {
-  @include titles($color3, light, 2rem);
+  @include titles($color3, 300, 2rem);
+}
+
+.text_violet_thin {
+  @include titles($color3, 300, 1.2rem);
+}
+
+.title_white_thin {
+  @include titles($color1, bold, 3rem);
 }
