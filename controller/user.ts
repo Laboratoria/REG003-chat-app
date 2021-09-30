@@ -11,7 +11,6 @@ type User = {
   profile_image: string;
 };
 //TODO-DONE format to email utils y password valid
-type CreateUserResponse = { id: number; email: string; password?: string; username: string, profile_image: string }
 //TODO format to email utils y password valid
 
 export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
