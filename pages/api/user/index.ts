@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { createUser } from '../../../controller/user'
+import { createUser, getAllUser } from '../../../controller/user'
 import { runMiddleware } from '../../../middlewares/auth'
 
 export default function user(
@@ -8,6 +8,8 @@ export default function user(
 ) {
   if(req.method === 'POST'){
     createUser(req, res)
+}else if (req.method === 'GET'){
+  getAllUser(req, res)
 }
 
 else{

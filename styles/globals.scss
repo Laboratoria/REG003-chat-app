@@ -25,12 +25,18 @@ $poiret: "Poiret One", cursive;
 
 body,
 html {
-  background-color: $color4;
+  background-color: $color2;
+  // width: 100vw;
 }
 
 h1,
 h2 {
   font-size: $poppins;
+}
+@mixin mobile {
+  @media only screen and (min-width: 568px) {
+    @content;
+  }
 }
 
 @mixin tablet {
