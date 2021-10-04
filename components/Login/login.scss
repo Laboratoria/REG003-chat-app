@@ -13,16 +13,10 @@
   // }
 }
 
-@mixin box($direction) {
-  display: flex;
-  flex-direction: $direction;
-  align-items: center;
-  justify-content: center;
-}
 
 .container__login {
   background-color: $color4;
-  @include box(column);
+  @include box(column, center,center);
   //margin: 5rem auto;
   width: 100vw;
   height: 100vh;
@@ -84,4 +78,5 @@
     margin-bottom: 0;
     width: 80vw;
   }
+  
 }
