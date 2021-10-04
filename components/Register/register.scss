@@ -1,29 +1,94 @@
-@mixin box($direction) {
-  display: flex;
-  flex-direction: $direction;
-  align-items: center;
-  justify-content: center;
+@function caculateRem($size) {
+  $remSize: $size / 16px;
+  @return $remSize * 1rem;
 }
 
-.container__register {
+.register {
+    padding: 0.5rem;
   background-color: $color4;
-  @include box(column);
+  @include box(column, center, center);
   //margin: 5rem auto;
   width: 100vw;
   height: 100vh;
   text-align: center;
-  gap: 2rem;
+  gap: 1rem;
 
-  .ant-col-offset-8 {
-    margin-left: 0% !important;
+  &__header {
+    @include box(column, flex-start, center);
+    padding-right: 6rem;
+    h2 {
+      font-family: $poiret;
+      @include font-size(30px);
+      color: $color3;
+    }
+    h3 {
+      font-family: $poppins;
+      @include font-size(40px);
+      font-weight: 800;
+      color: $color7;
+    }
   }
-  // @include mobile {
-  //     width: 26rem;
-  // }
-  // @include tablet {
-  //     width: 60rem;
-  // }
-  // @include desktop {
-  //     width: 80rem;
-  // }
+  p {
+    font-family: $poppins;
+    @include font-size(25px);
+    font-weight: 500;
+    color: $color2;
+  }
+  &__body {
+    .ant-col-offset-8 {
+      margin-left: 0% !important;
+    }
+    .ant-form-item-required {
+      font-family: $poiret;
+      @include font-size(18px);
+      font-weight: 500;
+      color: $color2;
+      &::before {
+        color: $color2 !important;
+      }
+    }
+    .ant-col {
+      padding: 0;
+    }
+    .ant-input {
+      background: $color1;
+      height: 2.9rem;
+      border-radius: 0.6rem;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .ant-input-affix-wrapper {
+      border-radius: 0.6rem;
+      padding: 0px 11px;
+      background: $color1;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+    .ant-form-item-with-help {
+        margin-bottom: 0;
+        width: 80vw;
+      }
+    .ant-form-item-explain-error{
+        @include titles1($poppins, 100, 14px,$color7);
+      }
+    .ant-btn {
+      width: caculateRem(209px);
+      height: caculateRem(54px);
+      border-radius: caculateRem(25px);
+      border: none;
+      background: $color6;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+      span {
+        @include titles1($poppins, 500, 20px, #fff);
+      }
+    }
+    .paragraph{
+        @include titles1($poiret, 100, 18px, $color3);
+    }
+    .paragraph__pink{
+        @include titles1($poppins, 100, 18px, $color7);
+    }
+
+
+  }
 }
