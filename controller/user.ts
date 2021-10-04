@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../lib/prisma";
 import bcrypt from "bcrypt";
-import { isValidEmail, isWeakPassword } from "../utils/utils";
+import { isValidEmail, isWeakPassword, validateParams } from "../utils/utils";
 
 type User = {
   id: number;
@@ -39,6 +39,74 @@ export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 };
+
+//TODO-DONE: CREATE CONTROLLER GET USER
+
+export const getAllUser = async (req:NextApiRequest, res:NextApiResponse) => {
+
+  //TODO: IMPROVE QUERY GETALLUSER
+  try {
+
+    const user = await prisma.user.findMany({
+      select: {password:false, id:true, email:true, username:true, profile_image:true}
+    })
+    return res.json({
+      ok: true,
+      content: user,
+      message: null
+    })
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      content: null,
+      message: "server error"
+    })
+  }
+}
+
+//TODO CONTROLLER getUserByIdOrEmail 
+
+export const getUserByIdIOrEmail = async(req:NextApiRequest, res:NextApiResponse) => {
+
+  try {
+    const {id} = req.query;
+    const data = validateParams(id)
+    if(!data){
+      return res.status(400).json({
+        ok:false,
+        content:null,
+        message: "Bad request"
+      })
+    } 
+
+    const findParams = await prisma.user.findUnique({
+      where:data,
+      select: {password:false, id:true, email:true, username:true, profile_image:true}
+
+    })
+
+    if(!findParams ){
+      return res.status(400).json({
+        ok:false,
+        content:null,
+        message: "Bad request"
+      })
+    } 
+    
+    res.json({
+      ok:true,
+      content: findParams
+    })
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      content: null,
+      message: "server error"
+    })
+  }
+
+}
+
 
 export const updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
