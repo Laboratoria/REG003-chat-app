@@ -33,10 +33,10 @@ export const runMiddleware = (req: Next.Custom, res: NextApiResponse, next: any)
     }
   });
 
-  next(req, res, next)
+  return isSameUser(req, res, next)
 }
 
-const isSameUser = async (req: Next.Custom, res: NextApiResponse, next: any) => {
+export const isSameUser = async (req: Next.Custom, res: NextApiResponse, next: any) => {
   const { id } = req.query
   const user = await prisma.user.findUnique({ where: { id: Number(id) } });
   if (!user) {

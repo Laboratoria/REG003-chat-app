@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { getUserByIdIOrEmail, updateUser, deleteUser } from '../../../controller/user'
 import { runMiddleware } from '../../../middlewares/auth'
 
+
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -10,10 +11,10 @@ export default function handler(
     return getUserByIdIOrEmail(req, res)
   }
   if (req.method === 'PUT') {
-    return updateUser(req, res)
+    return runMiddleware(req, res, updateUser)
   }
   if (req.method === 'DELETE') {
     return runMiddleware(req, res, deleteUser)
   }
-  res.status(200).json({ name: req.query.id, })
+  else res.status(405).json({ ok: 'false', message: 'Method Not Allowed ' })
 }
