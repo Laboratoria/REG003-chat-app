@@ -3,24 +3,25 @@ import { getUserByIdIOrEmail, updateUser, deleteUser } from '../../../controller
 import { runMiddleware } from '../../../middlewares/auth'
 
 
-type Data = {
-  name?: any
-}
-
-
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
   if (req.method === 'GET') {
     return getUserByIdIOrEmail(req, res)
   }
   if (req.method === 'PUT') {
-    updateUser(req, res)
+    return runMiddleware(req, res, updateUser)
   }
+<<<<<<< Updated upstream
   // res.status(200).json({ "name": req.query.id })
   if(req.method === 'DELETE') {
+=======
+
+    if(req.method === 'DELETE') {
+>>>>>>> Stashed changes
     return runMiddleware(req, res, deleteUser)
   }
-  res.status(200).json({ "name":req.query.id,})
+  else res.status(405).json({ok: 'false', message:'Method Not Allowed '})
+
 }

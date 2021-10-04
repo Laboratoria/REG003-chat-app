@@ -32,16 +32,16 @@ export const  runMiddleware = (req: Next.Custom, res: NextApiResponse, next:any)
       return res.status(500).json({ok: false, message:'Server Error'});}
   });
 
-    next(req, res, next)
+    return isSameUser(req, res, next)
   }
 
-const isSameUser = async(req:Next.Custom, res: NextApiResponse, next:any)=>{
+export const isSameUser = async(req:Next.Custom, res: NextApiResponse, next:any)=>{
     const { id } = req.query
     const user = await prisma.user.findUnique({ where: { id:Number(id) } });
     if(!user){
       return res.status(404).json({'ok':false, 'message':'Bad Request'})
     }
-    if(user.email ===req.authentication?.email ){
+    if(user.email === req.authentication?.email ){
     return next(req, res)
     }
     else{
