@@ -635,7 +635,7 @@ Asegúrate de seguir los siguientes pasos:
    salida similar a la siguiente:
 
    ```sh
-   $ npm run db:up
+   $ npm run db-up
 
    > chat-app@1.0.0 db:up
    > docker-compose up -d
