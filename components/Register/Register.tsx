@@ -28,13 +28,13 @@ const Register: NextPage<any> = ({ setIsLogin }) => {
 
   return (
     <>
-      <section className="container__register">
-        <div>
+      <section className="register">
+        <div className="register__header">
           <h2>Welcome to</h2>
-          <h2>Chat-app</h2>
+          <h3>Chat-app</h3>
         </div>
-        <div>
-          <p>Create account</p>
+        <p>Create account</p>
+        <div className="register__body">
           <Form
             name="basic"
             onFinish={onFinish}
@@ -42,7 +42,7 @@ const Register: NextPage<any> = ({ setIsLogin }) => {
             autoComplete="off"
           >
             <Form.Item
-              label="Name"
+              label="Username"
               name="username"
               rules={[
                 {
@@ -54,9 +54,8 @@ const Register: NextPage<any> = ({ setIsLogin }) => {
             >
               <Input />
             </Form.Item>
-
             <Form.Item
-              label="Email"
+              label="E-mail"
               name="email"
               rules={[
                 {
@@ -88,18 +87,19 @@ const Register: NextPage<any> = ({ setIsLogin }) => {
 
             {error ? (
               <Form.Item>
-                <p>User or password incorret</p>
+                <p >User or password incorret</p>
               </Form.Item>
             ) : null}
+            <br />
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit">
-                Submit
+                Register
               </Button>
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <p>¿Have an account? </p>
-              <a onClick={toLogin}> Log In </a>
+              <p className="paragraph">¿Have an account? </p>
+              <a onClick={toLogin} className="paragraph__pink"> Log In </a>
             </Form.Item>
           </Form>
         </div>
