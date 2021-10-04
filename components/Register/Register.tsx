@@ -2,15 +2,33 @@ import type { NextPage } from "next";
 import { postUser } from "../../services/user";
 import { Form, Input, Button } from "antd";
 import { useState } from "react";
+import React from "react";
 //TODO STYLES
 // DONE ERROR
-const Register: NextPage<any> = ({ setIsLogin }) => {
-  const [error, setError] = useState(false);
+interface Props {
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-  const onFinish = async (values: any) => {
-    const user: any = await postUser(values);
-    console.log(user.ok);
+interface onFinishProps {
+  email: string;
+  password: string;
+  username: string;
+}
+
+interface userResponse {
+  ok: boolean;
+  message: string;
+}
+
+const Register: NextPage<Props> = ({ setIsLogin }) => {
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const onFinish = async (values: onFinishProps) => {
+    const user: userResponse = await postUser(values);
+    console.log("USER", user);
     if (!user.ok) {
+      setErrorMessage(user.message);
       return setError(!user.ok);
     } else {
       setError(!user.ok);
@@ -23,7 +41,7 @@ const Register: NextPage<any> = ({ setIsLogin }) => {
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:");
+    console.log("Failed:", errorInfo);
   };
 
   return (
@@ -87,8 +105,8 @@ const Register: NextPage<any> = ({ setIsLogin }) => {
             </Form.Item>
 
             {error ? (
-              <Form.Item>
-                <p>User or password incorret</p>
+              <Form.Item style={{ color: "#ff4d4f" }}>
+                <p>{errorMessage}</p>
               </Form.Item>
             ) : null}
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

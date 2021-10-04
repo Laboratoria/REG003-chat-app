@@ -6,15 +6,14 @@ export default function user(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if(req.method === 'POST'){
+  if (req.method === 'POST') {
     createUser(req, res)
-}else if (req.method === 'GET'){
-  getAllUser(req, res)
-}
-
-else{
-  console.log('hola mal todo')
-}
+  } else if (req.method === 'GET') {
+    getAllUser(req, res)
+  }
+  else {
+    console.log('hola mal todo')
+  }
 }
 
 

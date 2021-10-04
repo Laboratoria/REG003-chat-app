@@ -7,13 +7,26 @@ import { useRouter } from "next/router";
 //TODO STYLES
 // TODO ERROR
 
-const Login: NextPage<any> = ({ setIsLogin }) => {
+interface Props {
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface onFinishProps {
+  email: string;
+  password: string;
+}
+
+interface Token {
+  ok: boolean;
+  token: string;
+}
+
+const Login: NextPage<Props> = ({ setIsLogin }) => {
   const [error, setError] = useState(false);
   const router = useRouter();
 
-  const onFinish = async (values: any) => {
-    const token: any = await postAuth(values);
-    console.log(token.ok);
+  const onFinish = async (values: onFinishProps) => {
+    const token: Token = await postAuth(values);
     if (!token.ok) {
       return setError(!token.ok);
     } else {
@@ -29,7 +42,7 @@ const Login: NextPage<any> = ({ setIsLogin }) => {
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:");
+    console.log("error", errorInfo);
   };
 
   return (
@@ -53,7 +66,7 @@ const Login: NextPage<any> = ({ setIsLogin }) => {
               label="Email"
               name="email"
               className="form-label"
-              // labelCol={{ span: 24 }}
+              labelCol={{ span: 24 }}
               rules={[
                 {
                   required: true,
@@ -69,7 +82,7 @@ const Login: NextPage<any> = ({ setIsLogin }) => {
             <Form.Item
               label="Password"
               name="password"
-              // labelCol={{ span: 24 }}
+              labelCol={{ span: 24 }}
               rules={[
                 {
                   required: true,
@@ -83,8 +96,8 @@ const Login: NextPage<any> = ({ setIsLogin }) => {
               <Input.Password className="form-input" />
             </Form.Item>
             {error ? (
-              <Form.Item>
-                <p>User or password incorret</p>
+              <Form.Item style={{ color: "#ff4d4f" }}>
+                <p>Incorrect user or password!</p>
               </Form.Item>
             ) : null}
 

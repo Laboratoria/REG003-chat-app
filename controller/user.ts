@@ -25,30 +25,29 @@ export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     });
     const responseUser: User = { ...newUser };
     delete responseUser.password;
-    return res.status(200).json({ok:true, user:responseUser});
+    return res.status(200).json({ ok: true, user: responseUser });
   } catch (error: any) {
     if (error.code === "P2002") {
       return res.status(400).json({
         ok: false,
-        message: "Bad request",
+        message: "Email already registered!",
       });
     }
     return res.status(500).json({
       ok: false,
-      message: "server error",
+      message: "Server error",
     });
   }
 };
 
 //TODO-DONE: CREATE CONTROLLER GET USER
 
-export const getAllUser = async (req:NextApiRequest, res:NextApiResponse) => {
+export const getAllUser = async (req: NextApiRequest, res: NextApiResponse) => {
 
   //TODO: IMPROVE QUERY GETALLUSER
   try {
-
     const user = await prisma.user.findMany({
-      select: {password:false, id:true, email:true, username:true, profile_image:true}
+      select: { password: false, id: true, email: true, username: true, profile_image: true }
     })
     return res.json({
       ok: true,
@@ -59,42 +58,42 @@ export const getAllUser = async (req:NextApiRequest, res:NextApiResponse) => {
     return res.status(500).json({
       ok: false,
       content: null,
-      message: "server error"
+      message: "Server Error"
     })
   }
 }
 
 //TODO CONTROLLER getUserByIdOrEmail 
 
-export const getUserByIdIOrEmail = async(req:NextApiRequest, res:NextApiResponse) => {
+export const getUserByIdIOrEmail = async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
-    const {id} = req.query;
+    const { id } = req.query;
     const data = validateParams(id)
-    if(!data){
+    if (!data) {
       return res.status(400).json({
-        ok:false,
-        content:null,
+        ok: false,
+        content: null,
         message: "Bad request"
       })
-    } 
+    }
 
     const findParams = await prisma.user.findUnique({
-      where:data,
-      select: {password:false, id:true, email:true, username:true, profile_image:true}
+      where: data,
+      select: { password: false, id: true, email: true, username: true, profile_image: true }
 
     })
 
-    if(!findParams ){
+    if (!findParams) {
       return res.status(400).json({
-        ok:false,
-        content:null,
+        ok: false,
+        content: null,
         message: "Bad request"
       })
-    } 
-    
+    }
+
     res.json({
-      ok:true,
+      ok: true,
       content: findParams
     })
   } catch (error) {
@@ -111,7 +110,6 @@ export const getUserByIdIOrEmail = async(req:NextApiRequest, res:NextApiResponse
 export const updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { id } = req.query;
-
     let { username, email, password } = req.body;
     if (!username && !email && !password && !id) {
       return res.status(400).json({ ok: false, message: "Bad Request" });
@@ -142,22 +140,22 @@ export const updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(500).json({
       ok: false,
       message: "server error",
-})
-  }}
+    })
+  }
+}
 
 export const deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { id } = req.query
-    if(!id){
-      return res.status(400).json({ok:false, message:'Bad Request'})
+    if (!id) {
+      return res.status(400).json({ ok: false, message: 'Bad Request' })
     }
-    const user = await prisma.user.delete({ where: { id: Number(id)}})
-    if (!user){
-      return res.status(404).json({ok:false, message:'Not Found'})
+    const user = await prisma.user.delete({ where: { id: Number(id) } })
+    if (!user) {
+      return res.status(404).json({ ok: false, message: 'Not Found' })
     }
-
-  return res.status(200).json({ok:true, user})
-  }catch (error: any) {
+    return res.status(200).json({ ok: true, user })
+  } catch (error: any) {
     return res.status(500).json({
       ok: false,
       message: "server error"
