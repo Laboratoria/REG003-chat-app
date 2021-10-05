@@ -4,7 +4,10 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
     "test": "echo \"Error: no test specified\" && exit 1",
     "db-up": "docker-compose up -d",
     "db-status": "docker-compose ps",
@@ -12,6 +15,9 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "next": "^11.1.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "socket.io": "^4.1.2"
   },
   "devDependencies": {
