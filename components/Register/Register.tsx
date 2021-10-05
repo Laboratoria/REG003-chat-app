@@ -62,6 +62,7 @@ const Register: NextPage<Props> = ({ setIsLogin }) => {
             <Form.Item
               label="Username"
               name="username"
+              labelCol={{ span: 24 }}
               rules={[
                 {
                   required: true,
@@ -75,6 +76,7 @@ const Register: NextPage<Props> = ({ setIsLogin }) => {
             <Form.Item
               label="E-mail"
               name="email"
+              labelCol={{ span: 24 }}
               rules={[
                 {
                   required: true,
@@ -90,6 +92,7 @@ const Register: NextPage<Props> = ({ setIsLogin }) => {
             <Form.Item
               label="Password"
               name="password"
+              labelCol={{ span: 24 }}
               rules={[
                 {
                   required: true,
