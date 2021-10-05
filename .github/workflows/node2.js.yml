@@ -37,7 +37,7 @@ jobs:
           cache: "npm"
       - run: npm ci
   deploy-heroku:
-    needs: [build, test]
+    needs: [build]
 
     runs-on: ubuntu-latest
 
