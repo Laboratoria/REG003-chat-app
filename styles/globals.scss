@@ -70,14 +70,14 @@ h3 {
   font-weight: $font-weight;
   font-size: $font-size;
 }
-@mixin titles1($family, $font-weight, $font-size,$color) {
+@mixin titles1($family, $font-weight, $font-size, $color) {
   // letter-spacing: 0.5rem;
   font-family: $family;
   font-weight: $font-weight;
   @include font-size($font-size);
   color: $color;
 }
-@mixin box($direction , $align, $justify) {
+@mixin box($direction, $align, $justify) {
   display: flex;
   flex-direction: $direction;
   align-items: $align;
@@ -85,16 +85,15 @@ h3 {
 }
 
 @function caculateRem($size) {
-  $remSize: $size / 16px;
-  @return $remSize*1rem
+  $remSize: math.div($size, 16px);
+  @return $remSize * 1rem;
 }
 
-@mixin font-size($size){
-  font-size:$size;
+@mixin font-size($size) {
+  font-size: $size;
   font-size: caculateRem($size);
-  line-height: caculateRem($size)*1.5;
+  line-height: caculateRem($size) * 1.5;
 }
-
 
 .title_pink_bold {
   @include titles($color7, bold, 3rem);
