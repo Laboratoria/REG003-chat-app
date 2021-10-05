@@ -6,6 +6,7 @@ export default function Home() {
   return (
     <div>
       <h1>HOLA MUNDO</h1>
+      <h2>Change commit</h2>
     </div>
   );
 }
