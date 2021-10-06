@@ -23,11 +23,10 @@ $poiret: "Poiret One", cursive;
   // font-family: $poiret;
 }
 
-// body,
-// html {
-//   background-color: $color2;
-//   // width: 100vw;
-// }
+body {
+  height: 100vh;
+  width: 100vw;
+}
 
 h1,
 h2,
