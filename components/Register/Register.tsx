@@ -51,8 +51,8 @@ const Register: NextPage<Props> = ({ setIsLogin }) => {
           <h2>Welcome to</h2>
           <h3>Chat-app</h3>
         </div>
-        <p>Create account</p>
         <div className="register__body">
+          <p>Create account</p>
           <Form
             name="basic"
             onFinish={onFinish}
@@ -111,17 +111,18 @@ const Register: NextPage<Props> = ({ setIsLogin }) => {
                 <p>{errorMessage}</p>
               </Form.Item>
             ) : null}
-            <br />
+            
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit">
                 Register
               </Button>
             </Form.Item>
-
+              
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            
               <p className="paragraph">¿Have an account? </p>
               <a onClick={toLogin} className="paragraph__pink">
-                {" "}
+                
                 Log In{" "}
               </a>
             </Form.Item>

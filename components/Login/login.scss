@@ -3,14 +3,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  //margin: 5rem auto;
+    //margin: 5rem auto;
+  overflow: hidden;
   width: 100%;
-  // @include tablet {
-  //   width: 60rem;
-  // }
-  // @include desktop {
-  //   width: 80rem;
-  // }
+
 }
 
 
@@ -76,7 +72,7 @@
 
   .ant-form-item-with-help {
     margin-bottom: 0;
-    width: 80vw;
+    width: 80%;
   }
   
 }
