@@ -1,13 +1,12 @@
-import { Space } from "antd";
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
-import { FC } from "react";
+import Header from '../components/Header/Header'
 //TODO ROUTER
-const Chat: FC = () => {
+const Chat: NextPage = () => {
   return (
-    <div>
-      <h1>Holaaaa, esto es Chat</h1>
-    </div>
+    <>
+      <Header></Header>
+    </>
   );
 };
 
