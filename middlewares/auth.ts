@@ -18,17 +18,18 @@ export const runMiddleware = (req: Next.Custom, res: NextApiResponse, next: any)
   }
 
   jwt.verify(token, secret, async (err: any, decodedToken: any) => {
+    try {
     if (err) {
       return res.status(403).json({ ok: false, message: 'Forbidden' });
+    }else{
+      const userValid = await prisma.user.findUnique({ where: { email: decodedToken.email } });
+    if (!userValid) {
+      return res.status(404).json({ ok: false, message: 'Not Found' });
     }
-    const userValid = await prisma.user.findUnique({ where: { email: decodedToken.email } });
-    try {
-      if (!userValid) {
-        return res.status(404).json({ ok: false, message: 'Not Found' });
-      }
+    req.authentication = decodedToken;}
 
-      req.authentication = decodedToken;
     } catch (error) {
+      console.log(error)
       return res.status(500).json({ ok: false, message: 'Server Error' });
     }
   });
@@ -37,7 +38,11 @@ export const runMiddleware = (req: Next.Custom, res: NextApiResponse, next: any)
 }
 
 export const isSameUser = async (req: Next.Custom, res: NextApiResponse, next: any) => {
-  const { id } = req.query
+  try{
+    const { id } = req.query
+    if(!id){
+      return res.status(404).json({ 'ok': false, 'message': 'Bad Request' })
+    }
   const user = await prisma.user.findUnique({ where: { id: Number(id) } });
   if (!user) {
     return res.status(404).json({ 'ok': false, 'message': 'Bad Request' })
@@ -47,5 +52,7 @@ export const isSameUser = async (req: Next.Custom, res: NextApiResponse, next: a
   }
   else {
     return res.status(403).json({ 'ok': false, 'message': 'Forbidden' })
+  }}catch (error) {
+    return res.status(500).json({ ok: false, message: 'Server Error' });
   }
 }

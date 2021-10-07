@@ -25,41 +25,41 @@ describe('run Middleware', () => {
     expect(res.json).toHaveBeenCalled()
   })
 
-  //   it('401 not bearer type', () => {
-  //     const req: any = {
-  //       headers: {
-  //         authorization: 'algo 123456'
-  //       }
-  //     }
-  //     const res = mockResponse()
-  //     runMiddleware(req, res, () => { })
-  //     expect(res.status).toHaveBeenCalledWith(401)
-  //     expect(res.json).toHaveBeenCalled()
-  //   })
-  //   it.skip('403 not token valid', () => {
-  //     const req: any = {
-  //       headers: {
-  //         authorization: 'bearer 123456'
-  //       }
-  //     }
-  //     const res = mockResponse()
+    it('401 not bearer type', () => {
+      const req: any = {
+        headers: {
+          authorization: 'algo 123456'
+        }
+      }
+      const res = mockResponse()
+      runMiddleware(req, res, () => { })
+      expect(res.status).toHaveBeenCalledWith(401)
+      expect(res.json).toHaveBeenCalled()
+    })
+  it('403 not token valid', () => {
+      const req: any = {
+        headers: {
+          authorization: 'bearer 123456'
+        }
+      }
+      const res = mockResponse()
 
-  //     runMiddleware(req, res, () => { })
-  //     expect(res.status).toHaveBeenCalledWith(403)
-  //     expect(res.json).toHaveBeenCalled()
-  //   })
-  //   it('403 not token valid', () => {
-  //     const req: any = {
-  //       headers: {
-  //         authorization: 'bearer 123456'
-  //       }
-  //     }
-  //     const res = mockResponse()
-  //     runMiddleware(req, res, () => { })
-  //     expect(res.status).toHaveBeenCalledWith(403)
-  //     expect(res.json).toHaveBeenCalled()
-  //   })
-  /* it('500',()=>{
+      runMiddleware(req, res, () => { })
+      expect(res.status).toHaveBeenCalledWith(403)
+      expect(res.json).toHaveBeenCalled()
+      })
+  it('403 not token valid', () => {
+      const req: any = {
+        headers: {
+          authorization: 'bearer 123456'
+        }
+      }
+    const res = mockResponse()
+      runMiddleware(req, res, () => { })
+      expect(res.status).toHaveBeenCalledWith(403)
+      expect(res.json).toHaveBeenCalled()
+    })
+it('500',()=>{
     const req: any = {
       headers: {
         authorization:'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIwLCJlbWFpbCI6InVzZXIyQGNoYXQuY29tIiwiaWF0IjoxNjMzMzE5ODIwLCJleHAiOjE2MzMzNDg2MjB9.cxTehLdJmuTax0FicCRQ5PwHFOLWMUtEsuRl-3Gsh0o'
@@ -70,9 +70,9 @@ describe('run Middleware', () => {
   runMiddleware(req, res, ()=>{})
   expect(res.status).toHaveBeenCalledWith(500)
   expect(res.json).toHaveBeenCalled()
-  }) */
+  })
 })
 /* describe('is Same user', ()=>{
 
   it('',()=>{})
-}) */
+})  */
