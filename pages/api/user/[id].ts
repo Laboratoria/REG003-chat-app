@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getUserByIdIOrEmail, updateUser, deleteUser } from '../../../controller/user'
-import { runMiddleware } from '../../../middlewares/auth'
+import { requireAuth } from '../../../middlewares/auth'
 
 
 export default function handler(
@@ -11,10 +11,10 @@ export default function handler(
     return getUserByIdIOrEmail(req, res)
   }
   if (req.method === 'PUT') {
-    return runMiddleware(req, res, updateUser)
+    return requireAuth(req, res, updateUser)
   }
   if (req.method === 'DELETE') {
-    return runMiddleware(req, res, deleteUser)
+    return requireAuth(req, res, deleteUser)
   }
   else res.status(405).json({ ok: 'false', message: 'Method Not Allowed ' })
 }

@@ -1,17 +1,52 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 
-  datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
-  }
+generator client {
+  provider = "prisma-client-js"
+}
 
-  generator client {
-    provider      = "prisma-client-js"
-  }
+model User {
+  id            Int           @id @default(autoincrement())
+  email         String        @unique
+  password      String
+  username      String
+  profile_image String        @default("https://cdn-icons-png.flaticon.com/512/1077/1077114.png")
+  channels      ChannelUser[]
+  messages      Message[]
+}
 
-  model User {
-    id            Int       @default(autoincrement()) @id
-    email         String    @unique
-    password      String
-    username      String
-    profile_image String    @default("https://cdn-icons-png.flaticon.com/512/1077/1077114.png")
-  }
+model Channel {
+  id          Int           @id @default(autoincrement())
+  name        String
+  description String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  users       ChannelUser[]
+  messages    Message[]
+}
+
+model ChannelUser {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  channelId Int
+  joinDate  DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  channel   Channel  @relation(fields: [channelId], references: [id])
+
+  @@unique([userId, channelId])
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  channelId  Int
+  body       String
+  attachment String?
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+  channel    Channel  @relation(fields: [channelId], references: [id])
+
+  @@index([channelId])
+}

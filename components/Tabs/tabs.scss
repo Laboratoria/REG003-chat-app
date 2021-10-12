@@ -1,0 +1,24 @@
+.ant-tabs{
+  background-color: $color4;
+  color: $color3;
+  padding: 0 1rem;
+  align-items: center;
+  justify-content: space-around;
+}
+.ant-tabs-tab-btn{
+  font-size: 1.1rem;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+  color: $color7;
+}
+.ant-tabs-ink-bar{
+  background-color: $color7;
+}
+
+.ant-tabs-top > .ant-tabs-nav::before{
+  border-bottom: $color4;
+}
+.ant-tabs-tab-btn:hover{
+  color: $color7;
+}
