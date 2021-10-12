@@ -4,7 +4,7 @@ import { secret } from '../config'
 import prisma from '../lib/prisma';
 import { Next } from '../types/custom';
 
-export const runMiddleware = (req: Next.Custom, res: NextApiResponse, next: any) => {
+export const requireAuth = (req: Next.Custom, res: NextApiResponse, next: any) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
@@ -29,7 +29,7 @@ export const runMiddleware = (req: Next.Custom, res: NextApiResponse, next: any)
         req.authentication = decodedToken;
         console.log("token", req.authentication)
       }
-      return isSameUser(req, res, next)
+      return next(req, res)
     } catch (error) {
       console.log(error)
       return res.status(500).json({ ok: false, message: 'Server Error' });
@@ -37,22 +37,26 @@ export const runMiddleware = (req: Next.Custom, res: NextApiResponse, next: any)
   });
 }
 
-export const isSameUser = async (req: Next.Custom, res: NextApiResponse, next: any) => {
+export const requireSameUser = async (req: Next.Custom, res: NextApiResponse, next: any) => {
+  //llamar dentro al primer middleware del auth
   try {
-    const { id } = req.query
-    if (!id) {
-      return res.status(404).json({ 'ok': false, 'message': 'Bad Request from IsSameUser' })
-    }
-    const user = await prisma.user.findUnique({ where: { id: Number(id) } });
-    if (!user) {
-      return res.status(404).json({ 'ok': false, 'message': 'Bad Request from IsSameUser' })
-    }
-    if (user.email === req.authentication?.email) {
-      return next(req, res)
-    }
-    else {
-      return res.status(403).json({ 'ok': false, 'message': 'Forbidden from IsSameUser' })
-    }
+    requireAuth(req, res, async()=>{
+      const { id } = req.query
+      if (!id) {
+        return res.status(404).json({ 'ok': false, 'message': 'Bad Request from IsSameUser' })
+      }
+      const user = await prisma.user.findUnique({ where: { id: Number(id) } });
+      if (!user) {
+        return res.status(404).json({ 'ok': false, 'message': 'Bad Request from IsSameUser' })
+      }
+      if (user.email === req.authentication?.email) {
+        return next(req, res)
+      }
+      else {
+        return res.status(403).json({ 'ok': false, 'message': 'Forbidden from IsSameUser' })
+      }
+    })
+
   } catch (error) {
     return res.status(500).json({ ok: false, message: 'Server Error from IsSameUser' });
   }
