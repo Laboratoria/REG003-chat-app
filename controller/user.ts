@@ -70,6 +70,7 @@ export const getUserByIdIOrEmail = async (req: NextApiRequest, res: NextApiRespo
   try {
     const { id } = req.query;
     const data = validateParams(id)
+    console.log(typeof data, "data")
     if (!data) {
       return res.status(400).json({
         ok: false,
@@ -97,6 +98,7 @@ export const getUserByIdIOrEmail = async (req: NextApiRequest, res: NextApiRespo
       content: findParams
     })
   } catch (error) {
+    console.log(error)
     return res.status(500).json({
       ok: false,
       content: null,
