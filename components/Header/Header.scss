@@ -1,0 +1,25 @@
+.site-page-header{
+  width: 100%;
+  margin: 0;
+}
+.ant-page-header, .ant-page-header-heading-title, .ant-dropdown-trigger, .ant-dropdown-open{
+  background-color: $color4;
+  color: $color3;
+}
+.ant-dropdown-menu{
+  background-color: $color4;
+  color: $color2;
+}
+.ant-dropdown-menu-title-content{
+  color: $color1;
+}
+.ant-dropdown-menu-title-content:hover{
+  color: $color7;
+}
+.ant-dropdown-menu-item-active:hover{
+background-color: $color4;
+}
+.ant-dropdown-trigger:hover{
+  background-color: $color4;
+  color:$color7;
+}

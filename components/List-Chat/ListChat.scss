@@ -1,0 +1,29 @@
+.card-item{
+  width: 100%;
+  background-color: $color4;
+
+  border: 1px solid $color4;
+  border-radius: 0;
+}
+.card-item:active{
+  background-color: $color3;
+}
+.ant-card-meta-title{
+  color:$color1;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.ant-card-meta-description{
+  color:$color2
+}
+.ant-card-meta-detail{
+  margin: 0;
+}
+.time{
+color:$color7;
+width: 100%;
+display: flex;
+justify-content: flex-end;
+position: absolute;
+padding: 0 2rem;
+}

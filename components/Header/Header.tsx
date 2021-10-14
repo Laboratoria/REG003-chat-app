@@ -1,25 +1,24 @@
 import type { NextPage } from "next";
-import { PageHeader, Menu, Dropdown, Button, } from 'antd';
+import { PageHeader, Menu, Dropdown, Button} from 'antd';
 import { MoreOutlined, SearchOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
-
 
 const Header: NextPage = () => {
   const router = useRouter();
   const menu = (
     <Menu>
-      <Menu.Item>
+      <Menu.Item key="profile">
         <p>
-          perfil
+          Perfil
         </p>
       </Menu.Item>
-      <Menu.Item>
+      <Menu.Item key="new-chanels">
         <p>
-          crear canales
+          Crear Canales
         </p>
       </Menu.Item>
-      <Menu.Item>
-        <p> cerrar Sesión</p>
+      <Menu.Item key="logout">
+        <p> Cerrar Sesión</p>
       </Menu.Item>
     </Menu>
   );
@@ -54,7 +53,7 @@ const Header: NextPage = () => {
     <DropdownMenu key="more" />,
     ]}
   >
-  </PageHeader>,
+  </PageHeader>
     </>
   );
 };
