@@ -39,18 +39,3 @@ module.exports = {
     }
   },
 };
-
-// async function main() {
-//   const newUser = await prisma.user.create({
-//     data: {
-//       email: 'alice@gmail.com',
-//       name: 'Alice',
-//       password: '12345678q',
-//     },
-//   });
-//   return newUser;
-// }
-
-// main()
-//   .then((res) => console.log(res))
-//   .catch((error) => console.log(error.code));
