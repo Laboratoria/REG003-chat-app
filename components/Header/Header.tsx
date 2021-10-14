@@ -3,8 +3,17 @@ import { PageHeader, Menu, Dropdown, Button} from 'antd';
 import { MoreOutlined, SearchOutlined } from '@ant-design/icons';
 import { useRouter } from "next/router";
 
-const Header: NextPage = () => {
+interface Props {
+  setActiveSearch:React.Dispatch<React.SetStateAction<boolean>>;
+  activeSearch:boolean;
+}
+
+const Header: NextPage<Props>= ({setActiveSearch, activeSearch}) => {
   const router = useRouter();
+  const toggleSearch =()=>{
+    setActiveSearch(!activeSearch)
+
+  }
   const menu = (
     <Menu>
       <Menu.Item key="profile">
@@ -49,7 +58,7 @@ const Header: NextPage = () => {
     <SearchOutlined style={{
       fontSize: 25,
       verticalAlign: 'top',
-    }}  key="search"/>,
+    }}  onClick={toggleSearch} key="search"/>,
     <DropdownMenu key="more" />,
     ]}
   >

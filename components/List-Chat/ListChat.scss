@@ -1,7 +1,6 @@
 .card-item{
   width: 100%;
-  background-color: $color4;
-
+  background-color: $color8;
   border: 1px solid $color4;
   border-radius: 0;
 }
@@ -18,6 +17,10 @@
 }
 .ant-card-meta-detail{
   margin: 0;
+}
+.ant-card-body{
+padding: 1rem;
+
 }
 .time{
 color:$color7;
