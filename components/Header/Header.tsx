@@ -12,7 +12,9 @@ const Header: NextPage<Props>= ({setActiveSearch, activeSearch}) => {
   const router = useRouter();
   const toggleSearch =()=>{
     setActiveSearch(!activeSearch)
-
+  }
+  const logOut = () => {
+    localStorage.clear();
   }
   const menu = (
     <Menu>
@@ -26,7 +28,7 @@ const Header: NextPage<Props>= ({setActiveSearch, activeSearch}) => {
           Crear Canales
         </p>
       </Menu.Item>
-      <Menu.Item key="logout">
+      <Menu.Item key="logout" onClick={}>
         <p> Cerrar Sesión</p>
       </Menu.Item>
     </Menu>

@@ -58,7 +58,6 @@ const Login: NextPage<Props> = ({ setIsLogin }) => {
       setError(!token.ok);
       localStorage.setItem("token", token.token);
       router.push("/chat");
-      //navegacion a otro lado
     }
   };
 
