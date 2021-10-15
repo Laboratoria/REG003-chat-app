@@ -8,6 +8,7 @@ interface Props {
   channelTitle:String;
   lastMessage: String;
   time: String;
+  id?:string
 }
 
 const ListChat: NextPage<Props> = ({channelTitle,lastMessage, time}) => {
@@ -15,7 +16,6 @@ const router = useRouter();
 
 
   return (
-    <>
     <Card className="card-item" bordered={false}>
       <p className="time">{time}</p>
           <Meta
@@ -26,18 +26,6 @@ const router = useRouter();
             description={lastMessage}
           />
         </Card>
-        <Card className="card-item" bordered={false} >
-        <p className="time">{time}</p>
-        <Meta
-          avatar={
-            <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-          }
-          title={channelTitle}
-          description={lastMessage}
-        
-        />
-      </Card>
-      </>
   );
 };
 export default ListChat;
