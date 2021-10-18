@@ -4,7 +4,7 @@ import { useState } from "react";
 import { postAuth } from "../../services/auth";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import SocketIOClient from "socket.io-client";
+
 //TODO STYLES
 // TODO ERROR
 
