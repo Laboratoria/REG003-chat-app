@@ -1,6 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { createUser, getAllUser } from '../../../controller/user'
-import { runMiddleware } from '../../../middlewares/auth'
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { createUser, getAllUser } from '../../../controller/user';
+
 
 export default function user(
   req: NextApiRequest,
