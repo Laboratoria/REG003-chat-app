@@ -17,17 +17,21 @@ const InitialSocket = () => {
     SocketIOClient.connect(process.env.URL_API, {
       path: "/api/socket",
     });
+    console.log("socketOn");
     setSocketOn(true);
   };
 
   const disconnectSocket = () => {
     // @ts-ignore
     SocketIOClient.disconnect();
+    console.log("socketOff");
     setSocketOn(false);
   };
+
+  return [connectSocket, disconnectSocket];
 };
 
-const SocketContext = createContext(InitialSocket);
+export const SocketContext = createContext(InitialSocket);
 
 export const SocketProvider = ({ children }: ContextProvider) => {
   return (
