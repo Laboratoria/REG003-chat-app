@@ -13,13 +13,14 @@ interface Props {
 const Header: NextPage<Props> = ({ setActiveSearch, activeSearch }) => {
   const router = useRouter();
   // @ts-ignore
-  const { InitialSocket } = useContext(SocketContext);
-  console.log(InitialSocket);
+  const InitialSocket  = useContext(SocketContext);
+
   const toggleSearch = () => {
     setActiveSearch(!activeSearch);
   };
   const logOut = () => {
     localStorage.clear();
+    InitialSocket().disconnectSocket()
   };
   const menu = (
     <Menu>
@@ -29,8 +30,7 @@ const Header: NextPage<Props> = ({ setActiveSearch, activeSearch }) => {
       <Menu.Item key="new-chanels">
         <p>Crear Canales</p>
       </Menu.Item>
-      <Menu.Item key="logout">
-        {/* onClick={InitialSocket.disconnectSocket} */}
+      <Menu.Item key="logout"  onClick={logOut}>
         <p> Cerrar Sesión</p>
       </Menu.Item>
     </Menu>
