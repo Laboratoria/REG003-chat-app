@@ -1,8 +1,7 @@
 import dotenv from 'dotenv';
-import { JsonWebTokenError } from 'jsonwebtoken';
 import jwt from "jsonwebtoken";
 dotenv.config();
-import { runMiddleware, isSameUser } from '../../../middlewares/auth'
+import { requireAuth, requireSameUser } from '../../../middlewares/auth'
 import { prismaMock } from '../../../singleton'
 import { secret } from '../../../config'
 
@@ -24,7 +23,7 @@ describe('run Middleware', () => {
       }
     }
     const res = mockResponse()
-    runMiddleware(req, res, () => { })
+    requireAuth(req, res, () => { })
     expect(res.status).toHaveBeenCalledWith(401)
     expect(res.json).toHaveBeenCalled()
   })
@@ -36,7 +35,7 @@ describe('run Middleware', () => {
       }
     }
     const res = mockResponse()
-    runMiddleware(req, res, () => { })
+    requireAuth(req, res, () => { })
     expect(res.status).toHaveBeenCalledWith(401)
     expect(res.json).toHaveBeenCalled()
   })
@@ -49,7 +48,7 @@ describe('run Middleware', () => {
     }
     const res = mockResponse()
 
-    runMiddleware(req, res, () => { })
+    requireAuth(req, res, () => { })
     expect(res.status).toHaveBeenCalledWith(403)
     expect(res.json).toHaveBeenCalled()
   })
@@ -62,7 +61,7 @@ describe('run Middleware', () => {
     }
     prismaMock.user.findUnique.mockRejectedValue('error')
     const res = mockResponse()
-    runMiddleware(req, res, () => { })
+    requireAuth(req, res, () => { })
     expect(res.status).toHaveBeenCalledWith(500)
     expect(res.json).toHaveBeenCalled()
   })
@@ -81,7 +80,7 @@ describe('run Middleware', () => {
     }
     const res = mockResponse()
     prismaMock.user.findUnique.mockResolvedValue(user)
-    runMiddleware(req, res, () => { })
+    requireAuth(req, res, () => { })
     expect(res.status).toHaveBeenCalledWith(200)
     expect(req.authentication).toBeTruthy();
     expect(req.authentication).toEqual({

@@ -38,7 +38,7 @@ export const requireAuth = (req: Next.Custom, res: NextApiResponse, next: any) =
   });
 }
 
-export const isSameUser = async (req: Next.Custom, res: NextApiResponse, next: any, handleError: any) => {
+export const requireSameUser = async (req: Next.Custom, res: NextApiResponse, next: any, handleError: any) => {
   try {
     requireAuth(req, res, async () => {
       const { id } = req.query
