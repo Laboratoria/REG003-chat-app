@@ -1,0 +1,17 @@
+.container-search{
+  width: 100%;
+  background-color: $color4;
+  padding: 0 .5rem .5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-search{
+  width: 80%;
+  height: 90%;
+  border: 1px solid $color4;
+  border-radius: 1rem;
+  padding: .2rem .5rem;
+
+}

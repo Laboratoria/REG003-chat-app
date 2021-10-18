@@ -35,10 +35,10 @@ export const authController = async (req: NextApiRequest, res: NextApiResponse) 
         uid: user.id,
         email: user.email,
       },
-      secret,
-      {
-        expiresIn: '8h',
-      }
+      secret
+      // {
+      //   expiresIn: '8h',
+      // }
     );
     if (!token) {
       return res.status(500).json({

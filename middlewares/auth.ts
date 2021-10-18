@@ -20,6 +20,7 @@ export const requireAuth = (req: Next.Custom, res: NextApiResponse, next: any) =
   jwt.verify(token, secret, async (err: any, decodedToken: any) => {
     try {
       if (err) {
+        console.log("error", err)
         return res.status(403).json({ ok: false, message: 'Forbidden' });
       } else {
         const userValid = await prisma.user.findUnique({ where: { email: decodedToken.email } });
@@ -37,27 +38,38 @@ export const requireAuth = (req: Next.Custom, res: NextApiResponse, next: any) =
   });
 }
 
-export const requireSameUser = async (req: Next.Custom, res: NextApiResponse, next: any) => {
-  //llamar dentro al primer middleware del auth
+export const requireSameUser = async (req: Next.Custom, res: NextApiResponse, next: any, handleError: any) => {
   try {
-    requireAuth(req, res, async()=>{
+    requireAuth(req, res, async () => {
       const { id } = req.query
       if (!id) {
-        return res.status(404).json({ 'ok': false, 'message': 'Bad Request from IsSameUser' })
+        handleError(404)
+        return false
+        // res.status(404).json({ 'ok': false, 'message': 'Bad Request from IsSameUser' })
       }
       const user = await prisma.user.findUnique({ where: { id: Number(id) } });
       if (!user) {
-        return res.status(404).json({ 'ok': false, 'message': 'Bad Request from IsSameUser' })
+        return false
+        // res.status(404).json({ 'ok': false, 'message': 'Bad Request from IsSameUser' })
       }
       if (user.email === req.authentication?.email) {
-        return next(req, res)
+        return true
+        // next(req, res)
       }
       else {
-        return res.status(403).json({ 'ok': false, 'message': 'Forbidden from IsSameUser' })
+        console.log("Entra a same user")
+        return false
+        // res.status(403).json({ 'ok': false, 'message': 'Forbidden from IsSameUser' })
       }
     })
-
-  } catch (error) {
-    return res.status(500).json({ ok: false, message: 'Server Error from IsSameUser' });
   }
+  catch (error) {
+    console.log();
+    throw new Error('Server Error from IsSameUser')
+    // return res.status(500).json({ ok: false, message: 'Server Error from IsSameUser' });
+  }
+}
+
+export const handleError = async (errorCode: String) => {
+
 }
