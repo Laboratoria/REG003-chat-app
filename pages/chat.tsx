@@ -3,16 +3,25 @@ import Header from "../components/Header/Header";
 import TabsMenu from "../components/Tabs/tabs";
 import ListChat from "../components/List-Chat/ListChat";
 import SearchSide from "../components/Search/Search";
-import { useEffect, useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import { SocketContext } from "../contexts/socketContext";
 //TODO ROUTER
+type InitialSocket = {
+  initialSocket: () => {};
+};
+
 const Chat: NextPage = () => {
-  /*   const [channelTitle, setChannelTitle] = useState("holis")
-    const [lastMessage, setLastChannel] = useState("tomar agua es bueno")
-    const [time, setTime] = useState("10:30") */
+  // @ts-ignore
+  const { InitialSocket } = useContext(SocketContext);
   const arrayExample: Array<any> = [];
   const [listChats, setListChats] = useState(arrayExample);
   const [activeSearch, setActiveSearch] = useState(false);
   const [activeChannel, setActiveChannel] = useState(true);
+
+  useEffect(() => {
+    console.log(InitialSocket);
+    // InitialSocket.connectSocket();
+  });
 
   useEffect(() => {
     //TODO PETICION A LA BD DE CANALES DE USUARIO

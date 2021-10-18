@@ -1,7 +1,9 @@
+import React, { useContext } from "react";
 import type { NextPage } from "next";
 import { PageHeader, Menu, Dropdown, Button } from "antd";
 import { MoreOutlined, SearchOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
+import { SocketContext } from "../../contexts/socketContext";
 
 interface Props {
   setActiveSearch: React.Dispatch<React.SetStateAction<boolean>>;
@@ -10,6 +12,9 @@ interface Props {
 
 const Header: NextPage<Props> = ({ setActiveSearch, activeSearch }) => {
   const router = useRouter();
+  // @ts-ignore
+  const { InitialSocket } = useContext(SocketContext);
+  console.log(InitialSocket);
   const toggleSearch = () => {
     setActiveSearch(!activeSearch);
   };
@@ -25,6 +30,7 @@ const Header: NextPage<Props> = ({ setActiveSearch, activeSearch }) => {
         <p>Crear Canales</p>
       </Menu.Item>
       <Menu.Item key="logout">
+        {/* onClick={InitialSocket.disconnectSocket} */}
         <p> Cerrar Sesión</p>
       </Menu.Item>
     </Menu>
