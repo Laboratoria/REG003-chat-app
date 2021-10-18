@@ -27,28 +27,28 @@ const Login: NextPage<Props> = ({ setIsLogin }) => {
   const [isConnected, setIsConnected] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    // @ts-ignore
-    const socket = SocketIOClient.connect(process.env.URL_API, {
-      path: "/api/socket",
-    });
+  // useEffect(() => {
+  //   // @ts-ignore
+  //   const socket = SocketIOClient.connect(process.env.URL_API, {
+  //     path: "/api/socket",
+  //   });
 
-    socket.on("connect", () => {
-      setIsConnected(true);
-      console.log(isConnected);
-    });
-    socket.on("disconnect", () => {
-      setIsConnected(false);
-      console.log(isConnected);
-    });
-    socket.on("status", (data: any) => {
-      console.log("hello", data);
-    });
-    return () => {
-      socket.off("connect");
-      socket.off("disconnect");
-    };
-  });
+  //   // socket.on("connect", () => {
+  //   //   setIsConnected(true);
+  //   //   console.log(isConnected);
+  //   // });
+  //   // socket.on("disconnect", () => {
+  //   //   setIsConnected(false);
+  //   //   console.log(isConnected);
+  //   // });
+  //   // socket.on("status", (data: any) => {
+  //   //   console.log("hello", data);
+  //   // });
+  //   return () => {
+  //     socket.off("connect");
+  //     socket.off("disconnect");
+  //   };
+  // });
 
   const onFinish = async (values: onFinishProps) => {
     const token: Token = await postAuth(values);
