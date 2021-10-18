@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import SocketIOClient from "socket.io-client";
 
 export type GlobalContext = {
   socketOn: boolean;
@@ -10,25 +11,26 @@ export type ContextProvider = {
 };
 
 const InitialSocket = () => {
-  const [socketOn, setSocketOn] = useState(false);
+/*   const [socketOn, setSocketOn] = useState(false); */
 
   const connectSocket = () => {
     // @ts-ignore
-    SocketIOClient.connect(process.env.URL_API, {
+   const socket = SocketIOClient.connect(process.env.URL_API, {
       path: "/api/socket",
     });
-    console.log("socketOn");
-    setSocketOn(true);
+
+    return socket
   };
 
   const disconnectSocket = () => {
     // @ts-ignore
-    SocketIOClient.disconnect();
+    const socket = SocketIOClient.disconnect;
     console.log("socketOff");
-    setSocketOn(false);
+    console.log(socket)
+    return socket
   };
 
-  return [connectSocket, disconnectSocket];
+  return { connectSocket, disconnectSocket };
 };
 
 export const SocketContext = createContext(InitialSocket);

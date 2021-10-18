@@ -5,26 +5,45 @@ import ListChat from "../components/List-Chat/ListChat";
 import SearchSide from "../components/Search/Search";
 import { useState, useEffect, useContext } from "react";
 import { SocketContext } from "../contexts/socketContext";
+import SocketIOClient from "socket.io-client";
 //TODO ROUTER
-type InitialSocket = {
+/* type InitialSocket = {
   initialSocket: () => {};
-};
+}; */
 
 const Chat: NextPage = () => {
   // @ts-ignore
-  const { InitialSocket } = useContext(SocketContext);
+  const InitialSocket = useContext(SocketContext);
   const arrayExample: Array<any> = [];
+  const [isConnected, setIsConnected] = useState(false);
   const [listChats, setListChats] = useState(arrayExample);
   const [activeSearch, setActiveSearch] = useState(false);
   const [activeChannel, setActiveChannel] = useState(true);
 
-  useEffect(() => {
-    console.log(InitialSocket);
-    // InitialSocket.connectSocket();
-  });
 
   useEffect(() => {
-    //TODO PETICION A LA BD DE CANALES DE USUARIO
+
+    const socket = InitialSocket().connectSocket();
+    console.log(socket)
+    socket.on("connect", () => {
+      setIsConnected(true);
+      console.log(isConnected);
+    });
+    socket.on("disconnect", () => {
+      setIsConnected(false);
+      console.log(isConnected);
+    });
+    socket.on("status", (data: any) => {
+      console.log("hello", data);
+    });
+    return () => {
+      socket.off("connect");
+      socket.off("disconnect");
+    };
+  }, );
+
+  useEffect(() => {
+    //TODO PETICION A LA BD DE CANALES DE USUARIo
     const myChannels = [
       {
         channelTitle: "Mis canales",
