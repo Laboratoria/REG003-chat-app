@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../lib/prisma";
 import bcrypt from "bcrypt";
 import { isValidEmail, isWeakPassword, validateParams } from "../utils/utils";
+import err from '../middlewares/error'
 
 type User = {
   id: number;
@@ -17,7 +18,8 @@ export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { username, email, password } = req.body;
     if (!username || !isValidEmail(email) || isWeakPassword(password)) {
-      return res.status(400).json({ ok: false, message: "bad request" });
+      return err( 500, req, res,)
+      // return res.status(400).json({ ok: false, message: "bad request" });
     }
     const passwordCrypt = bcrypt.hashSync(password, 10);
     const newUser = await prisma.user.create({
@@ -28,15 +30,22 @@ export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json({ ok: true, user: responseUser });
   } catch (error: any) {
     if (error.code === "P2002") {
-      return res.status(400).json({
-        ok: false,
-        message: "Email already registered!",
-      });
+      return err( 400,
+        req,
+        res,)
+      // return res.status(400).json({
+      //   ok: false,
+      //   message: "Email already registered!",
+      // }
+      //);
     }
-    return res.status(500).json({
-      ok: false,
-      message: "Server error",
-    });
+    return err( 500,
+      req,
+      res,)
+    // return res.status(500).json({
+    //   ok: false,
+    //   message: "Server error",
+    // });
   }
 };
 
@@ -72,11 +81,14 @@ export const getUserByIdIOrEmail = async (req: NextApiRequest, res: NextApiRespo
     const data = validateParams(id)
     console.log(typeof data, "data")
     if (!data) {
-      return res.status(400).json({
-        ok: false,
-        content: null,
-        message: "Bad request"
-      })
+      return err( 400,
+        req,
+        res,)
+      // return res.status(400).json({
+      //   ok: false,
+      //   content: null,
+      //   message: "Bad request"
+      // })
     }
 
     const findParams = await prisma.user.findUnique({
@@ -134,15 +146,21 @@ export const updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
   } catch (error: any) {
 
     if (error.code === "P2025") {
-      return res.status(404).json({
-        ok: false,
-        message: error.meta.cause
-      });
+      return err( 404,
+        req,
+        res,)
+      // return res.status(404).json({
+      //   ok: false,
+      //   message: error.meta.cause
+      // });
     }
-    return res.status(500).json({
-      ok: false,
-      message: "server error",
-    })
+    return err( 500,
+      req,
+      res,)
+    // return res.status(500).json({
+    //   ok: false,
+    //   message: "server error",
+    // })
   }
 }
 
@@ -150,17 +168,26 @@ export const deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { id } = req.query
     if (!id) {
-      return res.status(400).json({ ok: false, message: 'Bad Request' })
+      return err( 400,
+        req,
+        res,)
+      // return res.status(400).json({ ok: false, message: 'Bad Request' })
     }
     const user = await prisma.user.delete({ where: { id: Number(id) } })
     if (!user) {
-      return res.status(404).json({ ok: false, message: 'Not Found' })
+      return err( 500,
+        req,
+        res,)
+      // return res.status(404).json({ ok: false, message: 'Not Found' })
     }
     return res.status(200).json({ ok: true, user })
   } catch (error: any) {
-    return res.status(500).json({
-      ok: false,
-      message: "server error"
-    });
+    return err( 500,
+      req,
+      res,)
+    // return res.status(500).json({
+    //   ok: false,
+    //   message: "server error"
+    // });
   }
 }
