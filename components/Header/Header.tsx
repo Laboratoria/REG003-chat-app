@@ -13,14 +13,17 @@ interface Props {
 const Header: NextPage<Props> = ({ setActiveSearch, activeSearch }) => {
   const router = useRouter();
   // @ts-ignore
-  const InitialSocket  = useContext(SocketContext);
+  const {connectSocket, disconnectSocket , socket, setSocket} = useContext(SocketContext);
 
   const toggleSearch = () => {
     setActiveSearch(!activeSearch);
   };
   const logOut = () => {
     localStorage.clear();
-    InitialSocket().disconnectSocket()
+    const disconnet = disconnectSocket()
+    setSocket(disconnet)
+  console.log(socket)
+  router.push('/')
   };
   const menu = (
     <Menu>
