@@ -1,8 +1,9 @@
 import type { NextPage } from "next";
 import { postUser } from "../../services/user";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, message } from "antd";
 import { useState } from "react";
 import React from "react";
+import { Router } from "express";
 //TODO STYLES
 // DONE ERROR
 interface Props {
@@ -31,8 +32,9 @@ const Register: NextPage<Props> = ({ setIsLogin }) => {
       setErrorMessage(user.message);
       return setError(!user.ok);
     } else {
-      setError(!user.ok);
-      //navegacion a otro lado
+      setError(!user.ok)
+      ;
+      message.success('Register sucess!! Please Loggin');
     }
   };
 
