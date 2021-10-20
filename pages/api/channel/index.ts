@@ -1,3 +1,16 @@
-export const channels = () => {
-    console.log("Hola aquí api channels");
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { getAllChannels } from '../../../controller/channels';
+import { requireAuth } from "../../../middlewares/auth";
+
+export default function user(
+    req: NextApiRequest,
+    res: NextApiResponse
+) {
+    if (req.method === 'GET') {
+        // return requireAuth(req, res, getAllChannels)
+        return getAllChannels(req, res)
+    }
+    else {
+        console.log('hola mal todo')
+    }
 }
