@@ -182,9 +182,17 @@ export const deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
     }
     return res.status(200).json({ ok: true, user })
   } catch (error: any) {
-    return err( 500,
-      req,
-      res,)
+    if (error.code === "P2025") {
+      return err(404,
+          req,
+          res)
+  }
+  else {
+      return err(500,
+          req,
+          res)
+  }
+}
     // return res.status(500).json({
     //   ok: false,
     //   message: "server error"

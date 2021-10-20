@@ -5,11 +5,6 @@ import ListChat from "../components/List-Chat/ListChat";
 import SearchSide from "../components/Search/Search";
 import { useState, useEffect, useContext } from "react";
 import { SocketContext } from "../contexts/socketContext";
-import SocketIOClient from "socket.io-client";
-//TODO ROUTER
-/* type InitialSocket = {
-  initialSocket: () => {};
-}; */
 
 const Chat: NextPage = () => {
   // @ts-ignore
@@ -22,25 +17,25 @@ const Chat: NextPage = () => {
 
 
   useEffect(() => {
-    socket ? '': setSocket(connectSocket());
-console.log(socket)
-    if(socket){
-      socket.on("connect", () => {
+    const sockets = connectSocket();
+    sockets.on("connect", () => {
       setIsConnected(true);
       console.log('conectado',isConnected);
     })
-    socket.on("disconnect", () => {
+    sockets.on("disconnect", () => {
       setIsConnected(false);
       console.log('desconectado',isConnected);
     });
-    socket.on("status", (data: any) => {
+    sockets.on("status", (data: any) => {
       console.log("hello", data);
     });
+    setSocket(sockets);
     return () => {
-      socket.off("connect");
-      socket.off("disconnect");
-    }}
-  },);
+      sockets.off("connect");
+      sockets.off("disconnect");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
   useEffect(() => {
     //TODO PETICION A LA BD DE CANALES DE USUARIo

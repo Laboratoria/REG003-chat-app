@@ -16,9 +16,8 @@ export const SocketContext = createContext(InitialSocket);
 export const SocketProvider = ({ children }: ContextProvider) => {
 const [socket, setSocket]= useState();
 const connectSocket = () => {
-  console.log('1')
   // @ts-ignore
-const sockets = SocketIOClient.connect(process.env.URL_API, {
+const sockets =  SocketIOClient.connect(process.env.URL_API, {
     path: "/api/socket",
   });
   return sockets
