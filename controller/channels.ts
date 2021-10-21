@@ -7,10 +7,10 @@ export const getAllChannels = async (req: Next.Custom, res: NextApiResponse) => 
 
     //TODO: IMPROVE QUERY GETALLUSER
     try {
-        let myCursor = 1;
+        const { cursor } = req.headers
+        let myCursor = cursor ? Number(req.headers.cursor) : 1;
         const allChannels = await prisma.channel.findMany({
             take: 10,
-            skip: 1, // Skip the cursor
             cursor: {
                 id: myCursor,
             },
@@ -18,15 +18,16 @@ export const getAllChannels = async (req: Next.Custom, res: NextApiResponse) => 
                 createdAt: "desc"
             }
         })
-        const lastPostInResults = allChannels[9] // Remember: zero-based index! :)
-        myCursor = lastPostInResults.id;
-
+        const lastPostInResults = allChannels[(allChannels.length - 1)] // Remember: zero-based index! :)
+        myCursor = lastPostInResults.id
         return res.status(200).json({
             ok: true,
             content: allChannels,
-            message: 'success'
+            message: 'success',
+            cursorChannel: myCursor,
         })
     } catch (error) {
+        console.log(error)
         return err(500, req, res);
     }
 }
@@ -54,7 +55,7 @@ export const updateChannel = async (req: Next.Custom, res: NextApiResponse) => {
     try {
         const { id } = req.query;
         const { name, description } = req.body;
-        if(!name && !description){
+        if (!name && !description) {
             return err(400, req, res)
         }
         const updateChannel = await prisma.channel.update({
