@@ -13,34 +13,35 @@ import SocketIOClient from "socket.io-client";
 
 const Chat: NextPage = () => {
   // @ts-ignore
-  const { connectSocket, disconnectSocket, socket, setSocket } = useContext(SocketContext);
+  const { connectSocket, disconnectSocket, socket, setSocket } =
+    useContext(SocketContext);
   const arrayExample: Array<any> = [];
   const [isConnected, setIsConnected] = useState(false);
   const [listChats, setListChats] = useState(arrayExample);
   const [activeSearch, setActiveSearch] = useState(false);
   const [activeChannel, setActiveChannel] = useState(true);
 
-
   useEffect(() => {
-    socket ? '': setSocket(connectSocket());
-console.log(socket)
-    if(socket){
+    socket ? "" : setSocket(connectSocket());
+    console.log(socket);
+    if (socket) {
       socket.on("connect", () => {
-      setIsConnected(true);
-      console.log('conectado',isConnected);
-    })
-    socket.on("disconnect", () => {
-      setIsConnected(false);
-      console.log('desconectado',isConnected);
-    });
-    socket.on("status", (data: any) => {
-      console.log("hello", data);
-    });
-    return () => {
-      socket.off("connect");
-      socket.off("disconnect");
-    }}
-  },);
+        setIsConnected(true);
+        console.log("conectado", isConnected);
+      });
+      socket.on("disconnect", () => {
+        setIsConnected(false);
+        console.log("desconectado", isConnected);
+      });
+      socket.on("status", (data: any) => {
+        console.log("hello", data);
+      });
+      return () => {
+        socket.off("connect");
+        socket.off("disconnect");
+      };
+    }
+  });
 
   useEffect(() => {
     //TODO PETICION A LA BD DE CANALES DE USUARIo
