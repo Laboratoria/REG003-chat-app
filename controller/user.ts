@@ -18,7 +18,7 @@ export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { username, email, password } = req.body;
     if (!username || !isValidEmail(email) || isWeakPassword(password)) {
-      return err( 500, req, res,)
+      return err(500, req, res,)
       // return res.status(400).json({ ok: false, message: "bad request" });
     }
     const passwordCrypt = bcrypt.hashSync(password, 10);
@@ -30,18 +30,18 @@ export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json({ ok: true, user: responseUser });
   } catch (error: any) {
     if (error.code === "P2002") {
-      return err( 400,
+      return err(400,
         req,
-        res,)
+        res)
       // return res.status(400).json({
       //   ok: false,
       //   message: "Email already registered!",
       // }
       //);
     }
-    return err( 500,
+    return err(500,
       req,
-      res,)
+      res)
     // return res.status(500).json({
     //   ok: false,
     //   message: "Server error",
@@ -81,9 +81,9 @@ export const getUserByIdIOrEmail = async (req: NextApiRequest, res: NextApiRespo
     const data = validateParams(id)
     console.log(typeof data, "data")
     if (!data) {
-      return err( 400,
+      return err(400,
         req,
-        res,)
+        res)
       // return res.status(400).json({
       //   ok: false,
       //   content: null,
@@ -146,17 +146,17 @@ export const updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
   } catch (error: any) {
 
     if (error.code === "P2025") {
-      return err( 404,
+      return err(404,
         req,
-        res,)
+        res)
       // return res.status(404).json({
       //   ok: false,
       //   message: error.meta.cause
       // });
     }
-    return err( 500,
+    return err(500,
       req,
-      res,)
+      res)
     // return res.status(500).json({
     //   ok: false,
     //   message: "server error",
@@ -168,34 +168,34 @@ export const deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { id } = req.query
     if (!id) {
-      return err( 400,
+      return err(400,
         req,
-        res,)
+        res)
       // return res.status(400).json({ ok: false, message: 'Bad Request' })
     }
     const user = await prisma.user.delete({ where: { id: Number(id) } })
     if (!user) {
-      return err( 500,
+      return err(500,
         req,
-        res,)
+        res)
       // return res.status(404).json({ ok: false, message: 'Not Found' })
     }
     return res.status(200).json({ ok: true, user })
   } catch (error: any) {
     if (error.code === "P2025") {
       return err(404,
-          req,
-          res)
-  }
-  else {
+        req,
+        res)
+    }
+    else {
       return err(500,
-          req,
-          res)
+        req,
+        res)
+    }
   }
 }
     // return res.status(500).json({
     //   ok: false,
     //   message: "server error"
     // });
-  }
-}
+

@@ -31,6 +31,15 @@ export const getAllChannels = async (req: Next.Custom, res: NextApiResponse) => 
         return err(500, req, res);
     }
 }
+
+export const getUserChannels = async (req: Next.Custom, res: NextApiResponse) => {
+    try {
+
+    } catch (error) {
+
+    }
+}
+
 export const deleteChannel = async (req: Next.Custom, res: NextApiResponse) => {
     try {
         const { id } = req.query;
