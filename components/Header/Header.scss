@@ -16,10 +16,30 @@
 .ant-dropdown-menu-title-content:hover{
   color: $color7;
 }
+.ant-dropdown-menu-title-content::selection{
+  color: $color7;
+}
 .ant-dropdown-menu-item-active:hover{
 background-color: $color4;
 }
+.ant-dropdown-menu-item-active::selection{
+  background-color: $color4;
+  }
 .ant-dropdown-trigger:hover{
   background-color: $color4;
+  color:$color7;
+}
+.ant-dropdown-trigger::selection{
+  background-color: $color4;
+  color:$color7;
+}
+.anticon{
+  color: $color2;
+  font-size: 1.2rem;
+}
+.anticon:hover{
+  color:$color7;
+}
+.anticon::selection{
   color:$color7;
 }
