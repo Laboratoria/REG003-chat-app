@@ -1,30 +1,30 @@
 import type { NextPage } from "next";
-import Header from "../components/Header/Header";
-import TabsMenu from "../components/Tabs/tabs";
-import ListChat from "../components/List-Chat/ListChat";
-import SearchSide from "../components/Search/Search";
+import Header from "../../components/Header/Header";
+import TabsMenu from "../../components/Tabs/tabs";
+import ListChat from "../../components/List-Chat/ListChat";
+import SearchSide from "../../components/Search/Search";
 import { useState, useEffect, useContext } from "react";
-import { SocketContext } from "../contexts/socketContext";
+import { SocketContext } from "../../contexts/socketContext";
 
 const Chat: NextPage = () => {
   // @ts-ignore
-  const { connectSocket, disconnectSocket, socket, setSocket } =
-    useContext(SocketContext);
+  const { connectSocket, disconnectSocket, socket, setSocket } = useContext(SocketContext);
   const arrayExample: Array<any> = [];
   const [isConnected, setIsConnected] = useState(false);
   const [listChats, setListChats] = useState(arrayExample);
   const [activeSearch, setActiveSearch] = useState(false);
   const [activeChannel, setActiveChannel] = useState(true);
 
+
   useEffect(() => {
     const sockets = connectSocket();
     sockets.on("connect", () => {
       setIsConnected(true);
-      console.log("conectado", isConnected);
-    });
+      console.log('conectado',isConnected);
+    })
     sockets.on("disconnect", () => {
       setIsConnected(false);
-      console.log("desconectado", isConnected);
+      console.log('desconectado',isConnected);
     });
     sockets.on("status", (data: any) => {
       console.log("hello", data);
@@ -33,9 +33,9 @@ const Chat: NextPage = () => {
     return () => {
       sockets.off("connect");
       sockets.off("disconnect");
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
   useEffect(() => {
     //TODO PETICION A LA BD DE CANALES DE USUARIo
