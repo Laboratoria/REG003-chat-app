@@ -34,9 +34,13 @@ export const getAllChannels = async (req: Next.Custom, res: NextApiResponse) => 
 
 export const getUserChannels = async (req: Next.Custom, res: NextApiResponse) => {
     try {
-
+        const userChannels = await prisma.channelUser.findMany({
+            where: { userId: 123 },
+            include: { channel: true },
+        });
+        return res.status(200).json(userChannels)
     } catch (error) {
-
+        return err(500, req, res)
     }
 }
 
@@ -60,6 +64,7 @@ export const deleteChannel = async (req: Next.Custom, res: NextApiResponse) => {
     }
 
 }
+
 export const updateChannel = async (req: Next.Custom, res: NextApiResponse) => {
     try {
         const { id } = req.query;
@@ -88,4 +93,23 @@ export const updateChannel = async (req: Next.Custom, res: NextApiResponse) => {
         }
     }
 
+}
+
+export const createChannel = async (req: Next.Custom, res: NextApiResponse) => {
+    try {
+        const uid = req.authentication?.uid;
+        if (!uid) {
+            return err(400, req, res)
+        } else {
+            const createdChannel = await prisma.channel.create({
+                data: {
+                    description: 'des',
+                    name: 'title',
+                    users: { create: { userId: uid } },
+                },
+            })
+        }
+    } catch (error) {
+
+    }
 }
