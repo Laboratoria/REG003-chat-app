@@ -10,28 +10,33 @@ export type ContextProvider = {
   children: React.ReactNode;
 };
 
-const InitialSocket:any={}
+const InitialSocket: any = {};
 export const SocketContext = createContext(InitialSocket);
 
 export const SocketProvider = ({ children }: ContextProvider) => {
-const [socket, setSocket]= useState();
-const connectSocket = () => {
-  // @ts-ignore
-const sockets =  SocketIOClient.connect(process.env.URL_API, {
-    path: "/api/socket",
-  });
-  return sockets
-};
+  const [socket, setSocket] = useState();
 
-const disconnectSocket = () => {
-  // @ts-ignores
-  const sockets = socket.disconnect();
-  console.log("socketOff", sockets);
+  const connectSocket = () => {
+    console.log("1");
+    // @ts-ignore
+    const sockets = SocketIOClient.connect(process.env.URL_API, {
+      path: "/api/socket",
+    });
+    return sockets;
+  };
 
-  return sockets
-};
+  const disconnectSocket = () => {
+    // @ts-ignores
+    const sockets = socket.disconnect();
+    console.log("socketOff", sockets);
+
+    return sockets;
+  };
+
   return (
-    <SocketContext.Provider value={{connectSocket, disconnectSocket , socket, setSocket}}>
+    <SocketContext.Provider
+      value={{ connectSocket, disconnectSocket, socket, setSocket }}
+    >
       {children}
     </SocketContext.Provider>
   );

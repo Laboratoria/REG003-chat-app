@@ -18,6 +18,14 @@ export const getAllChannels = async (req: Next.Custom, res: NextApiResponse) => 
                 createdAt: "desc"
             }
         })
+
+        if (allChannels.length === 0) {
+            return res.status(200).json({
+                ok: true,
+                content: [],
+                message: 'There are no registered channels'
+            })
+        }
         const lastPostInResults = allChannels[(allChannels.length - 1)] // Remember: zero-based index! :)
         myCursor = lastPostInResults.id
         return res.status(200).json({
@@ -95,21 +103,62 @@ export const updateChannel = async (req: Next.Custom, res: NextApiResponse) => {
 
 }
 
-export const createChannel = async (req: Next.Custom, res: NextApiResponse) => {
-    try {
-        const uid = req.authentication?.uid;
-        if (!uid) {
-            return err(400, req, res)
-        } else {
-            const createdChannel = await prisma.channel.create({
-                data: {
-                    description: 'des',
-                    name: 'title',
-                    users: { create: { userId: uid } },
-                },
-            })
-        }
-    } catch (error) {
+// export const createChannel = async (req: Next.Custom, res: NextApiResponse) => {
+//     try {
+//         const uid = req.authentication?.uid;
+//         if (!uid) {
+//             return err(400, req, res)
+//         } else {
+//             const createdChannel = await prisma.channel.create({
+//                 data: {
+//                     description: 'des',
+//                     name: 'title',
+//                     users: { create: { userId: uid } },
+//                 },
+//             })
+//         }
+//     } catch (error) {
 
+//     }
+// }
+
+
+
+//TODO: CREATE CHANNEL AND USERID
+export const createChannel = async (req: Next.Custom, res: NextApiResponse) => {
+
+    try {
+        const { name, description, channelImage } = req.body;
+
+        const uid = req.authentication?.uid;
+
+        if ((!name) || (!uid)) {
+            return err(400, req, res);
+        }
+
+        const newChannel = await prisma.channel.create({
+            data: {
+                name,
+                description,
+                channelImage,
+                users: {
+                    create: { userId: uid }
+                    //create:{userId: user.id}
+                }
+            }
+        })
+        console.log('holaaaa2');
+
+        // const responseChannel: Channel = {...newChannel}
+
+        console.log(newChannel);
+
+
+        return res.json({ "hola": "mundo" })
+    } catch (error) {
+        console.log(error);
+
+        return res.status(500).json({ "name": error })
     }
 }
+

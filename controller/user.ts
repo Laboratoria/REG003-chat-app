@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../lib/prisma";
 import bcrypt from "bcrypt";
 import { isValidEmail, isWeakPassword, validateParams } from "../utils/utils";
-import err from '../middlewares/error'
+import err from "../middlewares/error";
 
 type User = {
   id: number;
@@ -18,7 +18,7 @@ export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { username, email, password } = req.body;
     if (!username || !isValidEmail(email) || isWeakPassword(password)) {
-      return err(500, req, res,)
+      return err(400, req, res);
       // return res.status(400).json({ ok: false, message: "bad request" });
     }
     const passwordCrypt = bcrypt.hashSync(password, 10);
@@ -30,18 +30,14 @@ export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json({ ok: true, user: responseUser });
   } catch (error: any) {
     if (error.code === "P2002") {
-      return err(400,
-        req,
-        res)
+      return err(400, req, res);
       // return res.status(400).json({
       //   ok: false,
       //   message: "Email already registered!",
       // }
       //);
     }
-    return err(500,
-      req,
-      res)
+    return err(500, req, res);
     // return res.status(500).json({
     //   ok: false,
     //   message: "Server error",
@@ -52,38 +48,43 @@ export const createUser = async (req: NextApiRequest, res: NextApiResponse) => {
 //TODO-DONE: CREATE CONTROLLER GET USER
 
 export const getAllUser = async (req: NextApiRequest, res: NextApiResponse) => {
-
   //TODO: IMPROVE QUERY GETALLUSER
   try {
     const user = await prisma.user.findMany({
-      select: { password: false, id: true, email: true, username: true, profile_image: true }
-    })
+      select: {
+        password: false,
+        id: true,
+        email: true,
+        username: true,
+        profile_image: true,
+      },
+    });
     return res.json({
       ok: true,
       content: user,
-      message: null
-    })
+      message: null,
+    });
   } catch (error) {
     return res.status(500).json({
       ok: false,
       content: null,
-      message: "Server Error"
-    })
+      message: "Server Error",
+    });
   }
-}
+};
 
-//TODO CONTROLLER getUserByIdOrEmail 
+//TODO CONTROLLER getUserByIdOrEmail
 
-export const getUserByIdIOrEmail = async (req: NextApiRequest, res: NextApiResponse) => {
-
+export const getUserByIdIOrEmail = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
   try {
     const { id } = req.query;
-    const data = validateParams(id)
-    console.log(typeof data, "data")
+    const data = validateParams(id);
+    console.log(typeof data, "data");
     if (!data) {
-      return err(400,
-        req,
-        res)
+      return err(400, req, res);
       // return res.status(400).json({
       //   ok: false,
       //   content: null,
@@ -93,33 +94,39 @@ export const getUserByIdIOrEmail = async (req: NextApiRequest, res: NextApiRespo
 
     const findParams = await prisma.user.findUnique({
       where: data,
-      select: { password: false, id: true, email: true, username: true, profile_image: true }
-
-    })
+      select: {
+        password: false,
+        id: true,
+        email: true,
+        username: true,
+        profile_image: true,
+      },
+    });
 
     if (!findParams) {
-      return res.status(400).json({
-        ok: false,
-        content: null,
-        message: "Bad request"
-      })
+      return err(400, req, res);
+      // return res.status(400).json({
+      //   ok: false,
+      //   content: null,
+      //   message: "Bad request"
+      // })
     }
 
     res.json({
       ok: true,
-      content: findParams
-    })
+      content: findParams,
+    });
   } catch (error) {
-    console.log(error)
-    return res.status(500).json({
-      ok: false,
-      content: null,
-      message: "server error"
-    })
+    console.log(error);
+    return err(500, req, res);
+
+    // res.status(500).json({
+    //   ok: false,
+    //   content: null,
+    //   message: "server error"
+    // })
   }
-
-}
-
+};
 
 export const updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -136,51 +143,42 @@ export const updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
         data: {
           email,
           password,
-          username
-        }
+          username,
+        },
       });
       const responseUser: User = { ...updatedUser };
       delete responseUser.password;
       return res.status(200).json(responseUser);
     }
   } catch (error: any) {
-
     if (error.code === "P2025") {
-      return err(404,
-        req,
-        res)
+      return err(404, req, res);
       // return res.status(404).json({
       //   ok: false,
       //   message: error.meta.cause
       // });
     }
-    return err(500,
-      req,
-      res)
+    return err(500, req, res);
     // return res.status(500).json({
     //   ok: false,
     //   message: "server error",
     // })
   }
-}
+};
 
 export const deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { id } = req.query
+    const { id } = req.query;
     if (!id) {
-      return err(400,
-        req,
-        res)
+      return err(400, req, res);
       // return res.status(400).json({ ok: false, message: 'Bad Request' })
     }
-    const user = await prisma.user.delete({ where: { id: Number(id) } })
+    const user = await prisma.user.delete({ where: { id: Number(id) } });
     if (!user) {
-      return err(500,
-        req,
-        res)
+      return err(500, req, res);
       // return res.status(404).json({ ok: false, message: 'Not Found' })
     }
-    return res.status(200).json({ ok: true, user })
+    return res.status(200).json({ ok: true, user });
   } catch (error: any) {
     if (error.code === "P2025") {
       return err(404,
@@ -198,4 +196,3 @@ export const deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
     //   ok: false,
     //   message: "server error"
     // });
-
