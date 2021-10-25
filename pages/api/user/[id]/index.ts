@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getUserByIdIOrEmail, updateUser, deleteUser } from '../../../controller/user'
-import { requireAuth } from '../../../middlewares/auth'
+import { getUserByIdIOrEmail, updateUser, deleteUser } from '../../../../controller/user'
+import { requireAuth } from '../../../../middlewares/auth'
 
 
 export default function handler(

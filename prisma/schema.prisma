@@ -20,8 +20,8 @@ model User {
 model Channel {
   id          Int           @id @default(autoincrement())
   name        String
-  description String
-  channelImage String        @default("https://cdn-icons-png.flaticon.com/512/1077/1077114.png")
+  description String?
+  channelImage String?        @default("https://cdn-icons-png.flaticon.com/512/1077/1077114.png")
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   users       ChannelUser[]

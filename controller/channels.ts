@@ -1,3 +1,4 @@
+import { any } from "jest-mock-extended";
 import type { NextApiResponse } from "next";
 import prisma from "../lib/prisma";
 import err from '../middlewares/error';
@@ -42,8 +43,9 @@ export const getAllChannels = async (req: Next.Custom, res: NextApiResponse) => 
 
 export const getUserChannels = async (req: Next.Custom, res: NextApiResponse) => {
     try {
+        const { id } = req.query;
         const userChannels = await prisma.channelUser.findMany({
-            where: { userId: 123 },
+            where: { userId: Number(id) },
             include: { channel: true },
         });
         return res.status(200).json(userChannels)
@@ -76,14 +78,16 @@ export const deleteChannel = async (req: Next.Custom, res: NextApiResponse) => {
 export const updateChannel = async (req: Next.Custom, res: NextApiResponse) => {
     try {
         const { id } = req.query;
-        const { name, description } = req.body;
-        if (!name && !description) {
+        const { name, description, channelImage } = req.body;
+        if (!name && !description && !channelImage) {
             return err(400, req, res)
         }
         const updateChannel = await prisma.channel.update({
             where: { id: Number(id) }, data: {
                 name,
-                description
+                description,
+                //@ts-ignore
+                channelImage
             }
         })
         return res.status(200).json(updateChannel)
@@ -103,27 +107,6 @@ export const updateChannel = async (req: Next.Custom, res: NextApiResponse) => {
 
 }
 
-// export const createChannel = async (req: Next.Custom, res: NextApiResponse) => {
-//     try {
-//         const uid = req.authentication?.uid;
-//         if (!uid) {
-//             return err(400, req, res)
-//         } else {
-//             const createdChannel = await prisma.channel.create({
-//                 data: {
-//                     description: 'des',
-//                     name: 'title',
-//                     users: { create: { userId: uid } },
-//                 },
-//             })
-//         }
-//     } catch (error) {
-
-//     }
-// }
-
-
-
 //TODO: CREATE CHANNEL AND USERID
 export const createChannel = async (req: Next.Custom, res: NextApiResponse) => {
 
@@ -140,24 +123,16 @@ export const createChannel = async (req: Next.Custom, res: NextApiResponse) => {
             data: {
                 name,
                 description,
+                //@ts-ignore
                 channelImage,
                 users: {
                     create: { userId: uid }
-                    //create:{userId: user.id}
                 }
             }
-        })
-        console.log('holaaaa2');
-
-        // const responseChannel: Channel = {...newChannel}
-
-        console.log(newChannel);
-
-
-        return res.json({ "hola": "mundo" })
+        });
+        return res.json(newChannel);
     } catch (error) {
-        console.log(error);
-
+        console.log(error)
         return res.status(500).json({ "name": error })
     }
 }
