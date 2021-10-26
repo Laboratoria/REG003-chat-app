@@ -5,6 +5,7 @@ import prisma from '../lib/prisma'
 
 export const getMessage = async (req: Next.Custom, res: NextApiResponse) => {
     try {
+//channel deberia ser un query id?
         const { channel, cursor } = req.headers
         if (!channel) {
             err(400, req, res)
