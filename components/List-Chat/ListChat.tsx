@@ -5,18 +5,17 @@ import React from "react";
 
 const { Meta } = Card;
 interface Props {
-  channelTitle:String;
-  lastMessage: String;
-  time: String;
-  id?:string
+  channelTitle:string;
+  lastMessage: string;
+  time: string;
+  id:number;
 }
 
-const ListChat: NextPage<Props> = ({channelTitle,lastMessage, time}) => {
+const ListChat: NextPage<Props> = ({channelTitle,lastMessage, time, id}) => {
 const router = useRouter();
 
-
   return (
-    <Card className="card-item" bordered={false}>
+    <Card className="card-item" bordered={false} onClick={()=>router.push(`/chat/${id}`)}>
       <p className="time">{time}</p>
           <Meta
             avatar={
