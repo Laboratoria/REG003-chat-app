@@ -25,7 +25,9 @@ interface Token {
 
 const Login: NextPage<Props> = ({ setIsLogin }) => {
   const [error, setError] = useState(false);
-  const { connectSocket,setSocket } = useContext(SocketContext);
+
+  const { connectSocket, setSocket, socket } = useContext(SocketContext);
+
   const [isConnected, setIsConnected] = useState(false);
   const router = useRouter();
 
@@ -35,10 +37,14 @@ const Login: NextPage<Props> = ({ setIsLogin }) => {
       return setError(!token.ok);
     } else {
       setError(!token.ok);
+
+      const sockets = connectSocket();
       localStorage.setItem('token', token.token);
-      const socket =connectSocket()
-      setSocket(socket);
-      router.push('/chat');
+      setSocket(sockets)
+      setTimeout(() => {
+        router.push('/chat');
+      }, 2000)
+
     }
   };
 
