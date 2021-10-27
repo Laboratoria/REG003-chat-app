@@ -5,34 +5,29 @@ import ListChat from "../../components/List-Chat/ListChat";
 import SearchSide from "../../components/Search/Search";
 import { useState, useEffect, useContext } from "react";
 import { SocketContext } from "../../contexts/socketContext";
+import ListDiscover from "../../components/List-Chat/ListDiscover";
 
 const Chat: NextPage = () => {
   // @ts-ignore
   const { socket } = useContext(SocketContext);
-  const arrayExample: Array<any> = [];
-  const [isConnected, setIsConnected] = useState(false);
-  const [listChats, setListChats] = useState(arrayExample);
-  const [activeSearch, setActiveSearch] = useState(false);
-  const [activeChannel, setActiveChannel] = useState(true);
+  const [listChats, setListChats] = useState<Array<any>>();
+  const [listDiscover, setDiscover] = useState<Array<any>>();
+  const [activeSearch, setActiveSearch] = useState<boolean>(false);
+  const [activeChannel, setActiveChannel] = useState<boolean>(true);
 
 
 
-  console.log(socket)
-  socket.on("connect", () => {
-    setIsConnected(true);
-    console.log('conectado', isConnected);
-  })
-  socket.on("disconnect", () => {
-    setIsConnected(false);
-    console.log('desconectado', isConnected);
-  });
-  socket.on("status", (data: any) => {
-    console.log("hello", data);
-  });
-  /*       return () => {
-          socket.off("connect");
-          socket.off("disconnect");
-        } */
+  /*   socket.on("connect", () => {
+  
+      console.log('conectado',);
+    })
+    socket.on("disconnect", () => {
+      console.log('desconectado');
+    });
+    socket.on("status", (data: any) => {
+      console.log("hello", data);
+    });
+   */
 
   useEffect(() => {
     //TODO PETICION A LA BD DE CANALES DE USUARIo
@@ -95,7 +90,7 @@ const Chat: NextPage = () => {
       },
     ];
 
-    activeChannel ? setListChats(myChannels) : setListChats(descubrir);
+    activeChannel ? setListChats(myChannels) : setDiscover(descubrir);
   }, [activeChannel]);
 
   return (
@@ -109,22 +104,39 @@ const Chat: NextPage = () => {
         setActiveChannel={setActiveChannel}
       ></TabsMenu>
       {activeSearch ? <SearchSide></SearchSide> : ""}
-      {listChats[0] ? (
-        listChats.map((chat) => {
-          const { channelTitle, lastMessage, time, id } = chat;
-          return (
-            <ListChat
-              key={id}
-              channelTitle={channelTitle}
-              lastMessage={lastMessage}
-              time={time}
-              id={id}
-            ></ListChat>
-          );
-        })
-      ) : (
-        <p>No te has unido a canales aun </p>
-      )}
+      {activeChannel ?
+        listChats?.length ? (
+          listChats.map((chat) => {
+            const { channelTitle, lastMessage, time, id } = chat;
+            return (
+              <ListChat
+                key={id}
+                channelTitle={channelTitle}
+                lastMessage={lastMessage}
+                time={time}
+                id={id}
+              ></ListChat>
+            );
+          })
+        ) : (
+          <p>No te has unido a canales aun </p>
+        ) : listDiscover?.length ? (
+          listDiscover.map((chat) => {
+            const { channelTitle, description, channelImage, id } = chat;
+            return (
+              <ListDiscover
+                key={id}
+                channelTitle={channelTitle}
+                description={description}
+                channelImage={channelImage}
+                id={id}
+              ></ListDiscover>
+            );
+          })
+        ) : (
+          <p>No te has unido a canales aun </p>
+        )
+      }
     </section>
   );
 };
