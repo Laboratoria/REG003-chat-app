@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { deleteChannel, updateChannel } from '../../../controller/channels';
-import { requireAuth } from '../../../middlewares/auth'
+import { deleteChannel, updateChannel } from '../../../../controller/channels';
+import { requireAuth } from '../../../../middlewares/auth'
 
 export default function channelId(
     req: NextApiRequest,

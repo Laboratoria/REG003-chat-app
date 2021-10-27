@@ -5,9 +5,9 @@ import prisma from '../lib/prisma'
 
 export const getMessage = async (req: Next.Custom, res: NextApiResponse) => {
     try {
-//channel deberia ser un query id?
-        const { channel, cursor } = req.headers
-        if (!channel) {
+        const id = req.query.id;
+        const { cursor } = req.headers;
+        if (!id) {
             err(400, req, res)
         }
         const messages = await prisma.message.findMany({
@@ -15,15 +15,28 @@ export const getMessage = async (req: Next.Custom, res: NextApiResponse) => {
             cursor: {
                 id: cursor ? Number(cursor) : 1,
             },
-            orderBy: {
-                createdAt: "desc"
-            }, where: {
-                channelId: Number(channel)
-            }
+            where: {
+                channelId: Number(id)
+            },orderBy: {
+                createdAt: "asc"
+            },
+            include: { user: true },
         })
+        if (messages.length === 0) {
+            return res.status(200).json({
+                ok: true,
+                content: [],
+                message: 'There are any messages'
+            })
+        }
         const lastMessage = messages[(messages.length - 1)]
         const myCursor = lastMessage.id
-        return res.status(200).json({ messages, myCursor })
+        return res.status(200).json({
+            ok: true,
+            content: messages,
+            message: 'success',
+            cursorChannel: myCursor,
+        })
     } catch (error: any) {
         console.log(error)
         return err(500, req, res);
