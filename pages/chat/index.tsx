@@ -6,28 +6,31 @@ import SearchSide from "../../components/Search/Search";
 import { useState, useEffect, useContext } from "react";
 import { SocketContext } from "../../contexts/socketContext";
 import ListDiscover from "../../components/List-Chat/ListDiscover";
+import { JsonWebTokenError } from "jsonwebtoken";
 
 const Chat: NextPage = () => {
   // @ts-ignore
-  const { socket } = useContext(SocketContext);
+  const { socket, setSocket } = useContext(SocketContext);
   const [listChats, setListChats] = useState<Array<any>>();
   const [listDiscover, setDiscover] = useState<Array<any>>();
   const [activeSearch, setActiveSearch] = useState<boolean>(false);
   const [activeChannel, setActiveChannel] = useState<boolean>(true);
 
-
-
-  /*   socket.on("connect", () => {
-  
-      console.log('conectado',);
+  useEffect(() => {
+    const sockets = socket;
+    sockets.on("connect", () => {
+      console.log('conectado');
     })
-    socket.on("disconnect", () => {
+    sockets.on("disconnect", () => {
       console.log('desconectado');
     });
-    socket.on("status", (data: any) => {
+    sockets.on("status", (data: any) => {
       console.log("hello", data);
     });
-   */
+  }, [])
+
+
+
 
   useEffect(() => {
     //TODO PETICION A LA BD DE CANALES DE USUARIo
@@ -60,19 +63,19 @@ const Chat: NextPage = () => {
     const descubrir = [
       {
         channelTitle: "DESCUBRIR",
-        lastMessage: "holis 5",
+        description: "holis 5",
         time: "10:15",
         id: 1,
       },
       {
         channelTitle: "sugar free",
-        lastMessage: "holas",
+        description: "holas",
         time: "10:00",
         id: 2,
       },
       {
         channelTitle: "sunrise",
-        lastMessage: "buenas buenas",
+        description: "buenas buenas",
         time: "09:11",
         id: 3,
       },

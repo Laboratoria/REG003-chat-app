@@ -24,7 +24,7 @@ const CommentChat: NextPage<Props> = ({ userName, body, time, attachment }) => {
                     < p >
                         {body}
                     </p >
-                    {attachment ? <Image src={attachment} alt='attachment' /> : ''}
+                    {attachment ? <img src={attachment} alt='attachment' /> : ''}
                 </div>
 
             }
