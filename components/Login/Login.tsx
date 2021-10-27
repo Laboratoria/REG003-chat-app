@@ -25,7 +25,9 @@ interface Token {
 
 const Login: NextPage<Props> = ({ setIsLogin }) => {
   const [error, setError] = useState(false);
+
   const { connectSocket, setSocket, socket } = useContext(SocketContext);
+
   const [isConnected, setIsConnected] = useState(false);
   const router = useRouter();
 
