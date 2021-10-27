@@ -6,6 +6,7 @@ export default function user(
     res: NextApiResponse
 ) {
     if (req.method === 'GET') {
+        console.log(req.query)
         return getUserChannels(req, res)
     }
     else {
