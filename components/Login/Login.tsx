@@ -1,9 +1,10 @@
 import type { NextPage } from "next";
 import { Form, Input, Button, Space } from "antd";
-import { useState } from "react";
 import { postAuth } from "../../services/auth";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { SocketContext } from "../../contexts/socketContext";
+
 
 //TODO STYLES
 // TODO ERROR
@@ -24,6 +25,7 @@ interface Token {
 
 const Login: NextPage<Props> = ({ setIsLogin }) => {
   const [error, setError] = useState(false);
+  const { connectSocket,setSocket } = useContext(SocketContext);
   const [isConnected, setIsConnected] = useState(false);
   const router = useRouter();
 
@@ -33,8 +35,10 @@ const Login: NextPage<Props> = ({ setIsLogin }) => {
       return setError(!token.ok);
     } else {
       setError(!token.ok);
-      localStorage.setItem("token", token.token);
-      router.push("/chat");
+      localStorage.setItem('token', token.token);
+      const socket =connectSocket()
+      setSocket(socket);
+      router.push('/chat');
     }
   };
 
