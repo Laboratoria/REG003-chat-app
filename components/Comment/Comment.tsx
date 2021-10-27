@@ -1,26 +1,37 @@
-import { NextPage } from 'next'
+import { NextPage, } from 'next'
+import  Image  from 'next/image'
 import React from 'react'
 import { Comment, Tooltip, Avatar } from 'antd';
 
+interface Props {
+    userName: string;
+    body: string;
+    time: string;
+    attachment?: string;
+    /*     id: number;
+        userId: string */
+}
 
 
-const CommentChat: NextPage = () => {
+const CommentChat: NextPage<Props> = ({ userName, body, time, attachment }) => {
 
     return (
         <Comment
-            author={<a>Han Solo</a>}
-            avatar={< Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
+            author={userName}
+            avatar={< Avatar src={attachment} alt={userName} />}
             content={
-                < p >
-                    We supply a series of design principles, practical patterns and high quality design
-                    resources(Sketch and Axure), to help people create their product prototypes beautifully
-                    and efficiently.
-        </p >
+                <div>
+                    < p >
+                        {body}
+                    </p >
+                    {attachment ? <Image src={attachment} alt='attachment' /> : ''}
+                </div>
+
             }
             datetime={
-                < Tooltip title='fecha' >
-                    <span>fecha</span>
-                </Tooltip >
+                < span >
+                    {time}
+                </span >
             }
         />
     );

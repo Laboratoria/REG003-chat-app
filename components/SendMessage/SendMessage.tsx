@@ -36,7 +36,7 @@ const SendMessage: NextPage = () => {
 
 
   return (
-    <>
+
       <Comment
         avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
         content={
@@ -48,7 +48,7 @@ const SendMessage: NextPage = () => {
           />
         }
       />
-    </>
+
   );
 }
 export default SendMessage
