@@ -46,7 +46,9 @@ const Chat: NextPage = () => {
       });
 
       getChannelsToDiscover(token, uid).then((res) => {
-        setDiscover(res);
+        console.log('line49',res.content);
+        
+        setDiscover(res.content);
         const channelsToDiscover = res;
         return channelsToDiscover;
       });
