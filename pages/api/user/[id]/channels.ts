@@ -1,13 +1,17 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { getUserChannels } from "../../../../controller/channels";
+import type { NextApiRequest, NextApiResponse } from "next";
+import { getUserChannels, getChannelsToDiscover } from "../../../../controller/channels";
+import { requireAuth } from '../../../../middlewares/auth';
 
 export default function user(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
     if (req.method === 'GET') {
-        console.log(req.query)
-        return getUserChannels(req, res)
+        if (req.headers.Discover === "true") {
+            return getChannelsToDiscover(req, res)
+        } else {
+            return getUserChannels(req, res)
+        }
     }
     else {
         console.log('hola mal todo')

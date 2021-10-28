@@ -4,34 +4,41 @@ import prisma from "../lib/prisma";
 import err from '../middlewares/error';
 import { Next } from "../types/custom";
 
-export const getAllChannels = async (req: Next.Custom, res: NextApiResponse) => {
-
+export const getChannelsToDiscover = async (req: Next.Custom, res: NextApiResponse) => {
     //TODO: IMPROVE QUERY GETALLUSER
     try {
+        const { id } = req.query;
         const { cursor } = req.headers
         let myCursor = cursor ? Number(req.headers.cursor) : 1;
-        const allChannels = await prisma.channel.findMany({
+        const channelsToDiscover = await prisma.channel.findMany({
             take: 10,
             cursor: {
                 id: myCursor,
             },
+            where: {
+                NOT: {
+                    id: Number(id),
+                },
+            },
             orderBy: {
                 createdAt: "desc"
             }
-        })
 
-        if (allChannels.length === 0) {
+        })
+        console.log(channelsToDiscover)
+
+        if (channelsToDiscover.length === 0) {
             return res.status(200).json({
                 ok: true,
                 content: [],
                 message: 'There are no registered channels'
             })
         }
-        const lastPostInResults = allChannels[(allChannels.length - 1)] // Remember: zero-based index! :)
+        const lastPostInResults = channelsToDiscover[(channelsToDiscover.length - 1)] // Remember: zero-based index! :)
         myCursor = lastPostInResults.id
         return res.status(200).json({
             ok: true,
-            content: allChannels,
+            content: channelsToDiscover,
             message: 'success',
             cursorChannel: myCursor,
         })
@@ -112,7 +119,6 @@ export const createChannel = async (req: Next.Custom, res: NextApiResponse) => {
 
     try {
         const { name, description, channelImage } = req.body;
-
         const uid = req.authentication?.uid;
 
         if ((!name) || (!uid)) {
