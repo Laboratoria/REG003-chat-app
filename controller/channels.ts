@@ -8,7 +8,6 @@ export const getChannelsToDiscover = async (req: Next.Custom, res: NextApiRespon
     //TODO: IMPROVE QUERY GETALLUSER
     try {
         const { id } = req.query;
-        console.log(id);
         
         const { cursor } = req.headers
         let myCursor = cursor ? Number(req.headers.cursor) : 1;

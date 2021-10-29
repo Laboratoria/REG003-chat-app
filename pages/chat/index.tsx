@@ -10,6 +10,7 @@ import {
   getUserChannels,
   getChannelsToDiscover,
 } from "../../services/channels";
+import ModalChannel from "../../components/Modal/ModalChannel";
 
 const Chat: NextPage = () => {
   // @ts-ignore
@@ -19,6 +20,8 @@ const Chat: NextPage = () => {
   const [listDiscover, setDiscover] = useState<Array<any>>();
   const [activeSearch, setActiveSearch] = useState<boolean>(false);
   const [activeChannel, setActiveChannel] = useState<boolean>(true);
+
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const sockets = socket;
@@ -46,8 +49,6 @@ const Chat: NextPage = () => {
       });
 
       getChannelsToDiscover(token, uid).then((res) => {
-        console.log('line49',res.content);
-        
         setDiscover(res.content);
         const channelsToDiscover = res;
         return channelsToDiscover;
@@ -64,24 +65,32 @@ const Chat: NextPage = () => {
       <Header
         setActiveSearch={setActiveSearch}
         activeSearch={activeSearch}
+        setIsModalVisible={setIsModalVisible}
+        isModalVisible={isModalVisible}
       ></Header>
       <TabsMenu
         activeChannel={activeChannel}
         setActiveChannel={setActiveChannel}
       ></TabsMenu>
+      <ModalChannel
+        setIsModalVisible={setIsModalVisible}
+        isModalVisible={isModalVisible}
+      />
       {activeSearch ? <SearchSide></SearchSide> : ""}
       {activeChannel ? (
         listChats?.length ? (
           listChats.map((chat) => {
             const { name, lastMessage, updatedAt, id } = chat.channel;
             return (
-              <ListChat
-                key={id}
-                channelTitle={name}
-                lastMessage={lastMessage}
-                time={updatedAt}
-                id={id}
-              ></ListChat>
+              <>
+                <ListChat
+                  key={id}
+                  channelTitle={name}
+                  lastMessage={lastMessage}
+                  time={updatedAt}
+                  id={id}
+                ></ListChat>
+              </>
             );
           })
         ) : (
@@ -91,13 +100,15 @@ const Chat: NextPage = () => {
         listDiscover.map((chat) => {
           const { name, description, channelImage, id } = chat.channel;
           return (
-            <ListDiscover
-              key={id}
-              channelTitle={name}
-              description={description}
-              channelImage={channelImage}
-              id={id}
-            ></ListDiscover>
+            <>
+              <ListDiscover
+                key={id}
+                channelTitle={name}
+                description={description}
+                channelImage={channelImage}
+                id={id}
+              ></ListDiscover>
+            </>
           );
         })
       ) : (
