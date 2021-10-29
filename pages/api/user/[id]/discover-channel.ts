@@ -7,7 +7,7 @@ export default function user(
     res: NextApiResponse
 ) {
     if (req.method === 'GET') {
-        return getUserChannels(req, res)
+            return getChannelsToDiscover(req, res)
     }
     else {
         console.log('hola mal todo')
