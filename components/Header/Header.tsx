@@ -12,12 +12,13 @@ interface Props {
   isModalVisible: boolean;
 }
 
-const Header: NextPage<Props> = ({ setActiveSearch, activeSearch, isModalVisible, setIsModalVisible  }) => {
+const Header: NextPage<Props> = ({
+  setActiveSearch,
+  activeSearch,
+  isModalVisible,
+  setIsModalVisible,
+}) => {
   const router = useRouter();
-
-  
-  console.log('line18',isModalVisible);
-
   // @ts-ignore
   const { connectSocket, disconnectSocket, socket, setSocket } =
     useContext(SocketContext);
@@ -47,7 +48,6 @@ const Header: NextPage<Props> = ({ setActiveSearch, activeSearch, isModalVisible
       <Menu.Item key="logout" onClick={logOut}>
         <p> Cerrar Sesión</p>
       </Menu.Item>
-      
     </Menu>
   );
   const DropdownMenu = () => (

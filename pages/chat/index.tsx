@@ -25,6 +25,7 @@ const Chat: NextPage = () => {
 
   useEffect(() => {
     const sockets = socket;
+    console.log(sockets);
     sockets.on("connect", () => {
       console.log("conectado");
     });
@@ -90,7 +91,7 @@ const Chat: NextPage = () => {
                   key={id}
                   channelTitle={name}
                   lastMessage={lastMessage}
-                  time={updatedAt}
+                  updatedAt={updatedAt}
                   id={id}
                 ></ListChat>
               </>
