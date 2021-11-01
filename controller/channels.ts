@@ -1,4 +1,3 @@
-import { any } from "jest-mock-extended";
 import type { NextApiResponse } from "next";
 import prisma from "../lib/prisma";
 import err from '../middlewares/error';
@@ -8,7 +7,7 @@ export const getChannelsToDiscover = async (req: Next.Custom, res: NextApiRespon
     //TODO: IMPROVE QUERY GETALLUSER
     try {
         const { id } = req.query;
-        
+
         const { cursor } = req.headers
         let myCursor = cursor ? Number(req.headers.cursor) : 1;
         const channelsToDiscover = await prisma.channelUser.findMany({
@@ -16,9 +15,9 @@ export const getChannelsToDiscover = async (req: Next.Custom, res: NextApiRespon
             cursor: {
                 id: myCursor,
             },
-            where:{
-                NOT:{
-                     userId: Number(id) 
+            where: {
+                NOT: {
+                    userId: Number(id)
                 }
             },
             include: { channel: true },

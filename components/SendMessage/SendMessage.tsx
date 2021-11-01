@@ -6,7 +6,8 @@ import { SocketContext } from "../../contexts/socketContext";
 const { TextArea } = Input;
 
 interface Props {
-  channelName: number;
+  uid: number;
+  channelId: number;
 }
 
 //@ts-ignore
@@ -28,7 +29,7 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
   </>
 );
 
-const SendMessage: NextPage = () => {
+const SendMessage: NextPage<Props> = ({ uid, channelId }) => {
   const [value, setValue] = useState<string>("");
   const [submitting, setSubmitting] = useState<boolean>(false);
   const { socket, setSocket } = useContext(SocketContext);

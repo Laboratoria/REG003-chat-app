@@ -34,14 +34,17 @@ const Chat: NextPage = () => {
     });
   }, []);
 
+  const token = localStorage.getItem("token");
+  let uid: any;
+  if (token) {
+    const payload = token.split(".")[1];
+    const decodedPayload = window.atob(payload);
+    const payloadJSON = JSON.parse(decodedPayload);
+    uid = payloadJSON.uid;
+  }
   useEffect(() => {
     //TODO PETICION A LA BD DE CANALES DE USUARIo
-    const token = localStorage.getItem("token");
     if (token) {
-      const payload = token.split(".")[1];
-      const decodedPayload = window.atob(payload);
-      const payloadJSON = JSON.parse(decodedPayload);
-      const uid = payloadJSON.uid;
       // console.log(payloadJSON.uid)
 
       getUserChannels(token, uid).then((res) => {
@@ -108,7 +111,9 @@ const Chat: NextPage = () => {
                 channelTitle={name}
                 description={description}
                 channelImage={channelImage}
-                id={id}
+                channelId={id}
+                token={token}
+                userId={uid}
               ></ListDiscover>
             </>
           );

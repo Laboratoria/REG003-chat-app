@@ -36,7 +36,6 @@ const Login: NextPage<Props> = ({ setIsLogin }) => {
       return setError(!token.ok);
     } else {
       setError(!token.ok);
-
       const sockets = connectSocket();
       localStorage.setItem("token", token.token);
       setSocket(sockets);

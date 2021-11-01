@@ -5,20 +5,20 @@ import CommentChat from "../../components/Comment/Comment";
 import HeaderChat from "../../components/Header_chat/HeaderChat";
 import SendMessage from "../../components/SendMessage/SendMessage";
 
-//TODO ROUTER
-
 const Home: NextPage = () => {
-  const { query } = useRouter();
-  console.log(query);
   const [messages, setMessages] = useState<Array<any>>([]);
+  const token = localStorage.getItem("token");
+  const { query } = useRouter();
+  // const channelId = window.location.pathname.replace("/chat/", "");
+  let uid: any;
+  console.log(query);
+  if (token) {
+    const payload = token.split(".")[1];
+    const decodedPayload = window.atob(payload);
+    const payloadJSON = JSON.parse(decodedPayload);
+    uid = payloadJSON.uid;
+  }
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const payload = token.split(".")[1];
-      const decodedPayload = window.atob(payload);
-      const payloadJSON = JSON.parse(decodedPayload);
-      const uid = payloadJSON.uid;
-    }
     setMessages([
       {
         userId: 11,
@@ -38,8 +38,10 @@ const Home: NextPage = () => {
   return (
     <div className="container">
       <HeaderChat
-        //@ts-ignore
-        channelName={query.channel ? query.channel : "canal"}
+        token={token}
+        channelId={Number(query.id)}
+        uid={Number(uid)}
+        channelName={String(query.channel)}
       ></HeaderChat>
       {messages[0] ? (
         messages.map(({ userId, id, body, attachment, createdAt }) => {
@@ -58,8 +60,10 @@ const Home: NextPage = () => {
       )}
 
       <SendMessage
-      // channelId={query.id ? Number(query.id) : 1}
-      // userId={uid}
+        channelId={Number(query.id)}
+        uid={Number(uid)}
+        // channelId={query.id ? Number(query.id) : 1}
+        // userId={uid}
       ></SendMessage>
     </div>
   );
