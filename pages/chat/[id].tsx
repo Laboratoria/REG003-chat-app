@@ -1,15 +1,24 @@
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import React, { useState, useContext, useEffect } from "react";
-import CommentChat from "../../components/Comment/Comment";
-import HeaderChat from "../../components/Header_chat/HeaderChat";
-import SendMessage from "../../components/SendMessage/SendMessage";
+import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import React, { useState, useContext, useEffect } from 'react';
+import CommentChat from '../../components/Comment/Comment';
+import HeaderChat from '../../components/Header_chat/HeaderChat'
+import SendMessage from '../../components/SendMessage/SendMessage';
 
-//TODO ROUTER
 
 const Home: NextPage = () => {
+  const [messages, setMessages] = useState<Array<any>>([])
+  const token = localStorage.getItem('token');
   const { query } = useRouter();
-  const [messages, setMessages] = useState<Array<any>>([]);
+  const channelId = window.location.pathname.replace('/chat/', '')
+  let uid: any;
+  console.log(query)
+  if (token) {
+    const payload = token.split('.')[1];
+    const decodedPayload = window.atob(payload);
+    const payloadJSON = JSON.parse(decodedPayload);
+    uid = payloadJSON.uid;
+  }
   useEffect(() => {
     setMessages([
       {
@@ -30,6 +39,9 @@ const Home: NextPage = () => {
   return (
     <div className="container">
       <HeaderChat
+        token={token}
+        channelId={Number(channelId)}
+        userId={uid}
         //@ts-ignore
         channelName={query.channel ? query.channel : "canal"}
       ></HeaderChat>
