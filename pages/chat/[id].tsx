@@ -4,14 +4,15 @@ import React, { useState, useContext, useEffect } from "react";
 import CommentChat from "../../components/Comment/Comment";
 import HeaderChat from "../../components/Header_chat/HeaderChat";
 import SendMessage from "../../components/SendMessage/SendMessage";
+import { SocketContext } from "../../contexts/socketContext";
 
 const Home: NextPage = () => {
   const [messages, setMessages] = useState<Array<any>>([]);
   const token = localStorage.getItem("token");
   const { query } = useRouter();
+  const { socket, setSocket } = useContext(SocketContext);
   // const channelId = window.location.pathname.replace("/chat/", "");
   let uid: any;
-  console.log(query);
   if (token) {
     const payload = token.split(".")[1];
     const decodedPayload = window.atob(payload);
@@ -19,21 +20,10 @@ const Home: NextPage = () => {
     uid = payloadJSON.uid;
   }
   useEffect(() => {
-    setMessages([
-      {
-        userId: 11,
-        id: 2,
-        body: "skdfbakdnsjaksdnc kajsdnckajsdckasndckasd",
-        attachment: "https://joeschmoe.io/api/v1/random",
-        createdAt: "10-20-30",
-      },
-      {
-        userId: 1,
-        id: 3,
-        body: "skdfbakdnsjaksdnc kajsdnckajsdckasndckasd",
-        createdAt: "10-11-30",
-      },
-    ]);
+    socket.on("send-message", (payload: any) => {
+      messages.push(payload);
+      setMessages([...messages]);
+    });
   }, []);
   return (
     <div className="container">

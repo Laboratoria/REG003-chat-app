@@ -19,7 +19,7 @@ export const joinChannel = async (req: Next.Custom, res: NextApiResponse) => {
     }
     )
     return res.status(200).json({ channelUser })
-  } catch (error) {
+  } catch (error: any) {
     if (error.code = 'P2002') {
       return err(400, req, res)
     }
@@ -47,7 +47,7 @@ export const deleteUserChannel = async (req: Next.Custom, res: NextApiResponse) 
     }
     )
     return res.status(200).json({ channelUser })
-  } catch (error) {
+  } catch (error: any) {
     if (error.code = 'P2002') {
       return err(400, req, res)
     }

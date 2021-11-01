@@ -1,14 +1,18 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { getMessage } from '../../../../controller/messages';
+import { NextApiRequest } from "next";
+import { NextApiResponseServerIO } from "../../../../types/next";
+import { getMessage, postMessage } from '../../../../controller/messages';
 import { requireAuth } from '../../../../middlewares/auth'
 
 export default function channelMessage(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponseServerIO
 ) {
   if (req.method === 'GET') {
     /* console.log(req) */
     return getMessage(req, res)
+  }
+  else if (req.method === 'POST') {
+    return postMessage(req, res)
   }
   else {
     console.log('hola mal todo')

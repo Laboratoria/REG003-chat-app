@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import React, { useState, useContext } from "react";
 import { Comment, Avatar, Form, Button, List, Input } from "antd";
 import { SocketContext } from "../../contexts/socketContext";
+import { postMessage } from "../../services/message";
 
 const { TextArea } = Input;
 
@@ -34,17 +35,22 @@ const SendMessage: NextPage<Props> = ({ uid, channelId }) => {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const { socket, setSocket } = useContext(SocketContext);
 
+  const token = localStorage.getItem("token");
+
   const handleChange = (e: any) => {
     setValue(e.target.value);
-    console.log(e.target.value);
   };
   const handleSubmit = () => {
     setSubmitting(true);
     if (!value) {
       console.log("emty");
     } else {
-      console.log("message", value);
-      socket.emit("send-message", value);
+      const payload = {
+        content: value,
+        channelId,
+        uid,
+      };
+      token ? postMessage(token, payload) : console.log("No token provided");
       setTimeout(() => setSubmitting(false), 3000);
     }
   };
