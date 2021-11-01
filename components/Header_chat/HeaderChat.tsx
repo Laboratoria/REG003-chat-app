@@ -4,10 +4,12 @@ import { PageHeader, Menu, Dropdown, Button } from "antd";
 import { MoreOutlined, SearchOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 
+interface Props {
+  channelName: string;
+}
 
-{/* <Props> */}
-const HeaderChat: NextPage = () => {
-  const channelName='labo'
+const HeaderChat: NextPage<Props> = ({ channelName }) => {
+  // const channelName = "labo";
   const router = useRouter();
 
   const menu = (
@@ -18,7 +20,7 @@ const HeaderChat: NextPage = () => {
       <Menu.Item key="showUsers">
         <p>Ver Usuarios</p>
       </Menu.Item>
-      <Menu.Item key="getOut"  >
+      <Menu.Item key="getOut">
         <p> Salir del Chat</p>
       </Menu.Item>
     </Menu>
@@ -44,12 +46,12 @@ const HeaderChat: NextPage = () => {
     <>
       <PageHeader
         title={channelName}
-        onBack={() =>   router.push('/chat')}
+        onBack={() => router.push("/chat")}
         className="site-page-header"
-        extra={[
-          <DropdownMenu key="more" />,
-        ]}
-        avatar={{ src: 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}
+        extra={[<DropdownMenu key="more" />]}
+        avatar={{
+          src: "https://avatars1.githubusercontent.com/u/8186664?s=460&v=4",
+        }}
       ></PageHeader>
     </>
   );

@@ -1,6 +1,7 @@
-import { NextPage } from 'next';
-import React, { useState } from 'react';
-import { Comment, Avatar, Form, Button, List, Input } from 'antd';
+import { NextPage } from "next";
+import React, { useState, useContext } from "react";
+import { Comment, Avatar, Form, Button, List, Input } from "antd";
+import { SocketContext } from "../../contexts/socketContext";
 
 const { TextArea } = Input;
 
@@ -11,7 +12,12 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
       <TextArea rows={4} onChange={onChange} value={value} />
     </Form.Item>
     <Form.Item>
-      <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
+      <Button
+        htmlType="submit"
+        loading={submitting}
+        onClick={onSubmit}
+        type="primary"
+      >
         Add Comment
       </Button>
     </Form.Item>
@@ -19,36 +25,39 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 );
 
 const SendMessage: NextPage = () => {
-  const [value, setValue] = useState<string>('')
-  const [submitting, setSubmitting] = useState<boolean>(false)
+  const [value, setValue] = useState<string>("");
+  const [submitting, setSubmitting] = useState<boolean>(false);
+  const { socket, setSocket } = useContext(SocketContext);
 
-  const handleChange = (e: any) => setValue(e.target.value);
+  const handleChange = (e: any) => {
+    setValue(e.target.value);
+    console.log(e.target.value);
+  };
   const handleSubmit = () => {
-    setSubmitting(true)
+    setSubmitting(true);
     if (!value) {
-      console.log('emty')
+      console.log("emty");
+    } else {
+      console.log("message", value);
+      socket.emit("send-message", value);
+      setTimeout(() => setSubmitting(false), 3000);
     }
-    else {
-      console.log(value)
-      setTimeout(()=>setSubmitting(false), 3000)
-    }
-  }
-
+  };
 
   return (
-
-      <Comment
-        avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
-        content={
-          <Editor
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            submitting={submitting}
-            value={value}
-          />
-        }
-      />
-
+    <Comment
+      avatar={
+        <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
+      }
+      content={
+        <Editor
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          submitting={submitting}
+          value={value}
+        />
+      }
+    />
   );
-}
-export default SendMessage
+};
+export default SendMessage;

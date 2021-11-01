@@ -6,8 +6,7 @@ import Register from "../components/Register/Register";
 //TODO ROUTER
 
 const Home: NextPage = () => {
-  const [isLogin, setIsLogin] = useState(false);
-
+  const [isLogin, setIsLogin] = useState(true);
 
   return (
     <div className="container">
