@@ -17,7 +17,7 @@ export const getMessage = async (req: Next.Custom, res: NextApiResponse) => {
             },
             where: {
                 channelId: Number(id)
-            },orderBy: {
+            }, orderBy: {
                 createdAt: "asc"
             },
             include: { user: true },
@@ -42,6 +42,7 @@ export const getMessage = async (req: Next.Custom, res: NextApiResponse) => {
         return err(500, req, res);
     }
 }
+
 export const updateMessage = async (req: Next.Custom, res: NextApiResponse) => {
     try {
         const { id } = req.query;
@@ -62,4 +63,25 @@ export const updateMessage = async (req: Next.Custom, res: NextApiResponse) => {
         return err(500, req, res);
     }
 }
+
+// export const createMessage = async (req: Next.Custom, res: NextApiResponse) => {
+//     try {
+//         const { id } = req.query;
+//         const { body, attachment } = req.body;
+//         if (!body && !!attachment) {
+//             err(400, req, res)
+//         }
+//         const message = await prisma.message.create({
+//             data: {
+//                 userId,
+//                 channelId: id,
+//                 body,
+//                 attachment
+//             }
+//         })
+//     } catch (error: any) {
+//         console.log(error)
+//         return err(500, req, res);
+//     }
+// }
 

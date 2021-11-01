@@ -5,6 +5,10 @@ import { SocketContext } from "../../contexts/socketContext";
 
 const { TextArea } = Input;
 
+interface Props {
+  channelName: number;
+}
+
 //@ts-ignore
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
   <>

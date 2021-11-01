@@ -45,6 +45,7 @@ const Chat: NextPage = () => {
       // console.log(payloadJSON.uid)
 
       getUserChannels(token, uid).then((res) => {
+        console.log(res);
         setListChats(res);
         return res;
       });

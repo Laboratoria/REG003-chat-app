@@ -1,7 +1,7 @@
-@function caculateRem($size) {
-  $remSize: $size / 16px;
-  @return $remSize * 1rem;
-}
+// @function caculateRem($size) {
+//   $remSize: $size / 16px;
+//   @return $remSize * 1rem;
+// }
 
 .register {
   // padding: 0.5rem;
@@ -11,14 +11,13 @@
   width: 100vw;
   height: 100vh;
   text-align: center;
-  
+
   // gap: 1rem;
   @include tablet {
     @include box(row, center, center);
   }
 
   &__header {
-
     @include box(column, flex-start, center);
     padding-right: 5rem;
     h2 {
@@ -35,13 +34,12 @@
       color: $color7;
     }
   }
-  
+
   &__body {
     @include tablet {
-      border: solid .005rem $color7;
+      border: solid 0.005rem $color7;
       padding: 1rem;
       border-radius: 1.2rem;
-  
     }
     p {
       // margin: 1rem;
@@ -51,7 +49,7 @@
       font-weight: 500;
       color: $color2;
     }
-   
+
     .ant-col-offset-8 {
       margin-left: 0% !important;
     }
@@ -114,8 +112,6 @@
     .paragraph__pink {
       @include titles1($poppins, 100, 14px, $color7);
     }
-
   }
-  @include large
-
+  @include large;
 }

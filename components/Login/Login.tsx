@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import { useState, useEffect, useContext } from "react";
 import { SocketContext } from "../../contexts/socketContext";
 
-
 //TODO STYLES
 // TODO ERROR
 
@@ -39,12 +38,11 @@ const Login: NextPage<Props> = ({ setIsLogin }) => {
       setError(!token.ok);
 
       const sockets = connectSocket();
-      localStorage.setItem('token', token.token);
-      setSocket(sockets)
+      localStorage.setItem("token", token.token);
+      setSocket(sockets);
       setTimeout(() => {
-        router.push('/chat');
-      }, 2000)
-
+        router.push("/chat");
+      }, 2000);
     }
   };
 
@@ -61,8 +59,8 @@ const Login: NextPage<Props> = ({ setIsLogin }) => {
       <section className="container__login">
         <div style={{ display: "inline-block" }}>
           {/* <Space align="end"> */}
-          <h3 className="title_violet_thin">Welcome to</h3>
-          <h1 className="title_pink_bold">Chat-app</h1>
+          <h2 className="title_violet_thin">Welcome to</h2>
+          <h3 className="title_pink_bold">Chat-app</h3>
           {/* </Space> */}
         </div>
         <div>
@@ -119,8 +117,8 @@ const Login: NextPage<Props> = ({ setIsLogin }) => {
             </Form.Item>
 
             <Form.Item>
-              <p className="text_violet_thin">¿Do not have an account? </p>
-              <a className="text_pink_thin" onClick={toRegister}>
+              <p className="paragraph">¿Do not have an account? </p>
+              <a className="paragraph__pink" onClick={toRegister}>
                 {" "}
                 Create Account{" "}
               </a>

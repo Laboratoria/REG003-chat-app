@@ -9,8 +9,16 @@ import SendMessage from "../../components/SendMessage/SendMessage";
 
 const Home: NextPage = () => {
   const { query } = useRouter();
+  console.log(query);
   const [messages, setMessages] = useState<Array<any>>([]);
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const payload = token.split(".")[1];
+      const decodedPayload = window.atob(payload);
+      const payloadJSON = JSON.parse(decodedPayload);
+      const uid = payloadJSON.uid;
+    }
     setMessages([
       {
         userId: 11,
@@ -49,7 +57,10 @@ const Home: NextPage = () => {
         <p>you dont have any message</p>
       )}
 
-      <SendMessage></SendMessage>
+      <SendMessage
+      // channelId={query.id ? Number(query.id) : 1}
+      // userId={uid}
+      ></SendMessage>
     </div>
   );
 };
