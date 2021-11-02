@@ -22,7 +22,7 @@ export const getChannelMessages = (token: string, channelId: number) => fetch(`$
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
-        'Authentication': 'Bearer ' + `${token}`
+        'Authentication': `Bearer ${token}`
     },
 }
 ).then(response => response.json())
