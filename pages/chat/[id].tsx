@@ -64,9 +64,8 @@ const Home: NextPage = () => {
       <SendMessage
         channelId={Number(query.id)}
         uid={Number(uid)}
-        /*  channelImage={String(query.channelImage)} */
-        // channelId={query.id ? Number(query.id) : 1}
-        // userId={uid}
+        username={query.username}
+        userImage={query.userImage}
       ></SendMessage>
     </div>
   );
