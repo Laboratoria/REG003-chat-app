@@ -9,6 +9,7 @@ const { TextArea } = Input;
 interface Props {
   uid: number;
   channelId: number;
+  userImage?: string;
 }
 
 //@ts-ignore
@@ -30,7 +31,7 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
   </>
 );
 
-const SendMessage: NextPage<Props> = ({ uid, channelId }) => {
+const SendMessage: NextPage<Props> = ({ uid, channelId, userImage }) => {
   const [value, setValue] = useState<string>("");
   const [submitting, setSubmitting] = useState<boolean>(false);
   const { socket, setSocket } = useContext(SocketContext);
@@ -58,7 +59,7 @@ const SendMessage: NextPage<Props> = ({ uid, channelId }) => {
   return (
     <Comment
       avatar={
-        <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
+        <Avatar src={userImage} alt="Han Solo" />
       }
       content={
         <Editor

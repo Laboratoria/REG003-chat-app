@@ -5,15 +5,15 @@ import React from "react";
 
 const { Meta } = Card;
 interface Props {
-  channelTitle: string;
-  lastMessage: string;
   updatedAt: string;
   id: number;
+  channelTitle: string;
+  channelImage: string;
 }
 
 const ListChat: NextPage<Props> = ({
   channelTitle,
-  lastMessage,
+  channelImage,
   updatedAt,
   id,
 }) => {
@@ -29,7 +29,7 @@ const ListChat: NextPage<Props> = ({
         router.push(
           {
             pathname: `/chat/${id}`,
-            query: { channel: channelTitle },
+            query: { channel: channelTitle, channelImage, },
           }
           // pathname: `/chat/${id}`,
         )
@@ -38,10 +38,9 @@ const ListChat: NextPage<Props> = ({
       <p className="time">{updatedAtDay}</p>
       <Meta
         avatar={
-          <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+          <Avatar src={channelImage} />
         }
         title={channelTitle}
-        description={lastMessage}
       />
     </Card>
   );
