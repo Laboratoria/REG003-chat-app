@@ -12,7 +12,7 @@ model User {
   email         String        @unique
   password      String
   username      String
-  profile_image String        @default("https://cdn-icons-png.flaticon.com/512/1077/1077114.png")
+  profile_image String        @default("https://joeschmoe.io/api/v1/random")
   channels      ChannelUser[]
   messages      Message[]
 }

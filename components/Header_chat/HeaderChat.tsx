@@ -6,12 +6,13 @@ import { deleteChannelUser } from '../../services/channelUser'
 
 interface Props {
   channelName: string;
-  token: any,
-  uid: number,
-  channelId: number
+  channelImage:string;
+  token: any;
+  uid: number;
+  channelId: number;
 
 }
-const HeaderChat: NextPage<Props> = ({ channelName, token, uid, channelId }) => {
+const HeaderChat: NextPage<Props> = ({ channelName, token, uid, channelId, channelImage }) => {
 
   const router = useRouter();
   const goOut = ()=>{
@@ -19,6 +20,7 @@ const HeaderChat: NextPage<Props> = ({ channelName, token, uid, channelId }) => 
     router.push('/chat')
     return channel
   }
+
 
   const menu = (
     <Menu>
@@ -55,7 +57,7 @@ const HeaderChat: NextPage<Props> = ({ channelName, token, uid, channelId }) => 
         className="site-page-header"
         extra={[<DropdownMenu key="more" />]}
         avatar={{
-          src: "https://avatars1.githubusercontent.com/u/8186664?s=460&v=4",
+          src:channelImage,
         }}
       ></PageHeader>
     </>
