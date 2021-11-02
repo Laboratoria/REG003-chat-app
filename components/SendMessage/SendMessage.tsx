@@ -1,7 +1,6 @@
 import { NextPage } from "next";
 import React, { useState, useContext } from "react";
 import { Comment, Avatar, Form, Button, List, Input } from "antd";
-import { SocketContext } from "../../contexts/socketContext";
 import { postMessage } from "../../services/message";
 
 const { TextArea } = Input;
@@ -11,29 +10,10 @@ interface Props {
   channelId: number;
 }
 
-//@ts-ignore
-const Editor = ({ onChange, onSubmit, submitting, value }) => (
-  <>
-    <Form.Item>
-      <TextArea rows={4} onChange={onChange} value={value} />
-    </Form.Item>
-    <Form.Item>
-      <Button
-        htmlType="submit"
-        loading={submitting}
-        onClick={onSubmit}
-        type="primary"
-      >
-        Add Comment
-      </Button>
-    </Form.Item>
-  </>
-);
-
 const SendMessage: NextPage<Props> = ({ uid, channelId }) => {
   const [value, setValue] = useState<string>("");
   const [submitting, setSubmitting] = useState<boolean>(false);
-  const { socket, setSocket } = useContext(SocketContext);
+  const [form] = Form.useForm();
 
   const token = localStorage.getItem("token");
 
@@ -42,6 +22,7 @@ const SendMessage: NextPage<Props> = ({ uid, channelId }) => {
   };
   const handleSubmit = () => {
     setSubmitting(true);
+    console.log(setSubmitting);
     if (!value) {
       console.log("emty");
     } else {
@@ -51,6 +32,7 @@ const SendMessage: NextPage<Props> = ({ uid, channelId }) => {
         uid,
       };
       token ? postMessage(token, payload) : console.log("No token provided");
+      form.resetFields(["message_input"]);
       setTimeout(() => setSubmitting(false), 3000);
     }
   };
@@ -61,12 +43,21 @@ const SendMessage: NextPage<Props> = ({ uid, channelId }) => {
         <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
       }
       content={
-        <Editor
-          onChange={handleChange}
-          onSubmit={handleSubmit}
-          submitting={submitting}
-          value={value}
-        />
+        <Form form={form}>
+          <Form.Item name="message_input">
+            <TextArea rows={4} onChange={handleChange} value={value} />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              htmlType="submit"
+              loading={submitting}
+              onClick={handleSubmit}
+              type="primary"
+            >
+              Add Comment
+            </Button>
+          </Form.Item>
+        </Form>
       }
     />
   );

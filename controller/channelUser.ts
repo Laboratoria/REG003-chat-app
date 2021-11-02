@@ -54,7 +54,6 @@ export const deleteUserChannel = async (req: Next.Custom, res: NextApiResponse) 
     else if (error.code = 'P2003') {
       return err(404, req, res)
     } else {
-
       return err(500, req, res)
     }
   }

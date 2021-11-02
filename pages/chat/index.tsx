@@ -25,7 +25,6 @@ const Chat: NextPage = () => {
 
   useEffect(() => {
     const sockets = socket;
-    console.log(sockets);
     sockets.on("connect", () => {
       console.log("conectado");
     });
@@ -48,7 +47,6 @@ const Chat: NextPage = () => {
       // console.log(payloadJSON.uid)
 
       getUserChannels(token, uid).then((res) => {
-        console.log(res);
         setListChats(res);
         return res;
       });

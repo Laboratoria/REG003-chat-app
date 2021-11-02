@@ -8,7 +8,6 @@ export default function channelMessage(
   res: NextApiResponseServerIO
 ) {
   if (req.method === 'GET') {
-    /* console.log(req) */
     return getMessage(req, res)
   }
   else if (req.method === 'POST') {

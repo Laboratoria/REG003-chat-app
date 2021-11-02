@@ -12,10 +12,10 @@ export const getMessage = async (req: Next.Custom, res: NextApiResponse) => {
             err(400, req, res)
         }
         const messages = await prisma.message.findMany({
-            take: 20,
-            cursor: {
-                id: cursor ? Number(cursor) : 1,
-            },
+            // take: 20,
+            // cursor: {
+            //     id: cursor ? Number(cursor) : 1,
+            // },
             where: {
                 channelId: Number(id)
             }, orderBy: {
@@ -23,6 +23,7 @@ export const getMessage = async (req: Next.Custom, res: NextApiResponse) => {
             },
             include: { user: true },
         })
+        // console.log(messages)
         if (messages.length === 0) {
             return res.status(200).json({
                 ok: true,
