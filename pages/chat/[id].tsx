@@ -28,9 +28,11 @@ const Home: NextPage = () => {
         })
       : "No token provided";
     socket.on("send-message", (payload: any) => {
-      messages.push(payload);
-      console.log(messages);
-      setMessages([...messages, payload]);
+      console.log(payload);
+      if (payload.channelId === Number(query.id)) {
+        messages.push(payload);
+        setMessages([...messages]);
+      }
     });
   }, []);
 
@@ -41,6 +43,7 @@ const Home: NextPage = () => {
         channelId={Number(query.id)}
         uid={Number(uid)}
         channelName={String(query.channel)}
+        channelImage={String(query.channelImage)}
       ></HeaderChat>
       {messages[0] ? (
         messages.map(({ userId, id, body, attachment, createdAt }) => {
@@ -61,6 +64,7 @@ const Home: NextPage = () => {
       <SendMessage
         channelId={Number(query.id)}
         uid={Number(uid)}
+        /*  channelImage={String(query.channelImage)} */
         // channelId={query.id ? Number(query.id) : 1}
         // userId={uid}
       ></SendMessage>

@@ -8,9 +8,10 @@ const { TextArea } = Input;
 interface Props {
   uid: number;
   channelId: number;
+  userImage?: string;
 }
 
-const SendMessage: NextPage<Props> = ({ uid, channelId }) => {
+const SendMessage: NextPage<Props> = ({ uid, channelId, userImage }) => {
   const [value, setValue] = useState<string>("");
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [form] = Form.useForm();
@@ -39,9 +40,7 @@ const SendMessage: NextPage<Props> = ({ uid, channelId }) => {
 
   return (
     <Comment
-      avatar={
-        <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
-      }
+      avatar={<Avatar src={userImage} alt="Han Solo" />}
       content={
         <Form form={form}>
           <Form.Item name="message_input">

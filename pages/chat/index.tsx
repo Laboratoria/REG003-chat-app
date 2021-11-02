@@ -20,6 +20,7 @@ const Chat: NextPage = () => {
   const [listDiscover, setDiscover] = useState<Array<any>>();
   const [activeSearch, setActiveSearch] = useState<boolean>(false);
   const [activeChannel, setActiveChannel] = useState<boolean>(true);
+  const [currentUser, setCurrentUser]= useState<Array<any>>();
 
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
@@ -83,13 +84,13 @@ const Chat: NextPage = () => {
       {activeChannel ? (
         listChats?.length ? (
           listChats.map((chat) => {
-            const { name, lastMessage, updatedAt, id } = chat.channel;
+            const { name, channelImage, updatedAt, id } = chat.channel;
             return (
               <>
                 <ListChat
                   key={id}
                   channelTitle={name}
-                  lastMessage={lastMessage}
+                  channelImage={channelImage}
                   updatedAt={updatedAt}
                   id={id}
                 ></ListChat>
