@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getUserChannels, getChannelsToDiscover } from "../../../../controller/channels";
+import { getChannelsToDiscover } from "../../../../controller/channels";
 import { requireAuth } from '../../../../middlewares/auth';
 
 export default function user(
@@ -7,7 +7,7 @@ export default function user(
     res: NextApiResponse
 ) {
     if (req.method === 'GET') {
-            return getChannelsToDiscover(req, res)
+        return getChannelsToDiscover(req, res)
     }
     else {
         console.log('hola mal todo')

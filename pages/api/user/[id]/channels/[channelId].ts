@@ -1,5 +1,5 @@
 import type { NextApiResponse } from 'next';
-import {Next} from '../../../../../types/custom'
+import { Next } from '../../../../../types/custom'
 import { joinChannel, deleteUserChannel } from '../../../../../controller/channelUser'
 
 export default function userChannel(
@@ -10,8 +10,8 @@ export default function userChannel(
     return joinChannel(req, res);
   }
   else if (req.method === 'DELETE') {
-console.log('delete')
-return deleteUserChannel(req, res)
+    console.log('delete')
+    return deleteUserChannel(req, res)
   }
   else {
     console.log('hola mal todo')

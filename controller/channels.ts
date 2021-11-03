@@ -24,6 +24,7 @@ export const getChannelsToDiscover = async (req: Next.Custom, res: NextApiRespon
         const filteredAllChannels = allChannels.map((channel) => channel.id)
 
         const channelsToDiscoverId = filteredAllChannels.filter(x => !filteredUserChannels.includes(x));
+        // console.log(channelsToDiscoverId)
 
         // if (channelsToDiscover.length === 0) {
         //     return res.status(200).json({
