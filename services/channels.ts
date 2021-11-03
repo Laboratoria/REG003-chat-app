@@ -51,7 +51,6 @@ export const getChannelById = async (token: string, channelId: number) => {
             'Authorization': 'Bearer ' + `${token}`
         }
     })
-    const data = await channelByIdService.json()
-    console.log('fetch result', data);
-    return data
+    const data = await channelByIdService.json();
+    return data;
 }

@@ -38,7 +38,6 @@ const Chat: NextPage = () => {
       setCurrentUser(data.content)
     );
     const sockets = socket;
-    console.log(sockets);
     sockets.on("connect", () => {
       console.log("conectado");
     });
@@ -48,7 +47,6 @@ const Chat: NextPage = () => {
   }, []);
 
   useEffect(() => {
-
     async function fetchData() {
       if (token) {
         // console.log(payloadJSON.uid)
@@ -63,13 +61,10 @@ const Chat: NextPage = () => {
 
         for (const channel of channels) {
           const resp = await getChannelById(token, channel);
-          console.log('channel receive', resp);
+          console.log("channel receive", resp);
           channelsArr.push(resp);
         }
-        console.log('channelsArr', channelsArr);
-
         setDiscover(channelsArr);
-
       }
     }
     fetchData();
@@ -114,7 +109,6 @@ const Chat: NextPage = () => {
         )
       ) : listDiscover?.length ? (
         listDiscover.map((chat) => {
-          console.log('chat', chat);
           const { name, description, channelImage, id } = chat;
           return (
             <>
