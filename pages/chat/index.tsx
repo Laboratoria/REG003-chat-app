@@ -105,6 +105,7 @@ const Chat: NextPage = () => {
                   channelImage={channelImage}
                   updatedAt={updatedAt}
                   id={id}
+                  setListChats={setListChats}
                 ></ListChat>
               </>
             );
@@ -120,6 +121,8 @@ const Chat: NextPage = () => {
             <>
               <ListDiscover
                 key={id}
+                setDiscover={setDiscover}
+                setListChats={setListChats}
                 channelTitle={name}
                 description={description}
                 channelImage={channelImage}

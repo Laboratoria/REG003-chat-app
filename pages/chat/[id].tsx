@@ -47,6 +47,7 @@ const Home: NextPage = () => {
         token={token}
         channelId={Number(query.id)}
         uid={Number(uid)}
+        setListChats={query.setListChats}
         channelName={String(query.channel)}
         channelImage={String(query.channelImage)}
       ></HeaderChat>
