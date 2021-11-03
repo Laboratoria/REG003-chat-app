@@ -10,8 +10,6 @@ interface Props {
   channelTitle: string;
   channelImage: string;
   currentUser: any;
-  setListChats: any;
-
 }
 
 const ListChat: NextPage<Props> = ({
@@ -19,7 +17,7 @@ const ListChat: NextPage<Props> = ({
   channelImage,
   updatedAt,
   id,
-  currentUser, setListChats
+  currentUser,
 }) => {
   const updatedAtDay = updatedAt.split("T")[0];
   const updatedAtTime = updatedAt.split("T")[1].slice(0, -5);
@@ -33,19 +31,19 @@ const ListChat: NextPage<Props> = ({
         router.push(
           {
             pathname: `/chat/${id}`,
-            query: { channel: channelTitle, channelImage, userImage: currentUser.profile_image, username: currentUser.username, setListChats },
+            query: {
+              channel: channelTitle,
+              channelImage,
+              userImage: currentUser.profile_image,
+              username: currentUser.username,
+            },
           }
           // pathname: `/chat/${id}`,
         )
       }
     >
       <p className="time">{updatedAtDay}</p>
-      <Meta
-        avatar={
-          <Avatar src={channelImage} />
-        }
-        title={channelTitle}
-      />
+      <Meta avatar={<Avatar src={channelImage} />} title={channelTitle} />
     </Card>
   );
 };

@@ -1,9 +1,11 @@
-import type { NextPage } from 'next';
-import { PageHeader, Menu, Dropdown, Button } from 'antd';
-import { MoreOutlined, } from '@ant-design/icons';
-import { useRouter } from 'next/router';
-import { deleteChannelUser } from '../../services/channelUser'
-import {getUserChannels} from '../../services/channels'
+import type { NextPage } from "next";
+import { PageHeader, Menu, Dropdown, Button } from "antd";
+import { MoreOutlined } from "@ant-design/icons";
+import { useRouter } from "next/router";
+import { deleteChannelUser } from "../../services/channelUser";
+import { getUserChannels } from "../../services/channels";
+import { SocketContext } from "../../contexts/socketContext";
+import { useContext } from "react";
 
 interface Props {
   channelName: string;
@@ -11,25 +13,29 @@ interface Props {
   token: any;
   uid: number;
   channelId: number;
-  setListChats: any
-
 }
-const HeaderChat: NextPage<Props> = ({ channelName, token, uid, channelId, channelImage, setListChats }) => {
+
+const HeaderChat: NextPage<Props> = ({
+  channelName,
+  token,
+  uid,
+  channelId,
+  channelImage,
+}) => {
+  const { setListChats } = useContext(SocketContext);
 
   const router = useRouter();
   const goOut = async () => {
-    const channel = deleteChannelUser(token, uid, channelId)
-    getUserChannels(token, uid).then((res) => {
-      setListChats(res);
-    });
-    router.push('/chat')
-    return channel
-  }
-
+    const channel = await deleteChannelUser(token, uid, channelId);
+    const userChannels = await getUserChannels(token, uid);
+    setListChats(userChannels);
+    router.push("/chat");
+    return channel;
+  };
 
   const menu = (
     <Menu>
-      <Menu.Item key='settings'>
+      <Menu.Item key="settings">
         <p>Ajustes</p>
       </Menu.Item>
       <Menu.Item key="getOut" onClick={goOut}>
@@ -38,17 +44,17 @@ const HeaderChat: NextPage<Props> = ({ channelName, token, uid, channelId, chann
     </Menu>
   );
   const DropdownMenu = () => (
-    <Dropdown key='more' overlay={menu}>
+    <Dropdown key="more" overlay={menu}>
       <Button
         style={{
-          border: 'none',
+          border: "none",
           padding: 0,
         }}
       >
         <MoreOutlined
           style={{
             fontSize: 25,
-            verticalAlign: 'top',
+            verticalAlign: "top",
           }}
         />
       </Button>

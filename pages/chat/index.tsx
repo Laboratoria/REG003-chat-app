@@ -16,10 +16,15 @@ import { getUserById } from "../../services/user";
 
 const Chat: NextPage = () => {
   // @ts-ignore
-  const { socket, setSocket } = useContext(SocketContext);
+  const {
+    socket,
+    setSocket,
+    listChats,
+    setListChats,
+    listDiscover,
+    setDiscover,
+  } = useContext(SocketContext);
 
-  const [listChats, setListChats] = useState<Array<any>>();
-  const [listDiscover, setDiscover] = useState<Array<any>>();
   const [activeSearch, setActiveSearch] = useState<boolean>(false);
   const [activeChannel, setActiveChannel] = useState<boolean>(true);
   const [currentUser, setCurrentUser] = useState<any>();
@@ -89,7 +94,7 @@ const Chat: NextPage = () => {
       {activeSearch ? <SearchSide></SearchSide> : ""}
       {activeChannel ? (
         listChats?.length ? (
-          listChats.map((chat) => {
+          listChats.map((chat: any) => {
             const { name, channelImage, updatedAt, id } = chat.channel;
             return (
               <>
@@ -100,7 +105,6 @@ const Chat: NextPage = () => {
                   channelImage={channelImage}
                   updatedAt={updatedAt}
                   id={id}
-                  setListChats={setListChats}
                 ></ListChat>
               </>
             );
@@ -109,14 +113,12 @@ const Chat: NextPage = () => {
           <p>No te has unido a canales aun </p>
         )
       ) : listDiscover?.length ? (
-        listDiscover.map((chat) => {
+        listDiscover.map((chat: any) => {
           const { name, description, channelImage, id } = chat;
           return (
             <>
               <ListDiscover
                 key={id}
-                setDiscover={setDiscover}
-                setListChats={setListChats}
                 channelTitle={name}
                 description={description}
                 channelImage={channelImage}

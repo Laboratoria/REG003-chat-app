@@ -15,9 +15,10 @@ export const SocketContext = createContext(InitialSocket);
 
 export const SocketProvider = ({ children }: ContextProvider) => {
   const [socket, setSocket] = useState();
+  const [listChats, setListChats] = useState<Array<any>>();
+  const [listDiscover, setDiscover] = useState<Array<any>>();
 
   const connectSocket = () => {
-    console.log("1");
     // @ts-ignore
     const sockets = SocketIOClient.connect(process.env.URL_API, {
       path: "/api/socket",
@@ -35,7 +36,16 @@ export const SocketProvider = ({ children }: ContextProvider) => {
 
   return (
     <SocketContext.Provider
-      value={{ connectSocket, disconnectSocket, socket, setSocket }}
+      value={{
+        connectSocket,
+        disconnectSocket,
+        socket,
+        setSocket,
+        listChats,
+        setListChats,
+        listDiscover,
+        setDiscover,
+      }}
     >
       {children}
     </SocketContext.Provider>
