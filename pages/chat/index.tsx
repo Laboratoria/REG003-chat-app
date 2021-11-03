@@ -9,6 +9,7 @@ import ListDiscover from "../../components/List-Chat/ListDiscover";
 import {
   getUserChannels,
   getChannelsToDiscover,
+  getChannelById,
 } from "../../services/channels";
 import ModalChannel from "../../components/Modal/ModalChannel";
 
@@ -20,7 +21,7 @@ const Chat: NextPage = () => {
   const [listDiscover, setDiscover] = useState<Array<any>>();
   const [activeSearch, setActiveSearch] = useState<boolean>(false);
   const [activeChannel, setActiveChannel] = useState<boolean>(true);
-  const [currentUser, setCurrentUser]= useState<Array<any>>();
+  const [currentUser, setCurrentUser] = useState<Array<any>>();
 
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
@@ -53,16 +54,20 @@ const Chat: NextPage = () => {
       });
 
       getChannelsToDiscover(token, uid).then((res) => {
-        setDiscover(res.content);
-        const channelsToDiscover = res;
-        return channelsToDiscover;
+        const channels = res.content;
+        const channelData = channels.map((channelId: number) =>
+          getChannelById(token, channelId).then((res) => res)
+        );
+        listDiscover
+          ? setDiscover([...listDiscover, channelData])
+          : setDiscover(channelData);
       });
     }
 
     // activeChannel
     //   ? setListChats(userChannels)
     //   : setDiscover(channelsToDiscover);
-  }, [activeChannel]);
+  }, []);
 
   return (
     <section className="container">
@@ -102,7 +107,8 @@ const Chat: NextPage = () => {
         )
       ) : listDiscover?.length ? (
         listDiscover.map((chat) => {
-          const { name, description, channelImage, id } = chat.channel;
+          console.log(chat);
+          const { name, description, channelImage, id } = chat;
           return (
             <>
               <ListDiscover

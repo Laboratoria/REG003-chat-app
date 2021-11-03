@@ -9,7 +9,7 @@ export const postMessage = (token: string, payload: MessageProps) => fetch(`${ur
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
-        'Authentication': 'Bearer ' + `${token}`
+        'Authorization': 'Bearer ' + `${token}`
     },
     body: JSON.stringify(payload)
 }
@@ -18,11 +18,11 @@ export const postMessage = (token: string, payload: MessageProps) => fetch(`${ur
     .catch(err => 'error')
 
 
-export const getChannelMessages = (token: string, channelId: number) => fetch(`${url}/api/channel/${channelId}/messages`, {
+export const getChannelMessages = (token: string, user: number) => fetch(`${url}/api/channel/${user}/messages`, {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
-        'Authentication': 'Bearer ' + `${token}`
+        'Authorization': 'Bearer ' + `${token}`
     },
 }
 ).then(response => response.json())

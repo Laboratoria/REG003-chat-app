@@ -1,44 +1,42 @@
-import { NextPage, } from 'next'
-import  Image  from 'next/image'
-import React from 'react'
-import { Comment, Tooltip, Avatar } from 'antd';
+import { NextPage } from "next";
+import Image from "next/image";
+import React from "react";
+import { Comment, Tooltip, Avatar } from "antd";
 
 interface Props {
-    userName: string;
-    body: string;
-    time: string;
-    attachment?: string;
-    /*     id: number;
+  user: any;
+  body: string;
+  time: string;
+  attachment?: string;
+  token: string;
+  /*     id: number;
         userId: string */
 }
 
+const CommentChat: NextPage<Props> = ({
+  user,
+  body,
+  time,
+  attachment,
+  token,
+}) => {
+  const updatedAtDay = time.split("T")[0];
+  const messageTime = time.split("T")[1].slice(0, -5);
 
-const CommentChat: NextPage<Props> = ({ userName, body, time, attachment }) => {
+  return (
+    <Comment
+      author={user.username}
+      avatar={<Avatar src={user.profile_image} />}
+      content={
+        <div>
+          <p>{body}</p>
 
-    return (
-        <Comment
-            author={userName}
-            avatar={< Avatar src={attachment} alt={userName} />}
-            content={
-                <div>
-                    < p >
-                        {body}
-                    </p >
+          {attachment ? <img src={attachment} alt="attachment" /> : ""}
+        </div>
+      }
+      datetime={<span>{messageTime}</span>}
+    />
+  );
+};
 
-                    {attachment ? <img src={attachment} alt='attachment' /> : ''}
-
-                </div>
-
-            }
-            datetime={
-                < span >
-                    {time}
-                </span >
-            }
-        />
-    );
-
-
-}
-
-export default CommentChat
+export default CommentChat;

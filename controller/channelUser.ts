@@ -44,8 +44,7 @@ export const deleteUserChannel = async (req: Next.Custom, res: NextApiResponse) 
           channelId: Number(channelId)
         }
       }
-    }
-    )
+    })
     return res.status(200).json({ channelUser })
   } catch (error: any) {
     if (error.code = 'P2002') {

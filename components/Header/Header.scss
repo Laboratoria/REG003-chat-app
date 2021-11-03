@@ -1,45 +1,56 @@
-.site-page-header{
+.site-page-header {
   width: 100%;
   margin: 0;
 }
-.ant-page-header, .ant-page-header-heading-title, .ant-dropdown-trigger, .ant-dropdown-open{
+.ant-page-header,
+.ant-dropdown-trigger,
+.ant-dropdown-open {
   background-color: $color4;
   color: $color3;
+
+  .ant-page-header-heading-title {
+    font-family: $poppins;
+    @include font-size(35px);
+    //font-size: 8vw;
+    font-weight: 800;
+    color: $color7;
+  }
 }
-.ant-dropdown-menu{
+
+.ant-dropdown-menu {
   background-color: $color4;
   color: $color2;
 }
-.ant-dropdown-menu-title-content{
+.ant-dropdown-menu-title-content {
   color: $color1;
 }
-.ant-dropdown-menu-title-content:hover{
+.ant-dropdown-menu-title-content:hover {
   color: $color7;
 }
-.ant-dropdown-menu-title-content::selection{
+.ant-dropdown-menu-title-content::selection {
   color: $color7;
 }
-.ant-dropdown-menu-item-active:hover{
-background-color: $color4;
-}
-.ant-dropdown-menu-item-active::selection{
+.ant-dropdown-menu-item-active:hover {
   background-color: $color4;
-  }
-.ant-dropdown-trigger:hover{
-  background-color: $color4;
-  color:$color7;
 }
-.ant-dropdown-trigger::selection{
+.ant-dropdown-menu-item-active::selection {
   background-color: $color4;
-  color:$color7;
 }
-.anticon{
+.ant-dropdown-trigger:hover {
+  background-color: $color4;
+  color: $color7;
+}
+.ant-dropdown-trigger::selection {
+  background-color: $color4;
+  color: $color7;
+}
+.anticon {
   color: $color2;
   font-size: 1.2rem;
 }
-.anticon:hover{
-  color:$color7;
+.anticon:hover {
+  color: $color7;
 }
-.anticon::selection{
-  color:$color7;
+.anticon::selection {
+  color: $color7;
 }

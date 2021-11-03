@@ -5,7 +5,7 @@ export const postUserChannels = async (token: string, uid: number, channelId: nu
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authentication': 'Bearer ' + `${token}`
+      'Authorization': 'Bearer ' + `${token}`
 
     }
   })
@@ -13,14 +13,13 @@ export const postUserChannels = async (token: string, uid: number, channelId: nu
   return data;
 }
 
-export const deleteChannelUser = async (token: string, uid: number, channelId:number) => {
+export const deleteChannelUser = async (token: string, uid: number, channelId: number) => {
 
   const channelUser = await fetch(`${url}/api/user/${uid}/channels/${channelId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
-      'Authentication': 'Bearer ' + `${token}`
-
+      'Authorization': 'Bearer ' + `${token}`
     }
   })
   const data = await channelUser.json();

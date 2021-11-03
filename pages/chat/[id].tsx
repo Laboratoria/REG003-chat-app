@@ -46,14 +46,15 @@ const Home: NextPage = () => {
         channelImage={String(query.channelImage)}
       ></HeaderChat>
       {messages[0] ? (
-        messages.map(({ userId, id, body, attachment, createdAt }) => {
+        messages.map(({ user, id, body, attachment, createdAt }) => {
           return (
             <CommentChat
               key={id}
-              userName={userId}
+              user={user}
               body={body}
               time={createdAt}
               attachment={attachment}
+              token={token ? token : ""}
             ></CommentChat>
           );
         })
