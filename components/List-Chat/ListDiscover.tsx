@@ -55,7 +55,7 @@ const ListDiscover: NextPage<Props> = ({
         }}
       >
         {" "}
-        join
+        Join
       </button>
       <Meta
         avatar={<Avatar src={channelImage} />}

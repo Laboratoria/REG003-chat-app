@@ -1,41 +1,52 @@
-.card-item{
+.card-item {
   width: 100%;
   background-color: $color8;
   border: 1px solid $color4;
   border-radius: 0;
 }
-.card-item:active{
+.card-item:active {
   background-color: $color3;
 }
-.ant-card-meta-title{
-  color:$color1;
-  font-weight: bold;
+.ant-card-meta-title {
+  color: $color1;
+  // font-weight: bold;
   text-transform: capitalize;
+  font-family: $poppins;
+  @include font-size(15px);
+  //font-size: 6.5vw;
+  font-weight: 500;
 }
-.ant-card-meta-description{
-  color:$color2
+.ant-card-meta-description {
+  color: $color3;
+  font-family: $poiret;
+  font-weight: normal;
+  @include font-size(18px);
 }
-.ant-card-meta-detail{
+.ant-card-meta-detail {
   margin: 0;
 }
-.ant-card-body{
-padding: 1rem;
-
+.ant-card-body {
+  padding: 1rem;
 }
-.time{
-color:$color7;
-width: 100%;
-display: flex;
-justify-content: flex-end;
-position: absolute;
-padding: 0 2rem;
+.time {
+  color: $color7;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  padding: 0 2rem;
 }
-.button-join{
-  color:$color4;
+.button-join {
+  // color: $color4;
   background-color: $color7;
   border: $color7;
-  border-radius: 1rem;
+  border-radius: caculateRem(25px);
+  // border-radius: 1rem;
   position: absolute;
   right: 10px;
-  padding: 0 2rem;
-  }
+  width: caculateRem(100px);
+  height: caculateRem(30px);
+  // padding: 0.2rem 2rem;
+  // font-family: $poppins;
+  @include titles1($poppins, 500, 14px, $color4);
+}

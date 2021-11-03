@@ -1,0 +1,13 @@
+.ant-page-header,
+.ant-dropdown-trigger,
+.ant-dropdown-open {
+  background-color: $color4;
+  color: $color3;
+
+  .ant-page-header-heading-title {
+    font-family: $poiret;
+    @include font-size(28px);
+    //font-size: 8vw;
+    color: $color3;
+  }
+}

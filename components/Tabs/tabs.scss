@@ -1,24 +1,33 @@
-.ant-tabs{
+.ant-tabs {
   width: 100%;
   background-color: $color4;
   color: $color3;
   align-items: center;
   justify-content: space-around;
 }
-.ant-tabs-tab-btn{
-  font-size: 1.1rem;
+.ant-tabs-tab-btn {
+  // font-size: 1.1rem;
+  // font-family: $poppins;
+  // @include font-size(20px);
+  // //font-size: 6.5vw;
+  // font-weight: 500;
+  // color: $color2;
+  font-family: $poiret;
+  @include font-size(20px);
+  //font-size: 8vw;
+  font-weight: normal;
 }
 
-.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
   color: $color7;
 }
-.ant-tabs-ink-bar{
+.ant-tabs-ink-bar {
   background-color: $color7;
 }
 
-.ant-tabs-top > .ant-tabs-nav::before{
+.ant-tabs-top > .ant-tabs-nav::before {
   border-bottom: $color4;
 }
-.ant-tabs-tab-btn:hover{
+.ant-tabs-tab-btn:hover {
   color: $color7;
 }

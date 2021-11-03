@@ -24,7 +24,6 @@ const Home: NextPage = () => {
   useEffect(() => {
     token
       ? getChannelMessages(token, Number(query.id)).then((res) => {
-          console.log(res.content);
           setMessages(res.content);
         })
       : "No token provided";
@@ -36,9 +35,7 @@ const Home: NextPage = () => {
     socket.on("send-message", (payload: any) => {
       if (payload.channelId === Number(query.id)) {
         messages.push(payload);
-        console.log(payload);
         setMessages([...messages]);
-        console.log(messages);
       }
     });
   });

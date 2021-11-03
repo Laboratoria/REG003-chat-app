@@ -29,7 +29,6 @@ const SendMessage: NextPage<Props> = ({
   };
   const handleSubmit = () => {
     setSubmitting(true);
-    console.log(setSubmitting);
     if (!value) {
       console.log("emty");
     } else {
@@ -52,21 +51,23 @@ const SendMessage: NextPage<Props> = ({
     <Comment
       avatar={<Avatar src={userImage} alt={username} />}
       content={
-        <Form form={form}>
-          <Form.Item name="message_input">
-            <TextArea rows={4} onChange={handleChange} value={value} />
-          </Form.Item>
-          <Form.Item>
-            <Button
-              htmlType="submit"
-              loading={submitting}
-              onClick={handleSubmit}
-              type="primary"
-            >
-              Add Comment
-            </Button>
-          </Form.Item>
-        </Form>
+        <div className="formContainer">
+          <Form form={form}>
+            <Form.Item name="message_input">
+              <TextArea rows={4} onChange={handleChange} value={value} />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                htmlType="submit"
+                loading={submitting}
+                onClick={handleSubmit}
+                type="primary"
+              >
+                Add Comment
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
       }
     />
   );

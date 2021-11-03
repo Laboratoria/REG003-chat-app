@@ -32,8 +32,7 @@ export const getChannelsToDiscover = async (
     const channelsToDiscoverId = filteredAllChannels.filter(
       (x) => !filteredUserChannels.includes(x)
     );
-    console.log(channelsToDiscoverId);
-    const result = channelsToDiscoverId.map((e) => {});
+    const result = channelsToDiscoverId.map((e) => { });
 
     // if (channelsToDiscover.length === 0) {
     //     return res.status(200).json({
