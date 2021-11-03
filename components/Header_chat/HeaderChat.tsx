@@ -3,20 +3,25 @@ import { PageHeader, Menu, Dropdown, Button } from 'antd';
 import { MoreOutlined, } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { deleteChannelUser } from '../../services/channelUser'
+import {getUserChannels} from '../../services/channels'
 
 interface Props {
   channelName: string;
-  channelImage:string;
+  channelImage: string;
   token: any;
   uid: number;
   channelId: number;
+  setListChats: any
 
 }
-const HeaderChat: NextPage<Props> = ({ channelName, token, uid, channelId, channelImage }) => {
+const HeaderChat: NextPage<Props> = ({ channelName, token, uid, channelId, channelImage, setListChats }) => {
 
   const router = useRouter();
-  const goOut = ()=>{
-    const channel= deleteChannelUser(token, uid, channelId)
+  const goOut = async () => {
+    const channel = deleteChannelUser(token, uid, channelId)
+    getUserChannels(token, uid).then((res) => {
+      setListChats(res);
+    });
     router.push('/chat')
     return channel
   }
@@ -57,7 +62,7 @@ const HeaderChat: NextPage<Props> = ({ channelName, token, uid, channelId, chann
         className="site-page-header"
         extra={[<DropdownMenu key="more" />]}
         avatar={{
-          src:channelImage,
+          src: channelImage,
         }}
       ></PageHeader>
     </>
