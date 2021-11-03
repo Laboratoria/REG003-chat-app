@@ -19,6 +19,7 @@ const Header: NextPage<Props> = ({
   setIsModalVisible,
 }) => {
   const router = useRouter();
+
   // @ts-ignore
   const { connectSocket, disconnectSocket, socket, setSocket } =
     useContext(SocketContext);
