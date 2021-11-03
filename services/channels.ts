@@ -8,7 +8,7 @@ export const getUserChannels = async (token: string, uid: number) => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authentication': 'Bearer ' + `${token}`
+            'Authorizarion': `Bearer ${token}`
 
         }
     })
@@ -22,12 +22,12 @@ export const getChannelsToDiscover = async (token: string, uid: number) => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authentication': 'Bearer ' + `${token}`
+            'Authorization': `Bearer ${token}`
 
         }
     })
     const data = await userChannelsService.json();
-    return await data;
+    return data;
 }
 
 export const getAllChannels = async (token: string) => {
@@ -40,18 +40,18 @@ export const getAllChannels = async (token: string) => {
         }
     })
     const data = await allChannelsService.json();
-    return await data;
+    return data;
 }
 
-export const getChannelById = (token: string, channelId: number) => {
-    const channelByIdService = fetch(`${url}/api/channel/${channelId}`, {
+export const getChannelById = async (token: string, channelId: number) => {
+    const channelByIdService = await fetch(`${url}/api/channel/${channelId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + `${token}`
         }
-    }).then(response => response.json())
-        .then(data => data)
-        .catch(err => 'error')
-    return channelByIdService
+    })
+    const data = await channelByIdService.json()
+    console.log('fetch result', data);
+    return data
 }

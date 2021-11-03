@@ -186,7 +186,7 @@ export const getChannelById = async (req: Next.Custom, res: NextApiResponse) => 
             },
 
         });
-        return res.json(channelData);
+        return res.status(200).json(channelData);
     } catch (error) {
         return err(500,
             req,
