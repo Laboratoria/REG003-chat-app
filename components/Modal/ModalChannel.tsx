@@ -1,45 +1,45 @@
 import type { NextPage } from "next";
-import { Modal, Form, Input, Button } from "antd";
+import { Modal, Form, Input, Button, Radio } from "antd";
+import { useState } from "react";
+import FormItem from "antd/lib/form/FormItem";
+import { postChannel } from "../../services/channels";
 
 interface Props {
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   isModalVisible: boolean;
 }
 
+interface onFinishProps {
+  nameChannel: string;
+  description: string;
+}
+
 const ModalChannel: NextPage<Props> = ({
   setIsModalVisible,
   isModalVisible,
 }) => {
-  const handleOk = () => {
-    console.log("line13ok", isModalVisible);
+  const onFinish = async (values: onFinishProps) => {
+    const data = await postChannel(values);
+
     setIsModalVisible(false);
   };
 
-  const handleCancel = () => {
+  const onCancel = () => {
     setIsModalVisible(false);
-  };
-
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
-  };
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
   };
 
   return (
     <Modal
       title="Create new Channel"
       visible={isModalVisible}
-      onOk={handleOk}
-      onCancel={handleCancel}
+      okText="Create"
+      onCancel={onCancel}
+      footer={null}
     >
       <Form
-        name="basic"
-        initialValues={{ remember: true }}
+        layout="vertical"
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
+        //onFinishFailed={onFinishFailed}
       >
         <Form.Item
           label="name"
@@ -51,16 +51,21 @@ const ModalChannel: NextPage<Props> = ({
         >
           <Input />
         </Form.Item>
-
         <Form.Item
           label="description"
-          name="descriptio"
+          name="description"
           labelCol={{ span: 24 }}
           rules={[
             { required: true, message: "Please input your description!" },
           ]}
         >
-          <Input.Password />
+          <Input />
+        </Form.Item>
+        <Form.Item>
+          <Button onClick={onCancel}>Cancelar</Button>
+          <Button type="primary" htmlType="submit" onClick={onFinish}>
+            Enviar
+          </Button>
         </Form.Item>
       </Form>
     </Modal>
