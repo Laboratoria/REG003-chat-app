@@ -24,17 +24,22 @@ const Home: NextPage = () => {
   useEffect(() => {
     token
       ? getChannelMessages(token, Number(query.id)).then((res) => {
-          setMessages(res.content);
-        })
+        setMessages(res.content);
+      })
       : "No token provided";
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     socket.on("send-message", (payload: any) => {
-      console.log(payload);
       if (payload.channelId === Number(query.id)) {
         messages.push(payload);
         setMessages([...messages]);
       }
     });
-  }, []);
+  })
+
 
   return (
     <div className="container">
@@ -65,9 +70,8 @@ const Home: NextPage = () => {
       <SendMessage
         channelId={Number(query.id)}
         uid={Number(uid)}
-        /*  channelImage={String(query.channelImage)} */
-        // channelId={query.id ? Number(query.id) : 1}
-        // userId={uid}
+        username={String(query.username)}
+        userImage={String(query.userImage)}
       ></SendMessage>
     </div>
   );

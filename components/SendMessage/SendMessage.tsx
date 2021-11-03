@@ -8,10 +8,12 @@ const { TextArea } = Input;
 interface Props {
   uid: number;
   channelId: number;
+  username?: string;
   userImage?: string;
 }
 
-const SendMessage: NextPage<Props> = ({ uid, channelId, userImage }) => {
+const SendMessage: NextPage<Props> = ({ uid, channelId, username,
+  userImage }) => {
   const [value, setValue] = useState<string>("");
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [form] = Form.useForm();
@@ -31,6 +33,8 @@ const SendMessage: NextPage<Props> = ({ uid, channelId, userImage }) => {
         content: value,
         channelId,
         uid,
+        username,
+        userImage
       };
       token ? postMessage(token, payload) : console.log("No token provided");
       form.resetFields(["message_input"]);
@@ -40,7 +44,7 @@ const SendMessage: NextPage<Props> = ({ uid, channelId, userImage }) => {
 
   return (
     <Comment
-      avatar={<Avatar src={userImage} alt="Han Solo" />}
+      avatar={<Avatar src={userImage} alt={username} />}
       content={
         <Form form={form}>
           <Form.Item name="message_input">

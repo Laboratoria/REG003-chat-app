@@ -12,6 +12,7 @@ import {
   getChannelById,
 } from "../../services/channels";
 import ModalChannel from "../../components/Modal/ModalChannel";
+import { getUserById } from "../../services/user";
 
 const Chat: NextPage = () => {
   // @ts-ignore
@@ -21,20 +22,9 @@ const Chat: NextPage = () => {
   const [listDiscover, setDiscover] = useState<Array<any>>();
   const [activeSearch, setActiveSearch] = useState<boolean>(false);
   const [activeChannel, setActiveChannel] = useState<boolean>(true);
-  const [currentUser, setCurrentUser] = useState<Array<any>>();
+  const [currentUser, setCurrentUser] = useState<any>();
 
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-
-  useEffect(() => {
-    const sockets = socket;
-    sockets.on("connect", () => {
-      console.log("conectado");
-    });
-    sockets.on("disconnect", () => {
-      console.log("disconnect");
-    });
-  }, []);
-
   const token = localStorage.getItem("token");
   let uid: any;
   if (token) {
@@ -44,11 +34,26 @@ const Chat: NextPage = () => {
     uid = payloadJSON.uid;
   }
   useEffect(() => {
+    const user = getUserById(token, uid).then((data: any) =>
+      setCurrentUser(data.content)
+    );
+    const sockets = socket;
+    console.log(sockets);
+    sockets.on("connect", () => {
+      console.log("conectado");
+    });
+    sockets.on("disconnect", () => {
+      console.log("disconnect");
+    });
+  }, []);
+
+  useEffect(() => {
     //TODO PETICION A LA BD DE CANALES DE USUARIo
     if (token) {
       // console.log(payloadJSON.uid)
 
       getUserChannels(token, uid).then((res) => {
+        console.log(res);
         setListChats(res);
         return res;
       });
@@ -94,6 +99,7 @@ const Chat: NextPage = () => {
               <>
                 <ListChat
                   key={id}
+                  currentUser={currentUser}
                   channelTitle={name}
                   channelImage={channelImage}
                   updatedAt={updatedAt}
