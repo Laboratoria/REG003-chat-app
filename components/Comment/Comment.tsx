@@ -22,11 +22,12 @@ const CommentChat: NextPage<Props> = ({
 }) => {
   const updatedAtDay = time.split("T")[0];
   const messageTime = time.split("T")[1].slice(0, -5);
-
+  const { username, profile_image } = user;
+  console.log(user);
   return (
     <Comment
-      author={user.username}
-      avatar={<Avatar src={user.profile_image} />}
+      author={username}
+      avatar={<Avatar src={profile_image} />}
       content={
         <div>
           <p>{body}</p>

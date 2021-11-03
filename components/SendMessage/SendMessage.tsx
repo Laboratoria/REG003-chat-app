@@ -12,8 +12,12 @@ interface Props {
   userImage?: string;
 }
 
-const SendMessage: NextPage<Props> = ({ uid, channelId, username,
-  userImage }) => {
+const SendMessage: NextPage<Props> = ({
+  uid,
+  channelId,
+  username,
+  userImage,
+}) => {
   const [value, setValue] = useState<string>("");
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [form] = Form.useForm();
@@ -31,10 +35,12 @@ const SendMessage: NextPage<Props> = ({ uid, channelId, username,
     } else {
       const payload = {
         content: value,
+        user: {
+          username,
+          profile_image: userImage,
+        },
         channelId,
         uid,
-        username,
-        userImage
       };
       token ? postMessage(token, payload) : console.log("No token provided");
       form.resetFields(["message_input"]);

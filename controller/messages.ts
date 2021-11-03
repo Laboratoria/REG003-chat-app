@@ -79,7 +79,7 @@ export const postMessage = async (req: Next.Custom, res: NextApiResponseServerIO
                 channelId: Number(id),
                 body: content,
                 attachment
-            }
+            }, include: { user: true },
         })
         res?.socket?.server?.io?.emit("send-message", message);
     } catch (error: any) {
