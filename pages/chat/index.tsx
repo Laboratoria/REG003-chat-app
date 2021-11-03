@@ -48,30 +48,31 @@ const Chat: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    //TODO PETICION A LA BD DE CANALES DE USUARIo
-    if (token) {
-      // console.log(payloadJSON.uid)
 
-      getUserChannels(token, uid).then((res) => {
-        console.log(res);
-        setListChats(res);
-        return res;
-      });
+    async function fetchData() {
+      if (token) {
+        // console.log(payloadJSON.uid)
 
-      getChannelsToDiscover(token, uid).then((res) => {
-        const channels = res.content;
-        const channelData = channels.map((channelId: number) =>
-          getChannelById(token, channelId).then((res) => res)
-        );
-        listDiscover
-          ? setDiscover([...listDiscover, channelData])
-          : setDiscover(channelData);
-      });
+        getUserChannels(token, uid).then((res) => {
+          setListChats(res);
+        });
+
+        const channelsToDiscover = await getChannelsToDiscover(token, uid);
+        const channels = channelsToDiscover.content;
+        const channelsArr: Array<any> = [];
+
+        for (const channel of channels) {
+          const resp = await getChannelById(token, channel);
+          console.log('channel receive', resp);
+          channelsArr.push(resp);
+        }
+        console.log('channelsArr', channelsArr);
+
+        setDiscover(channelsArr);
+
+      }
     }
-
-    // activeChannel
-    //   ? setListChats(userChannels)
-    //   : setDiscover(channelsToDiscover);
+    fetchData();
   }, []);
 
   return (
@@ -113,7 +114,7 @@ const Chat: NextPage = () => {
         )
       ) : listDiscover?.length ? (
         listDiscover.map((chat) => {
-          console.log(chat);
+          console.log('chat', chat);
           const { name, description, channelImage, id } = chat;
           return (
             <>
